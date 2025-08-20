@@ -1,0 +1,78 @@
+{
+  "nav": {
+    "services": "Services",
+    "about": "About",
+    "appointments": "Appointments",
+    "contact": "Contact"
+  },
+  "logoAlt": "Nutrition by Iballa Logo",
+  "hero": {
+    "title": "Nutrition by Iballa",
+    "subtitle": "Personalised dietetic care, rooted in science, delivered across Ireland & Spain.",
+    "cta": "Book"
+  },
+  "services": {
+    "heading": "Specialist Services",
+    "items": {
+      "diabetes": {
+        "title": "Diabetes",
+        "description": "Personalised support for managing blood sugar levels, medication, and lifestyle changes."
+      },
+      "gut": {
+        "title": "Gut Health & IBS",
+        "description": "Guidance on FODMAPs, bloating, and digestive wellness."
+      },
+      "heart": {
+        "title": "Heart Health",
+        "description": "Nutrition strategies for cholesterol, blood pressure, and cardiovascular risk."
+      },
+      "women": {
+        "title": "Women's Health",
+        "description": "Hormonal balance, PCOS, fertility, and menopause support."
+      },
+      "healthy": {
+        "title": "Healthy Eating",
+        "description": "Practical, sustainable nutrition advice for everyday wellbeing."
+      },
+      "malnutrition": {
+        "title": "Malnutrition",
+        "description": "Specialist support for undernutrition, recovery, and nourishment."
+      }
+    }
+  },
+  "about": {
+    "heading": "About",
+    "paragraph1": "Hi, I’m Iballa Lucia Martinez Yanes — a Masters-trained Dietitian Consultant offering personalised nutrition services tailored to your health goals and lifestyle. I hold a Master’s degree in Dietetics from the University of Limerick, and I’m proudly registered with <strong>Coru</strong> and a member of the <strong>Irish Nutrition & Dietetic Institute (INDI)</strong>.",
+    "paragraph2": "My approach is rooted in evidence-based practice, empathy, and empowerment. Whether you're managing a medical condition, seeking preventative guidance, or simply striving for balance, I’m here to support you with expert care across Ireland, Spain, and beyond."
+  },
+  "appointments": {
+    "heading": "Book a Consultation",
+    "types": {
+      "initial": {
+        "title": "Initial Consultation",
+        "description": "55 minutes — In-depth assessment of your goals, medical history, and tailored nutrition plan."
+      },
+      "review": {
+        "title": "Review Consultation",
+        "description": "30 minutes — Progress review, adjustments, and continued support."
+      }
+    },
+    "cta": "Book Now"
+  },
+  "contact": {
+    "heading": "Contact",
+    "intro": "You can submit this form for <strong>general inquiries</strong>, <strong>business consultations</strong>, or <strong>collaborations</strong>. I’ll respond personally—usually within 1–2 business days.",
+    "success": "Thanks for your message! I’ll be in touch soon.",
+    "fields": {
+      "name": "Name",
+      "email": "Email",
+      "message": "Message",
+      "note": "We usually respond within 1–2 business days.",
+      "submit": "Send"
+    }
+  },
+  "footer": {
+    "bio": "WalkMe-certified builder crafting user-first digital adoption experiences that drive real impact.",
+    "logoAlt": "ADvanceUX Logo"
+  }
+}
