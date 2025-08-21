@@ -1,0 +1,357 @@
+import React, { useState, useRef, useEffect } from "react";
+import { useForm } from "@formspree/react";
+import {
+  Mail, Menu, Calendar, CreditCard, RotateCcw, Droplet, Leaf,
+  Venus, Soup, HeartPulse, Stethoscope, Linkedin, Instagram, ChevronDown
+} from "lucide-react";
+import "./App.css";
+import "./flipcards.css";
+import "./index.css";
+import { useTranslation } from "react-i18next";
+
+// Language Dropdown Component
+function LanguageDropdown() {
+  const { i18n } = useTranslation();
+  const [open, setOpen] = useState(false);
+
+  const languages = [
+    { code: "en", label: "English", flag: "/en.png" },
+    { code: "es", label: "Español", flag: "/es.png" }
+  ];
+
+  return (
+    <div className="relative inline-block text-left">
+      <button
+        onClick={() => setOpen(!open)}
+        className="flex items-center gap-2 px-3 py-2 bg-white rounded-md shadow hover:bg-gray-100 transition"
+      >
+        <img
+          src={`/${i18n.language}.png`}
+          alt={i18n.language}
+          className="w-5 h-5 rounded"
+        />
+        <span className="text-sm font-medium capitalize">{i18n.language}</span>
+        <ChevronDown
+          size={16}
+          className={`transition-transform duration-200 ${open ? "rotate-180" : ""}`}
+        />
+      </button>
+
+      {open && (
+        <div className="absolute right-0 mt-2 w-36 bg-white rounded-md shadow-lg z-10">
+          {languages.map((lang) => (
+            <button
+              key={lang.code}
+              onClick={() => {
+                i18n.changeLanguage(lang.code);
+                setOpen(false);
+              }}
+              className="flex items-center w-full px-3 py-2 hover:bg-gray-100"
+            >
+              <img src={lang.flag} alt={lang.label} className="w-5 h-5 rounded mr-2" />
+              <span className="text-sm">{lang.label}</span>
+            </button>
+          ))}
+        </div>
+      )}
+    </div>
+  );
+}
+
+// Services Array
+const services = [
+  { key: "diabetes", icon: Droplet, iconColor: "text-red-500", backColor: "bg-red-100" },
+  { key: "gut", icon: Stethoscope, iconColor: "text-orange-500", backColor: "bg-orange-100" },
+  { key: "heart", icon: HeartPulse, iconColor: "text-pink-500", backColor: "bg-pink-100" },
+  { key: "women", icon: Venus, iconColor: "text-purple-500", backColor: "bg-purple-100" },
+  { key: "healthy", icon: Leaf, iconColor: "text-green-500", backColor: "bg-green-100" },
+  { key: "malnutrition", icon: Soup, iconColor: "text-sky-500", backColor: "bg-sky-100" }
+];
+
+export default function NutritionByIballa() {
+  const [state, handleSubmit] = useForm("xzzvqdlq");
+  const [messageValue, setMessageValue] = useState("");
+  const messageRef = useRef(null);
+  const [navOpen, setNavOpen] = useState(false);
+  const { t, i18n } = useTranslation();
+
+  useEffect(() => {
+    if (messageRef.current) {
+      messageRef.current.style.height = "auto";
+      messageRef.current.style.height = `${messageRef.current.scrollHeight}px`;
+    }
+  }, [messageValue]);
+
+  useEffect(() => {
+    const widgetContainer = document.getElementById("calendly-widget");
+    const alreadyLoaded = widgetContainer?.querySelector("iframe");
+
+    if (window.Calendly && widgetContainer && !alreadyLoaded) {
+      window.Calendly.initInlineWidget({
+        url: "https://calendly.com/iballa-mtzyanes",
+        parentElement: widgetContainer,
+        prefill: {},
+        utm: {}
+      });
+    }
+  }, []);
+
+  const appointmentTypes = [
+    {
+      key: "initial",
+      icon: Calendar,
+      calendlyUrl: "https://calendly.com/iballa-mtzyanes/initial-consultation"
+    },
+    {
+      key: "review",
+      icon: RotateCcw,
+      calendlyUrl: "https://calendly.com/iballa-mtzyanes/30min"
+    }
+  ];
+
+  return (
+    <div className="bg-white text-gray-900 font-sans">
+      {/* Header */}
+      <header className="h-24 px-4 shadow-md flex justify-between items-center">
+        <img
+          src="/logo.png"
+          alt="Nutrition by Iballa Logo"
+          className="h-full w-[200px] object-contain"
+        />
+        <nav className="hidden md:flex space-x-6">
+          <a href="#services">{t("nav.services")}</a>
+          <a href="#about">{t("nav.about")}</a>
+          <a href="#appointments">{t("nav.appointments")}</a>
+          <a href="#contact">{t("nav.contact")}</a>
+        </nav>
+        <div className="flex items-center gap-4">
+          <LanguageDropdown />
+          <button className="md:hidden" onClick={() => setNavOpen(!navOpen)}>
+            <Menu />
+          </button>
+        </div>
+        {navOpen && (
+          <nav className="absolute top-full left-0 w-full bg-white shadow-md flex flex-col items-center space-y-4 p-4 z-50 md:hidden">
+            <a href="#services" onClick={() => setNavOpen(false)}>{t("nav.services")}</a>
+            <a href="#about" onClick={() => setNavOpen(false)}>{t("nav.about")}</a>
+            <a href="#appointments" onClick={() => setNavOpen(false)}>{t("nav.appointments")}</a>
+            <a href="#contact" onClick={() => setNavOpen(false)}>{t("nav.contact")}</a>
+          </nav>
+        )}
+      </header>
+
+      {/* Hero */}
+      <section className="p-12 text-center bg-gradient-to-r from-[#a3c9b9] to-[#7fae9e] text-white">
+        <h1 className="text-4xl font-bold mb-4">{t("hero.title")}</h1>
+        <p className="text-lg max-w-2xl mx-auto mb-6">{t("hero.subtitle")}</p>
+        <a
+          href="#appointments"
+          className="inline-block bg-white text-[#3b5f58] font-semibold px-6 py-2 rounded-full shadow hover:bg-gray-100 transition"
+        >
+          {t("hero.cta")}
+        </a>
+      </section>
+
+      {/* Services */}
+      <section id="services" className="p-12 bg-white">
+        <h2 className="text-3xl font-semibold mb-12 text-center">{t("services.heading")}</h2>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
+          {services.map((service, idx) => {
+            const Icon = service.icon;
+            return (
+              <div key={idx} className="flip-card h-56 overflow-hidden">
+                <div className="flip-card-inner relative w-full h-full rounded-xl shadow-lg">
+                  <div className="flip-card-front absolute inset-0 flex flex-col justify-center items-center bg-gradient-to-br from-[#cde4dc] to-[#a3c9b9] text-white rounded-xl p-6">
+                    <Icon size={36} className={`mb-3 ${service.iconColor}`} />
+                    <h3 className="text-lg font-bold text-center">
+                      {t(`services.items.${service.key}.title`)}
+                    </h3>
+                  </div>
+                  <div className={`flip-card-back absolute inset-0 flex flex-col justify-center items-center ${service.backColor} text-gray-900 rounded-xl p-6`}>
+                    <p className="text-sm text-center leading-relaxed">
+                      {t(`services.items.${service.key}.description`)}
+                    </p>
+                  </div>
+                </div>
+              </div>
+            );
+          })}
+        </div>
+      </section>
+
+      {/* About */}
+      <section id="about" className="p-12 bg-gradient-to-r from-[#a3c9b9] to-[#7fae9e] text-white">
+  <div className="max-w-5xl mx-auto flex flex-col md:flex-row items-center gap-8">
+    <img
+      src="/profile.png"
+      alt="Iballa Martinez"
+      className="rounded-full h-40 w-40 object-cover shadow-lg"
+    />
+    <div className="text-left">
+      <h2 className="text-3xl font-semibold mb-4">{t("about.heading")}</h2>
+      <p
+        className="text-lg leading-relaxed mb-4"
+        dangerouslySetInnerHTML={{ __html: t("about.paragraph1") }}
+      />
+      <p
+        className="text-lg leading-relaxed"
+        dangerouslySetInnerHTML={{ __html: t("about.paragraph2") }}
+      />
+    </div>
+  </div>
+</section>
+
+	{/* Appointment */}
+     <section id="appointments" className="p-12 bg-gray-50">
+  <h2 className="text-3xl font-semibold mb-12 text-center">
+    {t("appointments.heading")}
+  </h2>
+
+  <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 gap-6 max-w-4xl mx-auto mb-12">
+    {appointmentTypes.map((service, idx) => {
+      const Icon = service.icon;
+      return (
+        <div key={idx} className="rounded-xl shadow-lg overflow-hidden h-56 flex flex-col">
+          <div className="flex items-center justify-center bg-gradient-to-r from-green-400 to-teal-500 text-white p-4">
+            <Icon size={32} className="mr-2" />
+            <h3 className="text-lg font-bold">
+              {t(`appointments.types.${service.key}.title`)}
+            </h3>
+          </div>
+          <div className="flex-grow flex flex-col items-center justify-center bg-white text-gray-800 px-4 text-sm text-center">
+            <p>{t(`appointments.types.${service.key}.description`)}</p>
+            <a
+              href={service.calendlyUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="mt-4 inline-block bg-green-600 text-white text-xs font-semibold px-4 py-2 rounded-full hover:bg-green-700 transition"
+            >
+              {t("appointments.cta")}
+            </a>
+          </div>
+        </div>
+      );
+    })}
+  </div>
+</section>
+
+     {/* Contact */}
+<section id="contact" className="p-12 bg-gradient-to-r from-[#a3c9b9] to-[#7fae9e] text-white text-center">
+        <h2 className="text-3xl font-semibold mb-6">{t("contact.heading")}</h2>
+
+        <p
+          className="text-lg max-w-xl mx-auto mb-8"
+          dangerouslySetInnerHTML={{ __html: t("contact.intro") }}
+        />
+
+        {state.succeeded ? (
+          <p className="text-white text-lg">{t("contact.success")}</p>
+        ) : (
+          <form className="max-w-2xl mx-auto w-full" onSubmit={handleSubmit}>
+            <table className="w-full text-left text-white">
+              <tbody>
+                {/* Name */}
+                <tr className="align-top pb-6">
+                  <td className="pr-4 py-2 font-display text-sm font-medium">{t("contact.fields.name")}</td>
+                  <td className="w-full">
+                    <input
+                      id="name"
+                      name="name"
+                      required
+                      className="w-full h-10 rounded-md border border-gray-300 bg-white px-3 text-gray-900 placeholder:text-gray-500 focus:outline-none focus:ring-2 focus:ring-white"
+                    />
+                  </td>
+                </tr>
+
+                {/* Email */}
+                <tr className="align-top pb-6">
+                  <td className="pr-4 py-2 font-display text-sm font-medium">{t("contact.fields.email")}</td>
+                  <td className="w-full">
+                    <input
+                      id="email"
+                      name="email"
+                      type="email"
+                      required
+                      className="w-full h-10 rounded-md border border-gray-300 bg-white px-3 text-gray-900 placeholder:text-gray-500 focus:outline-none focus:ring-2 focus:ring-white"
+                    />
+                  </td>
+                </tr>
+
+                {/* Message */}
+                <tr className="align-top pb-6">
+                  <td className="pr-4 py-2 font-display text-sm font-medium">{t("contact.fields.message")}</td>
+                  <td className="w-full">
+                    <textarea
+                      id="message"
+                      name="message"
+                      required
+                      rows={4}
+                      ref={messageRef}
+                      value={messageValue}
+                      onChange={(e) => setMessageValue(e.target.value)}
+                      className="w-full resize-y rounded-md border border-gray-300 bg-white px-3 py-2 text-gray-900 placeholder:text-gray-500 focus:outline-none focus:ring-2 focus:ring-white"
+                    />
+                    <p className="text-sm text-white/80 mt-2">{t("contact.fields.note")}</p>
+                  </td>
+                </tr>
+
+                {/* Submit */}
+                <tr>
+                  <td></td>
+                  <td className="pt-4 text-right">
+                    <button
+                      type="submit"
+                      className="cursor-pointer rounded-md bg-white px-8 py-3 text-sm font-medium text-green-700 hover:bg-gray-100 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-white"
+                    >
+                      {t("contact.fields.submit")}
+                    </button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </form>
+        )}
+      </section>
+
+      {/* Footer */}
+      <footer className="bg-white text-[#1e1e5a] px-4 py-6 rounded-t-lg shadow-inner">
+        <div className="flex flex-row items-center justify-between gap-4 w-full">
+          {/* Logo */}
+          <img
+            src="/favicon.png"
+            alt={t("footer.logoAlt")}
+            className="w-6 h-6 rounded-full object-cover shrink-0"
+          />
+
+          {/* Bio */}
+          <div className="flex flex-col justify-center max-w-[60%] sm:max-w-md">
+            <p className="text-[10px] leading-tight text-left">
+              {t("footer.bio")}
+            </p>
+          </div>
+
+          {/* Social Icons */}
+          <div className="flex items-center gap-3 shrink-0">
+            <a
+              href="https://www.linkedin.com/in/aaron-doyle-06b793158"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="hover:opacity-80 transition duration-200"
+            >
+              <Linkedin size={20} color="#1e1e5a" />
+            </a>
+            <a
+              href="https://www.instagram.com/yourusername" // Replace with actual handle
+              target="_blank"
+              rel="noopener noreferrer"
+              className="hover:opacity-80 transition duration-200"
+            >
+              <Instagram size={20} color="#1e1e5a" />
+            </a>
+          </div>
+        </div>
+      </footer>
+    </div>
+  );
+}
+

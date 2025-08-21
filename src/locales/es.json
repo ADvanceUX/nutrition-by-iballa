@@ -7,7 +7,7 @@
   },
   "logoAlt": "Logotipo de Nutrición por Iballa",
   "hero": {
-    "title": "Nutrición por Iballa",
+    "title": "",
     "subtitle": "Atención dietética personalizada, basada en la ciencia, disponible en Irlanda y España.",
     "cta": "Reservar"
   },
@@ -19,7 +19,7 @@
         "description": "Apoyo personalizado para controlar los niveles de glucosa, la medicación y los cambios en el estilo de vida."
       },
       "gut": {
-        "title": "Salud Digestiva e IBS",
+        "title": "Digestión e IBS",
         "description": "Orientación sobre FODMAPs, hinchazón y bienestar digestivo."
       },
       "heart": {
@@ -72,7 +72,7 @@
     }
   },
   "footer": {
-    "bio": "Especialista certificado en WalkMe, creando experiencias de adopción digital centradas en el usuario que generan impacto real.",
+    "bio": "Nutrition by Iballa – Pequeños pasos, bienestar duradero.",
     "logoAlt": "Logotipo de ADvanceUX"
   }
 }
