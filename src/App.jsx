@@ -185,8 +185,8 @@ export default function NutritionByIballa() {
   {/* Optional overlay for readability */}
   <div className="absolute inset-0 bg-white/80 z-0"></div>
 
-  {/* Content */}
-  <div className="relative z-10">
+{/* Content */}
+<div className="relative z-10">
     <h2 className="text-3xl font-semibold mb-12 text-center">
       {t("services.heading")}
     </h2>
@@ -197,6 +197,7 @@ export default function NutritionByIballa() {
           <div key={idx} className="flip-card h-56 overflow-hidden">
             <div className="flip-card-inner relative w-full h-full rounded-xl shadow-lg">
              <div className="flip-card-front absolute inset-0 flex flex-col justify-start items-center bg-gradient-to-br from-[#cde4dc] to-[#a3c9b9] text-white rounded-xl p-6">
+		<RotateCcw className="absolute top-3 right-3 w-5 h-5 text-white opacity-70" />
   		<div className="h-6"></div>
   		<Icon size={36} className={`${service.iconColor} mb-3`} />
   		<h3 className="text-sm sm:text-base md:text-lg font-bold text-center leading-snug max-w-[14ch] sm:max-w-none mx-auto break-words">
