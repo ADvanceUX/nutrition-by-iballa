@@ -221,7 +221,7 @@ export default function NutritionByIballa() {
       <section id="about" className="p-12 bg-gradient-to-r from-[#a3c9b9] to-[#7fae9e] text-white">
   <div className="max-w-5xl mx-auto flex flex-col md:flex-row items-center gap-8">
     <img
-      src="/profile.png"
+      src="/profile1.png"
       alt="Iballa Martinez"
       className="rounded-full h-48 md:h-80 lg:h-96 shadow-lg border-4 border-white"
     />
