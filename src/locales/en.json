@@ -8,7 +8,7 @@
   "logoAlt": "Nutrition by Iballa Logo",
   "hero": {
     "title": "Nutrition by Iballa",
-    "subtitle": "Personalised dietetic care, rooted in science, delivered across Ireland & Spain.",
+    "subtitle": "I provide personalised, evidence-based nutrition advice and care in both English and Spanish. As a CORU Registered Dietitian, my goal is to help you improve your health and wellbeing with a professional, supportive, and friendly approach. Whether you’re looking to manage a medical condition, build sustainable habits, or simply feel your best, my goal is to empower people to make choices that fit their lifestyle and have a positive effect on their health.",
     "cta": "Book"
   },
   "services": {
@@ -16,63 +16,82 @@
     "items": {
       "diabetes": {
         "title": "Diabetes",
-        "description": "Personalised support for managing blood sugar levels, medication, and lifestyle changes."
+        "description": [
+          "Prediabetes",
+          "Type 2 Diabetes",
+          "Gestational Diabetes"
+        ]
       },
       "gut": {
         "title": "Gut Health & IBS",
-        "description": "Guidance on FODMAPs, bloating, and digestive wellness."
+        "description": [
+          "Functional gut disorders",
+          "Irritable Bowel Syndrome",
+          "Low FODMAP diet",
+          "Celiac disease"
+        ]
       },
       "heart": {
         "title": "Heart Health",
-        "description": "Nutrition strategies for cholesterol, blood pressure, and cardiovascular risk."
+        "description": [
+          "High Cholesterol",
+          "Cardiac Rehab"
+        ]
       },
       "women": {
         "title": "Women's Health",
-        "description": "Hormonal balance, PCOS, fertility, and menopause support."
+        "description": [
+          "Nutrition during pregnancy",
+          "Gestational diabetes",
+          "Fertility",
+          "Polycystic ovary syndrome"
+        ]
       },
       "healthy": {
         "title": "Healthy Eating",
-        "description": "Practical, sustainable nutrition advice for everyday wellbeing."
+        "description": "I help people build confidence in making balanced, sustainable food choices without strict meal plans, using practical guidance and education."
       },
       "malnutrition": {
         "title": "Malnutrition",
-        "description": "Specialist support for undernutrition, recovery, and nourishment."
+        "description": "I help individuals manage weight and muscle loss from conditions like cancer through balanced, sustainable nutrition."
       }
     }
   },
   "about": {
     "heading": "About",
-    "paragraph1": "Hi, I’m Iballa Lucia Martinez Yanes — a Masters-trained Dietitian Consultant offering personalised nutrition services tailored to your health goals and lifestyle. I hold a Master’s degree in Dietetics from the University of Limerick, and I’m proudly registered with <strong>Coru</strong> and a member of the <strong>Irish Nutrition & Dietetic Institute (INDI)</strong>.",
-    "paragraph2": "My approach is rooted in evidence-based practice, empathy, and empowerment. Whether you're managing a medical condition, seeking preventative guidance, or simply striving for balance, I’m here to support you with expert care across Ireland, Spain, and beyond."
+    "paragraph1": "Hi, I am Iballa, a Registered Dietitian and proud member of the Irish Nutrition and Dietetics Institute and CORU.",
+    "paragraph2": "I hold a BSc in Biomedical Science from the Technological University of Dublin and an MSc in Human Nutrition and Dietetics from the University of Limerick. Over the past several years, I have gained extensive clinical experience in both Ireland and Australia, working across a wide range of specialties with inpatients and outpatients. This diverse background has allowed me to strengthen my skills and broaden my expertise in supporting people with different nutritional needs.",
+"paragraph3": "I am deeply passionate about the role of nutrition in health and wellbeing. My approach focuses on educating and empowering individuals to make informed, sustainable choices that truly benefit their health.",
+"paragraph4": "I don’t believe in strict meal plans or quick fixes like “magic shakes.” Instead, my goal is to equip my clients with the knowledge and confidence to become the experts in their own health—helping them take control, feel empowered, and live their best lives."
   },
   "appointments": {
     "heading": "Book a Consultation",
     "types": {
       "initial": {
         "title": "Initial Consultation",
-        "description": "55 minutes — In-depth assessment of your goals, medical history, and tailored nutrition plan."
+        "description": "55 minutes — In your first appointment, we’ll review your health history, current medications, previous test results, and eating habits. This will help me understand your situation in a comprehensive way and create a nutrition plan tailored to your needs and goals."
       },
       "review": {
         "title": "Review Consultation",
-        "description": "30 minutes — Progress review, adjustments, and continued support."
+        "description": "30 minutes — In the follow-up appointments, we’ll assess your progress and look for solutions to any challenges that may arise along the way."
       }
     },
     "cta": "Book Now"
   },
   "contact": {
     "heading": "Contact",
-    "intro": "You can submit this form for <strong>general inquiries</strong>, <strong>business consultations</strong>, or <strong>collaborations</strong>. I’ll respond personally—usually within 1–2 business days.",
+    "intro": "Contact me if you have any general enquiries or would like a call back to discuss.",
     "success": "Thanks for your message! I’ll be in touch soon.",
     "fields": {
       "name": "Name",
       "email": "Email",
       "message": "Message",
-      "note": "We usually respond within 1–2 business days.",
+      "note": " I will respond personally within 1-2 business days.",
       "submit": "Send"
     }
   },
   "footer": {
-    "bio": "Nutrition by Iballa – Small steps, lasting wellness.",
+    "bio": "Nutrition by Iballa",
     "logoAlt": "ADvanceUX Logo"
   }
 }

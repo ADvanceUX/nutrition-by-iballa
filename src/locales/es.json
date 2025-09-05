@@ -8,7 +8,7 @@
   "logoAlt": "Logotipo de Nutrición por Iballa",
   "hero": {
     "title": "Nutrition by Iballa",
-    "subtitle": "Atención dietética personalizada, basada en la ciencia, disponible en Irlanda y España.",
+    "subtitle": "Brindo asesoría nutricional personalizada y basada en la evidencia, disponible en español e inglés. Como dietista-nutricionista colegiada en CORU, mi misión es acompañarte en el cuidado de tu salud y bienestar con una atención profesional, cercana y comprensible. Te ayudo a gestionar condiciones médicas, a crear hábitos sostenibles y a sentirte mejor en tu día a día, siempre con un enfoque adaptado a tu estilo de vida y orientado a generar cambios positivos y duraderos en tu salud.",
     "cta": "Reservar"
   },
   "services": {
@@ -16,27 +16,44 @@
     "items": {
       "diabetes": {
         "title": "Diabetes",
-        "description": "Apoyo personalizado para controlar los niveles de glucosa, la medicación y los cambios en el estilo de vida."
+        "description": [
+        "Prediabetes",
+        "Diabetes Tipo 2",
+        "Diabetes Gestacional"
+      ]
       },
       "gut": {
-        "title": "Digestión e IBS",
-        "description": "Orientación sobre FODMAPs, hinchazón y bienestar digestivo."
+        "title": "Salud Intestinal y SII",
+        "description": [
+        "Trastornos digestivos funcionales",
+        "Síndrome del intestino irritable",
+        "Dieta baja en FODMAP",
+	"Celiaquía"
+      ]
       },
       "heart": {
-        "title": "Salud Cardiaca",
-        "description": "Estrategias nutricionales para el colesterol, la presión arterial y el riesgo cardiovascular."
+        "title": "Salud Cardiovascular",
+        "description": [
+        "Colesterol Alto",
+        "Rehabilitación Cardiaca"
+      ]
       },
       "women": {
-        "title": "Salud de la Mujer",
-        "description": "Equilibrio hormonal, SOP, fertilidad y apoyo durante la menopausia."
+        "title": "Salud de la Mujer y Embarazo",
+        "description": [
+        "Nutritición Durante el Embarazo",
+        "Diabetes Gestacional",
+        "Fertilidad",
+	"Síndrome del Ovario Poliquistico"
+      ]
       },
       "healthy": {
         "title": "Alimentación Saludable",
-        "description": "Consejos nutricionales prácticos y sostenibles para el bienestar diario."
+        "description": "Ayudo a las personas a ganar confianza a la hora de elegir una alimentación equilibrada y sostenible, sin recurrir a planes estrictos, mediante orientación práctica y educación."
       },
       "malnutrition": {
         "title": "Desnutrición",
-        "description": "Apoyo especializado para la desnutrición, la recuperación y la nutrición adecuada."
+        "description": "Ayudo a las personas a manejar la pérdida de peso y de masa muscular causada por enfermedades como el cáncer mediante una nutrición equilibrada y sostenible."
       }
     }
   },
@@ -50,29 +67,29 @@
     "types": {
       "initial": {
         "title": "Consulta Inicial",
-        "description": "55 minutos — Evaluación detallada de tus objetivos, historial médico y plan nutricional personalizado."
+        "description": "55 minutos — En tu primera cita, revisaremos tu historial de salud, los medicamentos que tomas, resultados de análisis previos y tus hábitos alimenticios. Esto me ayudará a conocer tu situación de manera integral y a crear un plan de nutrición hecho a medida para tus necesidades y objetivos."
       },
       "review": {
         "title": "Consulta de Seguimiento",
-        "description": "30 minutos — Revisión del progreso, ajustes y apoyo continuo."
+        "description": "30 minutos — En las citas de seguimiento, evaluaremos tu progreso y buscaremos soluciones a cualquier dificultad que surja en el camino."
       }
     },
     "cta": "Reservar"
   },
   "contact": {
     "heading": "Contacto",
-    "intro": "Puedes enviar este formulario para <strong>consultas generales</strong>, <strong>asesorías empresariales</strong> o <strong>colaboraciones</strong>. Responderé personalmente, normalmente en 1–2 días hábiles.",
+    "intro": "Si tienes alguna consulta general o deseas ser cotactado por teléfono, por favor ponte en contacto.",
     "success": "¡Gracias por tu mensaje! Me pondré en contacto contigo pronto.",
     "fields": {
       "name": "Nombre",
       "email": "Correo electrónico",
       "message": "Mensaje",
-      "note": "Normalmente respondemos en un plazo de 1–2 días hábiles.",
+      "note": "Responderé personalmente en un plazo de 1 a 2 días hábiles.",
       "submit": "Enviar"
     }
   },
   "footer": {
-    "bio": "Nutrition by Iballa – Pequeños pasos, bienestar duradero.",
+    "bio": "Nutrition by Iballa",
     "logoAlt": "Logotipo de ADvanceUX"
   }
 }
