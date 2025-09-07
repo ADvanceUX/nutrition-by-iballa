@@ -343,10 +343,10 @@ export default function NutritionByIballa() {
   </div>
 
   {/* Responsive Layout: Cards first on mobile, image second */}
-  <div className="relative z-10 flex flex-col md:flex-row-reverse max-w-7xl mx-auto px-4 sm:px-6 md:px-12">
+  <div className="relative z-10 flex flex-col xl:flex-row-reverse max-w-7xl mx-auto px-4 sm:px-6 md:px-12">
     
     {/* Appointment Cards */}
-    <div className="order-1 md:order-2 w-full md:w-1/2 flex flex-col items-center justify-center">
+    <div className="order-1 xl:order-2 w-full xl:w-1/2 flex flex-col items-center justify-center">
       <div className="flex flex-col gap-4 sm:gap-6 w-full max-w-md items-center">
         {appointmentTypes[lang].map((service, idx) => {
           const Icon = service.icon;
@@ -394,12 +394,7 @@ export default function NutritionByIballa() {
     </div>
 
     {/* Image */}
-    <div
-      className="order-2 md:order-1 w-full md:w-1/2 h-48 sm:h-64 md:h-auto mt-8 md:mt-0 bg-no-repeat bg-contain bg-center"
-      style={{
-        backgroundImage: "url('/banner1.png')",
-      }}
-    ></div>
+   <div className="order-2 xl:order-1 w-full xl:w-1/2 h-48 sm:h-64 xl:h-auto mt-8 xl:mt-0 bg-no-repeat bg-contain bg-center" style={{ backgroundImage: "url('/banner1.png')" }}></div>
   </div>
 </section>
 
