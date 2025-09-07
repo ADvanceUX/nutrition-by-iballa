@@ -9,6 +9,7 @@ import "./flipcards.css";
 import "./index.css";
 import { useTranslation } from "react-i18next";
 import IntestineIcon from "./Icons/IntestineIcon";
+import { Analytics } from "@vercel/analytics/react"
 
 // Language Dropdown Component
 function LanguageDropdown() {
@@ -496,6 +497,7 @@ export default function NutritionByIballa() {
           </div>
         </div>
       </footer>
+     <Analytics />
     </div>
   );
 }
