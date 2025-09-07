@@ -49,11 +49,11 @@
       },
       "healthy": {
         "title": "Alimentación Saludable",
-        "description": "Ayudo a las personas a ganar confianza a la hora de elegir una alimentación equilibrada y sostenible, sin recurrir a planes estrictos, mediante orientación práctica y educación."
+        "description": "Ayudo a personas con pérdida de peso y masa muscular por enfermedades como el cáncer."
       },
       "malnutrition": {
         "title": "Desnutrición",
-        "description": "Ayudo a las personas a manejar la pérdida de peso y de masa muscular causada por enfermedades como el cáncer mediante una nutrición equilibrada y sostenible."
+        "description": "Guío a personas a elegir una alimentación equilibrada y sostenible con orientación práctica y educación."
       }
     }
   },
@@ -80,7 +80,7 @@
   },
   "contact": {
     "heading": "Contacto",
-    "intro": "Si tienes alguna consulta general o deseas ser cotactado por teléfono, por favor ponte en contacto.",
+    "intro": "Si tienes alguna consulta general o deseas ser contactado por teléfono, por favor ponte en contacto.",
     "success": "¡Gracias por tu mensaje! Me pondré en contacto contigo pronto.",
     "fields": {
       "name": "Nombre",
