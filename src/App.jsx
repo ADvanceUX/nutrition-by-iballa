@@ -1,9 +1,11 @@
 import React, { useState, useRef, useEffect } from "react";
 import { useForm } from "@formspree/react";
+import { AnimatePresence, motion } from "framer-motion";
 import {
   Mail, Menu, X, Calendar, CreditCard, RotateCcw, Droplet, Leaf,
   Venus, Soup, HeartPulse, Stethoscope, Linkedin, Instagram, ChevronDown,
-  ArrowLeft, ArrowRight, Clock, User, Tag
+  ArrowLeft, ArrowRight, Clock, User, Tag, CheckCircle2, ClipboardList,
+  GlassWater, Wheat, Dumbbell, Apple, Utensils
 } from "lucide-react";
 import "./App.css";
 import "./flipcards.css";
@@ -12,6 +14,12 @@ import { useTranslation } from "react-i18next";
 import IntestineIcon from "./Icons/IntestineIcon";
 import { Analytics } from "@vercel/analytics/react"
 import { blogPosts, getBlogPost } from "./blogPosts";
+import {
+  assessmentSteps,
+  calculateAssessmentResults,
+  getCompletedQuestionCount,
+  getQuestionCount
+} from "./nutritionAssessment";
 
 // Language Dropdown Component
 function LanguageDropdown() {
@@ -112,38 +120,14 @@ function upsertStructuredData(data) {
 }
 
 function BlogOverview() {
-  const carouselRef = useRef(null);
-  const [activeIndex, setActiveIndex] = useState(0);
-
-  const scrollToPost = (index) => {
-    const nextIndex = Math.max(0, Math.min(index, blogPosts.length - 1));
-    const container = carouselRef.current;
-    const slide = container?.children[nextIndex];
-
-    if (slide) {
-      slide.scrollIntoView({ behavior: "smooth", block: "nearest", inline: "center" });
-      setActiveIndex(nextIndex);
-    }
-  };
-
-  const handleScroll = () => {
-    const container = carouselRef.current;
-    if (!container) return;
-
-    const nextIndex = Math.round(container.scrollLeft / container.clientWidth);
-    setActiveIndex(Math.max(0, Math.min(nextIndex, blogPosts.length - 1)));
-  };
-
-  const handleKeyDown = (event) => {
-    if (event.key === "ArrowRight") scrollToPost(activeIndex + 1);
-    if (event.key === "ArrowLeft") scrollToPost(activeIndex - 1);
-  };
+  const latestPost = blogPosts[blogPosts.length - 1];
+  const postsNewestFirst = [...blogPosts].reverse();
 
   return (
     <main className="bg-white text-gray-900">
       <section className="pt-10 pb-10 text-center bg-gradient-to-r from-[#a3c9b9] to-[#7fae9e] text-white">
         <div className="max-w-5xl mx-auto px-6">
-          <p className="text-sm font-semibold uppercase tracking-wide mb-3">Nutrition by Iballa Blog</p>
+          <p className="text-sm font-semibold uppercase tracking-wide mb-3">Nutrition by Iballa Blogs</p>
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-5 leading-tight">
             Evidence-based nutrition guidance
           </h1>
@@ -153,57 +137,60 @@ function BlogOverview() {
         </div>
       </section>
 
-      <section
-        className="relative bg-gray-50 py-10 sm:py-14"
-        aria-label="Blog posts carousel"
-        onKeyDown={handleKeyDown}
-      >
+      <section className="relative bg-gray-50 py-10 sm:py-14" aria-labelledby="latest-blog-heading">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 md:px-12">
-          <div className="flex items-center justify-between gap-4 mb-6">
-            <h2 className="text-3xl font-semibold">Latest Posts</h2>
-            <div className="flex items-center gap-2">
-              <button
-                type="button"
-                onClick={() => scrollToPost(activeIndex - 1)}
-                disabled={activeIndex === 0}
-                className="h-10 w-10 rounded-full bg-white text-[#3b5f58] shadow ring-1 ring-[#7fae9e] hover:bg-gray-100 disabled:opacity-40 disabled:cursor-not-allowed transition"
-                aria-label="Previous blog post"
-              >
-                <ArrowLeft size={20} className="mx-auto" />
-              </button>
-              <button
-                type="button"
-                onClick={() => scrollToPost(activeIndex + 1)}
-                disabled={activeIndex === blogPosts.length - 1}
-                className="h-10 w-10 rounded-full bg-white text-[#3b5f58] shadow ring-1 ring-[#7fae9e] hover:bg-gray-100 disabled:opacity-40 disabled:cursor-not-allowed transition"
-                aria-label="Next blog post"
-              >
-                <ArrowRight size={20} className="mx-auto" />
-              </button>
-            </div>
-          </div>
+          <h2 id="latest-blog-heading" className="text-3xl font-semibold mb-6">
+            Latest Blog
+          </h2>
 
-          <div
-            ref={carouselRef}
-            onScroll={handleScroll}
-            className="flex snap-x snap-mandatory overflow-x-auto scroll-smooth gap-6 pb-4"
-            role="region"
-            aria-roledescription="carousel"
-            tabIndex={0}
-          >
-            {blogPosts.map((post, index) => (
-              <article
-                key={post.slug}
-                className="snap-center shrink-0 w-full rounded-xl shadow-lg ring-1 ring-[#7fae9e] overflow-hidden bg-white transition-all duration-200 hover:ring-2"
-                aria-label={`${index + 1} of ${blogPosts.length}: ${post.title}`}
-              >
-                <div className="grid md:grid-cols-2 min-h-[30rem]">
-                  <img
-                    src={post.image}
-                    alt=""
-                    className="h-64 md:h-full w-full object-cover object-center"
-                  />
-                  <div className="flex flex-col justify-center p-6 sm:p-8">
+          <article className="rounded-xl shadow-lg ring-1 ring-[#7fae9e] overflow-hidden bg-white transition-all duration-200 hover:ring-2">
+            <div className="grid md:grid-cols-2 min-h-[30rem]">
+              <img
+                src={latestPost.image}
+                alt=""
+                className="h-64 md:h-full w-full object-cover object-center"
+              />
+              <div className="flex flex-col justify-center p-6 sm:p-8">
+                <div className="flex flex-wrap items-center gap-3 text-sm text-gray-600 mb-4">
+                  <span className="inline-flex items-center rounded-full bg-[#cde4dc] px-3 py-1 font-semibold text-[#3b5f58]">
+                    {latestPost.category}
+                  </span>
+                  <span>{formatPostDate(latestPost.date)}</span>
+                  <span className="inline-flex items-center gap-1">
+                    <Clock size={16} />
+                    {latestPost.readingTime}
+                  </span>
+                </div>
+                <h3 className="text-2xl sm:text-3xl font-bold leading-tight mb-4">
+                  {latestPost.title}
+                </h3>
+                <p className="text-base sm:text-lg leading-relaxed text-gray-700 mb-6">
+                  {latestPost.excerpt}
+                </p>
+                <a
+                  href={`/blog/${latestPost.slug}`}
+                  className="self-start inline-flex items-center gap-2 bg-gradient-to-r from-[#a3c9b9] to-[#7fae9e] text-white text-sm font-semibold px-6 py-2 rounded-full shadow hover:brightness-105 transition"
+                >
+                  Read More
+                  <ArrowRight size={18} />
+                </a>
+              </div>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <section className="bg-white py-10 sm:py-14" aria-labelledby="all-blog-posts-heading">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 md:px-12">
+          <h2 id="all-blog-posts-heading" className="text-3xl font-semibold mb-6">
+            All Posts
+          </h2>
+          <div className="space-y-5">
+            {postsNewestFirst.map((post) => (
+              <article key={post.slug} className="rounded-xl shadow-lg ring-1 ring-[#7fae9e] overflow-hidden bg-white transition-all duration-200 hover:ring-2">
+                <a href={`/blog/${post.slug}`} className="grid sm:grid-cols-[12rem_1fr] group">
+                  <img src={post.image} alt="" className="h-48 sm:h-full w-full object-cover object-center" />
+                  <div className="p-5 sm:p-6">
                     <div className="flex flex-wrap items-center gap-3 text-sm text-gray-600 mb-4">
                       <span className="inline-flex items-center rounded-full bg-[#cde4dc] px-3 py-1 font-semibold text-[#3b5f58]">
                         {post.category}
@@ -214,20 +201,14 @@ function BlogOverview() {
                         {post.readingTime}
                       </span>
                     </div>
-                    <h3 className="text-2xl sm:text-3xl font-bold leading-tight mb-4">
+                    <h3 className="text-xl sm:text-2xl font-bold leading-tight mb-3 group-hover:text-[#3b5f58] transition">
                       {post.title}
                     </h3>
-                    <p className="text-base sm:text-lg leading-relaxed text-gray-700 mb-6">
+                    <p className="text-base leading-relaxed text-gray-700">
                       {post.excerpt}
                     </p>
-                    <a
-                      href={`/blog/${post.slug}`}
-                      className="self-start bg-gradient-to-r from-[#a3c9b9] to-[#7fae9e] text-white text-sm font-semibold px-6 py-2 rounded-full shadow hover:brightness-105 transition"
-                    >
-                      Read More
-                    </a>
                   </div>
-                </div>
+                </a>
               </article>
             ))}
           </div>
@@ -238,12 +219,30 @@ function BlogOverview() {
 }
 
 function BlogSection({ section }) {
+  const renderText = (text) => {
+    if (!Array.isArray(text)) return text;
+
+    return text.map((part) =>
+      typeof part === "string" ? (
+        part
+      ) : (
+        <a
+          key={`${part.href}-${part.label}`}
+          href={part.href}
+          className="text-[#3b5f58] underline hover:text-[#7fae9e] transition"
+        >
+          {part.label}
+        </a>
+      )
+    );
+  };
+
   return (
     <section className="mb-10">
       <h2 className="text-2xl sm:text-3xl font-semibold mb-4 text-gray-900">{section.heading}</h2>
       {section.body?.map((paragraph) => (
         <p key={paragraph} className="text-base sm:text-lg leading-relaxed text-gray-700 mb-4">
-          {paragraph}
+          {renderText(paragraph)}
         </p>
       ))}
       {section.list && (
@@ -253,9 +252,35 @@ function BlogSection({ section }) {
           ))}
         </ul>
       )}
+      {section.table && (
+        <div className="overflow-x-auto rounded-xl shadow ring-1 ring-[#7fae9e] bg-white mb-4">
+          <table className="min-w-full text-left text-sm sm:text-base">
+            <thead className="bg-gradient-to-r from-[#a3c9b9] to-[#7fae9e] text-white">
+              <tr>
+                {section.table.headers.map((header) => (
+                  <th key={header} scope="col" className="px-4 py-3 font-semibold">
+                    {header}
+                  </th>
+                ))}
+              </tr>
+            </thead>
+            <tbody className="divide-y divide-[#cde4dc]">
+              {section.table.rows.map((row) => (
+                <tr key={row.join("-")} className="hover:bg-gray-50 transition">
+                  {row.map((cell) => (
+                    <td key={cell} className="px-4 py-3 text-gray-700">
+                      {cell}
+                    </td>
+                  ))}
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      )}
       {section.bodyAfter?.map((paragraph) => (
         <p key={paragraph} className="text-base sm:text-lg leading-relaxed text-gray-700 mb-4">
-          {paragraph}
+          {renderText(paragraph)}
         </p>
       ))}
       {section.subsections?.map((subsection) => (
@@ -263,7 +288,7 @@ function BlogSection({ section }) {
           <h3 className="text-xl font-semibold mb-3 text-[#3b5f58]">{subsection.heading}</h3>
           {subsection.body?.map((paragraph) => (
             <p key={paragraph} className="text-base sm:text-lg leading-relaxed text-gray-700 mb-4">
-              {paragraph}
+              {renderText(paragraph)}
             </p>
           ))}
           {subsection.list && (
@@ -382,6 +407,308 @@ function BlogArticle({ post }) {
   );
 }
 
+const assessmentIcons = {
+  "basics": ClipboardList,
+  "fruit-vegetables": Apple,
+  "fibre-wholegrains": Wheat,
+  protein: Utensils,
+  hydration: GlassWater,
+  "meal-patterns": Clock,
+  lifestyle: Dumbbell
+};
+
+function NutritionAssessmentPage() {
+  const [answers, setAnswers] = useState({});
+  const [currentStep, setCurrentStep] = useState(0);
+  const [showResults, setShowResults] = useState(false);
+  const totalQuestions = getQuestionCount();
+  const completedQuestions = getCompletedQuestionCount(answers);
+  const progress = showResults
+    ? 100
+    : Math.round((completedQuestions / totalQuestions) * 100);
+  const step = assessmentSteps[currentStep];
+  const StepIcon = assessmentIcons[step.id] || ClipboardList;
+  const isFirstStep = currentStep === 0;
+  const isLastStep = currentStep === assessmentSteps.length - 1;
+  const currentStepComplete = step.questions.every((question) => question.optional || answers[question.id]);
+
+  const updateAnswer = (questionId, value) => {
+    setAnswers((currentAnswers) => ({
+      ...currentAnswers,
+      [questionId]: value
+    }));
+  };
+
+  const goBack = () => {
+    if (showResults) {
+      setShowResults(false);
+      setCurrentStep(assessmentSteps.length - 1);
+      return;
+    }
+
+    setCurrentStep((stepIndex) => Math.max(0, stepIndex - 1));
+  };
+
+  const goNext = () => {
+    if (!currentStepComplete) return;
+
+    if (isLastStep) {
+      setShowResults(true);
+      window.scrollTo({ top: 0, behavior: "smooth" });
+      return;
+    }
+
+    setCurrentStep((stepIndex) => stepIndex + 1);
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
+
+  const restartAssessment = () => {
+    setAnswers({});
+    setCurrentStep(0);
+    setShowResults(false);
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
+
+  return (
+    <main className="bg-white text-gray-900">
+      <section className="pt-10 pb-10 text-center bg-gradient-to-r from-[#a3c9b9] to-[#7fae9e] text-white">
+        <div className="max-w-5xl mx-auto px-6">
+          <p className="text-sm font-semibold uppercase tracking-wide mb-3">
+            Nutrition by Iballa
+          </p>
+          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-5 leading-tight">
+            Nutrition Assessment
+          </h1>
+          <p className="text-base sm:text-lg leading-relaxed max-w-3xl mx-auto">
+            Get a general overview of your everyday nutrition habits and simple ideas to support your goals.
+          </p>
+        </div>
+      </section>
+
+      <section className="bg-gray-50 py-10 sm:py-14">
+        <div className="max-w-5xl mx-auto px-4 sm:px-6 md:px-12">
+          <div className="mb-6 rounded-xl shadow-lg ring-1 ring-[#7fae9e] bg-white p-5 sm:p-6">
+            <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+              <div>
+                <p className="text-sm font-semibold text-[#3b5f58]">
+                  {showResults ? "Assessment complete" : `Step ${currentStep + 1} of ${assessmentSteps.length}`}
+                </p>
+                <p className="text-sm text-gray-600">
+                  This tool provides general educational insights only. It does not diagnose or replace personalised medical or dietetic advice.
+                </p>
+              </div>
+              <span className="inline-flex items-center gap-2 self-start rounded-full bg-[#cde4dc] px-3 py-1 text-sm font-semibold text-[#3b5f58]">
+                <CheckCircle2 size={16} />
+                {progress}% complete
+              </span>
+            </div>
+            <div className="mt-4 h-3 overflow-hidden rounded-full bg-gray-100" aria-hidden="true">
+              <div
+                className="h-full rounded-full bg-gradient-to-r from-[#a3c9b9] to-[#7fae9e] transition-all duration-500"
+                style={{ width: `${progress}%` }}
+              ></div>
+            </div>
+          </div>
+
+          <AnimatePresence mode="wait">
+            {showResults ? (
+              <motion.div
+                key="assessment-results"
+                initial={{ opacity: 0, y: 18 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -18 }}
+                transition={{ duration: 0.25 }}
+              >
+                <AssessmentResults answers={answers} onBack={goBack} onRestart={restartAssessment} />
+              </motion.div>
+            ) : (
+              <motion.div
+                key={step.id}
+                initial={{ opacity: 0, x: 24 }}
+                animate={{ opacity: 1, x: 0 }}
+                exit={{ opacity: 0, x: -24 }}
+                transition={{ duration: 0.25 }}
+                className="rounded-xl shadow-lg ring-1 ring-[#7fae9e] bg-white overflow-hidden"
+              >
+                <div className="bg-gradient-to-r from-[#a3c9b9] to-[#7fae9e] px-5 py-6 text-white sm:px-8">
+                  <div className="flex items-start gap-4">
+                    <div className="rounded-full bg-white/90 p-3 text-[#3b5f58] shadow">
+                      <StepIcon size={28} />
+                    </div>
+                    <div>
+                      <h2 className="text-2xl sm:text-3xl font-semibold leading-tight">{step.title}</h2>
+                      <p className="mt-2 text-sm sm:text-base leading-relaxed text-white/95">{step.intro}</p>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="p-5 sm:p-8">
+                  <div className="space-y-6">
+                    {step.questions.map((question) => (
+                      <fieldset key={question.id} className="space-y-3">
+                        <legend className="text-base sm:text-lg font-semibold text-gray-900">
+                          {question.label}
+                          {question.helper && (
+                            <span className="ml-2 text-sm font-normal text-gray-500">{question.helper}</span>
+                          )}
+                        </legend>
+                        <div className="grid gap-3 sm:grid-cols-2">
+                          {question.options.map((option) => {
+                            const selected = answers[question.id] === option.value;
+                            return (
+                              <label
+                                key={option.value}
+                                className={`flex min-h-16 cursor-pointer items-center gap-3 rounded-xl border p-4 text-sm sm:text-base transition ${
+                                  selected
+                                    ? "border-[#3b5f58] bg-[#cde4dc] text-[#3b5f58] shadow"
+                                    : "border-gray-200 bg-white text-gray-800 hover:border-[#7fae9e] hover:bg-gray-50"
+                                }`}
+                              >
+                                <input
+                                  type="radio"
+                                  name={question.id}
+                                  value={option.value}
+                                  checked={selected}
+                                  onChange={() => updateAnswer(question.id, option.value)}
+                                  className="h-5 w-5 rounded-full border border-[#7fae9e] checked:bg-[#3b5f58] focus:ring-2 focus:ring-[#cde4dc]"
+                                />
+                                <span className="font-medium leading-snug">{option.label}</span>
+                              </label>
+                            );
+                          })}
+                        </div>
+                      </fieldset>
+                    ))}
+                  </div>
+
+                  <div className="mt-8 flex flex-col-reverse gap-3 sm:flex-row sm:items-center sm:justify-between">
+                    <button
+                      type="button"
+                      onClick={goBack}
+                      disabled={isFirstStep}
+                      className="inline-flex items-center justify-center gap-2 rounded-full bg-white px-6 py-2 text-sm font-semibold text-[#3b5f58] shadow ring-1 ring-[#7fae9e] transition hover:bg-gray-100 disabled:cursor-not-allowed disabled:opacity-40"
+                    >
+                      <ArrowLeft size={18} />
+                      Back
+                    </button>
+                    <button
+                      type="button"
+                      onClick={goNext}
+                      disabled={!currentStepComplete}
+                      className="inline-flex items-center justify-center gap-2 rounded-full bg-gradient-to-r from-[#a3c9b9] to-[#7fae9e] px-6 py-2 text-sm font-semibold text-white shadow transition hover:brightness-105 disabled:cursor-not-allowed disabled:opacity-50"
+                    >
+                      {isLastStep ? "View Results" : "Next"}
+                      <ArrowRight size={18} />
+                    </button>
+                  </div>
+                </div>
+              </motion.div>
+            )}
+          </AnimatePresence>
+        </div>
+      </section>
+    </main>
+  );
+}
+
+function AssessmentResults({ answers, onBack, onRestart }) {
+  const results = calculateAssessmentResults(answers);
+  const categoryOrder = ["fibre", "protein", "fruitVegetables", "hydration", "lifestyle"];
+
+  return (
+    <div className="space-y-6">
+      <section className="rounded-xl shadow-lg ring-1 ring-[#7fae9e] bg-white p-5 sm:p-8">
+        <div className="flex flex-col gap-6 lg:flex-row lg:items-center lg:justify-between">
+          <div className="max-w-2xl">
+            <p className="text-sm font-semibold uppercase tracking-wide text-[#3b5f58]">Your general summary</p>
+            <h2 className="mt-2 text-2xl sm:text-3xl font-semibold text-gray-900">
+              {results.overall.rating}
+            </h2>
+            <p className="mt-3 text-base sm:text-lg leading-relaxed text-gray-700">
+              {results.overall.summary}
+            </p>
+          </div>
+          <div className="flex h-36 w-36 shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-[#cde4dc] to-[#a3c9b9] text-[#3b5f58] shadow mx-auto lg:mx-0">
+            <div className="text-center">
+              <div className="text-4xl font-bold">{results.overall.score}</div>
+              <div className="text-sm font-semibold">out of 100</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section className="grid gap-4 md:grid-cols-2">
+        {categoryOrder.map((category) => {
+          const item = results.categories[category];
+          return (
+            <article key={category} className="rounded-xl shadow-lg ring-1 ring-[#7fae9e] bg-white p-5 transition hover:ring-2">
+              <div className="flex items-start justify-between gap-4">
+                <div>
+                  <h3 className="text-lg font-semibold text-gray-900">{item.label}</h3>
+                  <p className="mt-1 text-sm font-semibold text-[#3b5f58]">{item.rating}</p>
+                </div>
+                <span className="rounded-full bg-[#cde4dc] px-3 py-1 text-sm font-bold text-[#3b5f58]">
+                  {item.score}/100
+                </span>
+              </div>
+              <p className="mt-4 text-sm sm:text-base leading-relaxed text-gray-700">{item.summary}</p>
+            </article>
+          );
+        })}
+      </section>
+
+      <section className="rounded-xl shadow-lg ring-1 ring-[#7fae9e] bg-white p-5 sm:p-8">
+        <h3 className="text-2xl font-semibold text-gray-900">Practical recommendations</h3>
+        <ul className="mt-5 space-y-3">
+          {results.recommendations.map((recommendation) => (
+            <li key={recommendation} className="flex gap-3 text-base leading-relaxed text-gray-700">
+              <CheckCircle2 className="mt-1 shrink-0 text-[#3b5f58]" size={20} />
+              <span>{recommendation}</span>
+            </li>
+          ))}
+        </ul>
+      </section>
+
+      <section className="rounded-xl shadow-lg bg-gradient-to-r from-[#a3c9b9] to-[#7fae9e] p-6 text-white sm:p-8">
+        <div className="flex flex-col gap-5 lg:flex-row lg:items-center lg:justify-between">
+          <div className="max-w-2xl">
+            <h3 className="text-2xl sm:text-3xl font-semibold">Looking for tailored nutrition guidance?</h3>
+            <p className="mt-3 text-base sm:text-lg leading-relaxed">
+              While this assessment provides general nutrition insights, a consultation can provide personalised recommendations based on your goals, lifestyle, and health history.
+            </p>
+          </div>
+          <a
+            href="/#appointments"
+            className="inline-flex items-center justify-center gap-2 rounded-full bg-white px-6 py-3 text-sm font-semibold text-[#3b5f58] shadow transition hover:bg-gray-100"
+          >
+            BOOK A CONSULTATION
+            <Calendar size={18} />
+          </a>
+        </div>
+      </section>
+
+      <div className="flex flex-col-reverse gap-3 sm:flex-row sm:items-center sm:justify-between">
+        <button
+          type="button"
+          onClick={onBack}
+          className="inline-flex items-center justify-center gap-2 rounded-full bg-white px-6 py-2 text-sm font-semibold text-[#3b5f58] shadow ring-1 ring-[#7fae9e] transition hover:bg-gray-100"
+        >
+          <ArrowLeft size={18} />
+          Back to answers
+        </button>
+        <button
+          type="button"
+          onClick={onRestart}
+          className="inline-flex items-center justify-center gap-2 rounded-full bg-gradient-to-r from-[#a3c9b9] to-[#7fae9e] px-6 py-2 text-sm font-semibold text-white shadow transition hover:brightness-105"
+        >
+          <RotateCcw size={18} />
+          Restart assessment
+        </button>
+      </div>
+    </div>
+  );
+}
+
 export default function NutritionByIballa() {
   const [state, handleSubmit] = useForm("xzzvqdlq");
   const [messageValue, setMessageValue] = useState("");
@@ -397,6 +724,7 @@ export default function NutritionByIballa() {
   const activePost = slug ? getBlogPost(slug) : null;
   const isBlogRoute = path === "/blog";
   const isArticleRoute = path.startsWith("/blog/");
+  const isAssessmentRoute = path === "/nutrition-assessment";
 
   useEffect(() => {
     const handleResize = () => {
@@ -425,7 +753,7 @@ export default function NutritionByIballa() {
         !href ||
         isModifiedClick ||
         anchor.target === "_blank" ||
-        (!href.startsWith("/blog") && !href.startsWith("/#"))
+        (!href.startsWith("/blog") && !href.startsWith("/nutrition-assessment") && !href.startsWith("/#"))
       ) {
         return;
       }
@@ -471,11 +799,15 @@ export default function NutritionByIballa() {
   useEffect(() => {
     const title = activePost
       ? `${activePost.title} | Nutrition by Iballa`
+      : isAssessmentRoute
+        ? "Nutrition Assessment | Nutrition by Iballa"
       : isBlogRoute
         ? "Blog | Nutrition by Iballa"
         : "Nutrition by Iballa";
     const description = activePost
       ? activePost.excerpt
+      : isAssessmentRoute
+        ? "A general nutrition habits assessment from Nutrition by Iballa with educational insights and practical recommendations."
       : isBlogRoute
         ? "Evidence-based nutrition articles from Nutrition by Iballa."
         : "Personalised, evidence-based nutrition advice and care in English and Spanish.";
@@ -483,7 +815,7 @@ export default function NutritionByIballa() {
     document.title = title;
     upsertMeta("description", description);
     upsertMeta("robots", "index, follow");
-    upsertCanonical(activePost ? `/blog/${activePost.slug}` : isBlogRoute ? "/blog" : "/");
+    upsertCanonical(activePost ? `/blog/${activePost.slug}` : isAssessmentRoute ? "/nutrition-assessment" : isBlogRoute ? "/blog" : "/");
     upsertStructuredData(
       activePost
         ? {
@@ -503,6 +835,14 @@ export default function NutritionByIballa() {
             },
             mainEntityOfPage: `${window.location.origin}/blog/${activePost.slug}`
           }
+        : isAssessmentRoute
+          ? {
+            "@context": "https://schema.org",
+            "@type": "WebPage",
+            name: "Nutrition Assessment",
+            description,
+            url: `${window.location.origin}/nutrition-assessment`
+          }
         : isBlogRoute
           ? {
             "@context": "https://schema.org",
@@ -519,7 +859,7 @@ export default function NutritionByIballa() {
               url: window.location.origin
             }
     );
-  }, [activePost, isBlogRoute]);
+  }, [activePost, isAssessmentRoute, isBlogRoute]);
 
  const appointmentTypes = {
   en: [
@@ -561,6 +901,7 @@ export default function NutritionByIballa() {
         <a href="/#services">{t("nav.services")}</a>
         <a href="/#about">{t("nav.about")}</a>
         <a href="/#appointments">{t("nav.appointments")}</a>
+        <a href="/nutrition-assessment">Assessment</a>
         <a href="/blog">Blog</a>
         <a href="/#contact">{t("nav.contact")}</a>
       </nav>
@@ -587,6 +928,9 @@ export default function NutritionByIballa() {
       <a href="/#appointments" onClick={() => setNavOpen(false)}>
         {t("nav.appointments")}
       </a>
+      <a href="/nutrition-assessment" onClick={() => setNavOpen(false)}>
+        Assessment
+      </a>
       <a href="/blog" onClick={() => setNavOpen(false)}>
         Blog
       </a>
@@ -600,6 +944,8 @@ export default function NutritionByIballa() {
 
 {isBlogRoute ? (
   <BlogOverview />
+) : isAssessmentRoute ? (
+  <NutritionAssessmentPage />
 ) : isArticleRoute && activePost ? (
   <BlogArticle post={activePost} />
 ) : isArticleRoute ? (
