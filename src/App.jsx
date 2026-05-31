@@ -2,7 +2,8 @@ import React, { useState, useRef, useEffect } from "react";
 import { useForm } from "@formspree/react";
 import {
   Mail, Menu, X, Calendar, CreditCard, RotateCcw, Droplet, Leaf,
-  Venus, Soup, HeartPulse, Stethoscope, Linkedin, Instagram, ChevronDown
+  Venus, Soup, HeartPulse, Stethoscope, Linkedin, Instagram, ChevronDown,
+  ArrowLeft, ArrowRight, Clock, User, Tag
 } from "lucide-react";
 import "./App.css";
 import "./flipcards.css";
@@ -10,6 +11,7 @@ import "./index.css";
 import { useTranslation } from "react-i18next";
 import IntestineIcon from "./Icons/IntestineIcon";
 import { Analytics } from "@vercel/analytics/react"
+import { blogPosts, getBlogPost } from "./blogPosts";
 
 // Language Dropdown Component
 function LanguageDropdown() {
@@ -70,6 +72,316 @@ const services = [
   { key: "malnutrition", icon: Soup, iconColor: "text-sky-500", backColor: "bg-sky-100" }
 ];
 
+function formatPostDate(date) {
+  return new Intl.DateTimeFormat("en-GB", {
+    day: "numeric",
+    month: "long",
+    year: "numeric"
+  }).format(new Date(date));
+}
+
+function upsertMeta(name, content) {
+  let tag = document.querySelector(`meta[name="${name}"]`);
+  if (!tag) {
+    tag = document.createElement("meta");
+    tag.setAttribute("name", name);
+    document.head.appendChild(tag);
+  }
+  tag.setAttribute("content", content);
+}
+
+function upsertCanonical(pathname) {
+  let tag = document.querySelector('link[rel="canonical"]');
+  if (!tag) {
+    tag = document.createElement("link");
+    tag.setAttribute("rel", "canonical");
+    document.head.appendChild(tag);
+  }
+  tag.setAttribute("href", `${window.location.origin}${pathname}`);
+}
+
+function upsertStructuredData(data) {
+  let tag = document.getElementById("nutrition-by-iballa-structured-data");
+  if (!tag) {
+    tag = document.createElement("script");
+    tag.id = "nutrition-by-iballa-structured-data";
+    tag.type = "application/ld+json";
+    document.head.appendChild(tag);
+  }
+  tag.textContent = JSON.stringify(data);
+}
+
+function BlogOverview() {
+  const carouselRef = useRef(null);
+  const [activeIndex, setActiveIndex] = useState(0);
+
+  const scrollToPost = (index) => {
+    const nextIndex = Math.max(0, Math.min(index, blogPosts.length - 1));
+    const container = carouselRef.current;
+    const slide = container?.children[nextIndex];
+
+    if (slide) {
+      slide.scrollIntoView({ behavior: "smooth", block: "nearest", inline: "center" });
+      setActiveIndex(nextIndex);
+    }
+  };
+
+  const handleScroll = () => {
+    const container = carouselRef.current;
+    if (!container) return;
+
+    const nextIndex = Math.round(container.scrollLeft / container.clientWidth);
+    setActiveIndex(Math.max(0, Math.min(nextIndex, blogPosts.length - 1)));
+  };
+
+  const handleKeyDown = (event) => {
+    if (event.key === "ArrowRight") scrollToPost(activeIndex + 1);
+    if (event.key === "ArrowLeft") scrollToPost(activeIndex - 1);
+  };
+
+  return (
+    <main className="bg-white text-gray-900">
+      <section className="pt-10 pb-10 text-center bg-gradient-to-r from-[#a3c9b9] to-[#7fae9e] text-white">
+        <div className="max-w-5xl mx-auto px-6">
+          <p className="text-sm font-semibold uppercase tracking-wide mb-3">Nutrition by Iballa Blog</p>
+          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-5 leading-tight">
+            Evidence-based nutrition guidance
+          </h1>
+          <p className="text-base sm:text-lg leading-relaxed max-w-3xl mx-auto">
+            Practical, supportive articles to help you understand your health and build sustainable nutrition habits.
+          </p>
+        </div>
+      </section>
+
+      <section
+        className="relative bg-gray-50 py-10 sm:py-14"
+        aria-label="Blog posts carousel"
+        onKeyDown={handleKeyDown}
+      >
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 md:px-12">
+          <div className="flex items-center justify-between gap-4 mb-6">
+            <h2 className="text-3xl font-semibold">Latest Posts</h2>
+            <div className="flex items-center gap-2">
+              <button
+                type="button"
+                onClick={() => scrollToPost(activeIndex - 1)}
+                disabled={activeIndex === 0}
+                className="h-10 w-10 rounded-full bg-white text-[#3b5f58] shadow ring-1 ring-[#7fae9e] hover:bg-gray-100 disabled:opacity-40 disabled:cursor-not-allowed transition"
+                aria-label="Previous blog post"
+              >
+                <ArrowLeft size={20} className="mx-auto" />
+              </button>
+              <button
+                type="button"
+                onClick={() => scrollToPost(activeIndex + 1)}
+                disabled={activeIndex === blogPosts.length - 1}
+                className="h-10 w-10 rounded-full bg-white text-[#3b5f58] shadow ring-1 ring-[#7fae9e] hover:bg-gray-100 disabled:opacity-40 disabled:cursor-not-allowed transition"
+                aria-label="Next blog post"
+              >
+                <ArrowRight size={20} className="mx-auto" />
+              </button>
+            </div>
+          </div>
+
+          <div
+            ref={carouselRef}
+            onScroll={handleScroll}
+            className="flex snap-x snap-mandatory overflow-x-auto scroll-smooth gap-6 pb-4"
+            role="region"
+            aria-roledescription="carousel"
+            tabIndex={0}
+          >
+            {blogPosts.map((post, index) => (
+              <article
+                key={post.slug}
+                className="snap-center shrink-0 w-full rounded-xl shadow-lg ring-1 ring-[#7fae9e] overflow-hidden bg-white transition-all duration-200 hover:ring-2"
+                aria-label={`${index + 1} of ${blogPosts.length}: ${post.title}`}
+              >
+                <div className="grid md:grid-cols-2 min-h-[30rem]">
+                  <img
+                    src={post.image}
+                    alt=""
+                    className="h-64 md:h-full w-full object-cover object-center"
+                  />
+                  <div className="flex flex-col justify-center p-6 sm:p-8">
+                    <div className="flex flex-wrap items-center gap-3 text-sm text-gray-600 mb-4">
+                      <span className="inline-flex items-center rounded-full bg-[#cde4dc] px-3 py-1 font-semibold text-[#3b5f58]">
+                        {post.category}
+                      </span>
+                      <span>{formatPostDate(post.date)}</span>
+                      <span className="inline-flex items-center gap-1">
+                        <Clock size={16} />
+                        {post.readingTime}
+                      </span>
+                    </div>
+                    <h3 className="text-2xl sm:text-3xl font-bold leading-tight mb-4">
+                      {post.title}
+                    </h3>
+                    <p className="text-base sm:text-lg leading-relaxed text-gray-700 mb-6">
+                      {post.excerpt}
+                    </p>
+                    <a
+                      href={`/blog/${post.slug}`}
+                      className="self-start bg-gradient-to-r from-[#a3c9b9] to-[#7fae9e] text-white text-sm font-semibold px-6 py-2 rounded-full shadow hover:brightness-105 transition"
+                    >
+                      Read More
+                    </a>
+                  </div>
+                </div>
+              </article>
+            ))}
+          </div>
+        </div>
+      </section>
+    </main>
+  );
+}
+
+function BlogSection({ section }) {
+  return (
+    <section className="mb-10">
+      <h2 className="text-2xl sm:text-3xl font-semibold mb-4 text-gray-900">{section.heading}</h2>
+      {section.body?.map((paragraph) => (
+        <p key={paragraph} className="text-base sm:text-lg leading-relaxed text-gray-700 mb-4">
+          {paragraph}
+        </p>
+      ))}
+      {section.list && (
+        <ul className="list-disc pl-6 space-y-2 text-base sm:text-lg leading-relaxed text-gray-700 mb-4">
+          {section.list.map((item) => (
+            <li key={item}>{item}</li>
+          ))}
+        </ul>
+      )}
+      {section.bodyAfter?.map((paragraph) => (
+        <p key={paragraph} className="text-base sm:text-lg leading-relaxed text-gray-700 mb-4">
+          {paragraph}
+        </p>
+      ))}
+      {section.subsections?.map((subsection) => (
+        <div key={subsection.heading} className="mt-6">
+          <h3 className="text-xl font-semibold mb-3 text-[#3b5f58]">{subsection.heading}</h3>
+          {subsection.body?.map((paragraph) => (
+            <p key={paragraph} className="text-base sm:text-lg leading-relaxed text-gray-700 mb-4">
+              {paragraph}
+            </p>
+          ))}
+          {subsection.list && (
+            <ul className="list-disc pl-6 space-y-2 text-base sm:text-lg leading-relaxed text-gray-700">
+              {subsection.list.map((item) => (
+                <li key={item}>{item}</li>
+              ))}
+            </ul>
+          )}
+        </div>
+      ))}
+    </section>
+  );
+}
+
+function BlogArticle({ post }) {
+  const currentIndex = blogPosts.findIndex((item) => item.slug === post.slug);
+  const previousPost = currentIndex > 0 ? blogPosts[currentIndex - 1] : null;
+  const nextPost = currentIndex < blogPosts.length - 1 ? blogPosts[currentIndex + 1] : null;
+
+  return (
+    <main className="bg-white text-gray-900">
+      <article>
+        <div className="relative h-72 sm:h-96 overflow-hidden">
+          <img src={post.image} alt="" className="absolute inset-0 h-full w-full object-cover" />
+          <div className="absolute inset-0 bg-[#3b5f58]/50"></div>
+          <div className="relative z-10 h-full max-w-5xl mx-auto px-6 flex flex-col justify-center text-white">
+            <a
+              href="/blog"
+              className="inline-flex items-center gap-2 mb-5 text-sm font-semibold hover:text-gray-100 transition"
+            >
+              <ArrowLeft size={18} />
+              Back to Blog
+            </a>
+            <div className="flex flex-wrap items-center gap-3 text-sm mb-4">
+              <span className="inline-flex items-center gap-1 rounded-full bg-white/90 px-3 py-1 font-semibold text-[#3b5f58]">
+                <Tag size={15} />
+                {post.category}
+              </span>
+              <span>{formatPostDate(post.date)}</span>
+              <span className="inline-flex items-center gap-1">
+                <Clock size={16} />
+                {post.readingTime}
+              </span>
+              <span className="inline-flex items-center gap-1">
+                <User size={16} />
+                {post.author}
+              </span>
+            </div>
+            <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold leading-tight max-w-4xl">
+              {post.title}
+            </h1>
+          </div>
+        </div>
+
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 py-10 sm:py-14">
+          <div className="rounded-xl shadow-lg ring-1 ring-[#7fae9e] bg-[#cde4dc] text-[#3b5f58] p-5 sm:p-6 mb-10">
+            <p className="text-base sm:text-lg font-semibold leading-relaxed">{post.callout}</p>
+          </div>
+
+          {post.sections.map((section) => (
+            <BlogSection key={section.heading} section={section} />
+          ))}
+
+          <section className="border-t border-[#cde4dc] pt-8">
+            <h2 className="text-2xl sm:text-3xl font-semibold mb-4">References</h2>
+            <ol className="list-decimal pl-6 space-y-3 text-sm sm:text-base leading-relaxed text-gray-700">
+              {post.references.map((reference) => (
+                <li key={reference.url}>
+                  <a
+                    href={reference.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-[#3b5f58] underline hover:text-[#7fae9e] transition"
+                  >
+                    {reference.label}
+                  </a>
+                </li>
+              ))}
+            </ol>
+          </section>
+        </div>
+      </article>
+
+      <nav className="max-w-4xl mx-auto px-4 sm:px-6 pb-12 flex flex-col sm:flex-row gap-4 justify-between">
+        {previousPost ? (
+          <a
+            href={`/blog/${previousPost.slug}`}
+            className="inline-flex items-center justify-center gap-2 rounded-full bg-white px-5 py-2 text-sm font-semibold text-[#3b5f58] shadow ring-1 ring-[#7fae9e] hover:bg-gray-100 transition"
+          >
+            <ArrowLeft size={18} />
+            Previous Article
+          </a>
+        ) : (
+          <span></span>
+        )}
+        {nextPost ? (
+          <a
+            href={`/blog/${nextPost.slug}`}
+            className="inline-flex items-center justify-center gap-2 rounded-full bg-gradient-to-r from-[#a3c9b9] to-[#7fae9e] px-5 py-2 text-sm font-semibold text-white shadow hover:brightness-105 transition"
+          >
+            Next Article
+            <ArrowRight size={18} />
+          </a>
+        ) : (
+          <a
+            href="/blog"
+            className="inline-flex items-center justify-center gap-2 rounded-full bg-gradient-to-r from-[#a3c9b9] to-[#7fae9e] px-5 py-2 text-sm font-semibold text-white shadow hover:brightness-105 transition"
+          >
+            Back to Blog
+            <ArrowRight size={18} />
+          </a>
+        )}
+      </nav>
+    </main>
+  );
+}
+
 export default function NutritionByIballa() {
   const [state, handleSubmit] = useForm("xzzvqdlq");
   const [messageValue, setMessageValue] = useState("");
@@ -79,6 +391,12 @@ export default function NutritionByIballa() {
   const lang = i18n.language;
   const [expanded, setExpanded] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
+  const [path, setPath] = useState(window.location.pathname);
+
+  const slug = path.startsWith("/blog/") ? path.replace("/blog/", "") : "";
+  const activePost = slug ? getBlogPost(slug) : null;
+  const isBlogRoute = path === "/blog";
+  const isArticleRoute = path.startsWith("/blog/");
 
   useEffect(() => {
     const handleResize = () => {
@@ -87,6 +405,46 @@ export default function NutritionByIballa() {
     handleResize(); // Initial check
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
+  useEffect(() => {
+    const handlePopState = () => setPath(window.location.pathname);
+    window.addEventListener("popstate", handlePopState);
+    return () => window.removeEventListener("popstate", handlePopState);
+  }, []);
+
+  useEffect(() => {
+    const handleInternalNavigation = (event) => {
+      const anchor = event.target.closest("a");
+      if (!anchor) return;
+
+      const href = anchor.getAttribute("href");
+      const isModifiedClick = event.metaKey || event.ctrlKey || event.shiftKey || event.altKey;
+
+      if (
+        !href ||
+        isModifiedClick ||
+        anchor.target === "_blank" ||
+        (!href.startsWith("/blog") && !href.startsWith("/#"))
+      ) {
+        return;
+      }
+
+      event.preventDefault();
+      window.history.pushState({}, "", href);
+      setPath(window.location.pathname);
+
+      window.setTimeout(() => {
+        if (window.location.hash) {
+          document.querySelector(window.location.hash)?.scrollIntoView({ behavior: "smooth" });
+        } else {
+          window.scrollTo({ top: 0, behavior: "smooth" });
+        }
+      }, 0);
+    };
+
+    document.addEventListener("click", handleInternalNavigation);
+    return () => document.removeEventListener("click", handleInternalNavigation);
   }, []);
 
   useEffect(() => {
@@ -109,6 +467,59 @@ export default function NutritionByIballa() {
       });
     }
   }, []);
+
+  useEffect(() => {
+    const title = activePost
+      ? `${activePost.title} | Nutrition by Iballa`
+      : isBlogRoute
+        ? "Blog | Nutrition by Iballa"
+        : "Nutrition by Iballa";
+    const description = activePost
+      ? activePost.excerpt
+      : isBlogRoute
+        ? "Evidence-based nutrition articles from Nutrition by Iballa."
+        : "Personalised, evidence-based nutrition advice and care in English and Spanish.";
+
+    document.title = title;
+    upsertMeta("description", description);
+    upsertMeta("robots", "index, follow");
+    upsertCanonical(activePost ? `/blog/${activePost.slug}` : isBlogRoute ? "/blog" : "/");
+    upsertStructuredData(
+      activePost
+        ? {
+            "@context": "https://schema.org",
+            "@type": "BlogPosting",
+            headline: activePost.title,
+            description: activePost.excerpt,
+            image: `${window.location.origin}${activePost.image}`,
+            datePublished: activePost.date,
+            author: {
+              "@type": "Person",
+              name: activePost.author
+            },
+            publisher: {
+              "@type": "Organization",
+              name: "Nutrition by Iballa"
+            },
+            mainEntityOfPage: `${window.location.origin}/blog/${activePost.slug}`
+          }
+        : isBlogRoute
+          ? {
+            "@context": "https://schema.org",
+            "@type": "Blog",
+            name: "Nutrition by Iballa Blog",
+            description,
+            url: `${window.location.origin}/blog`
+          }
+          : {
+              "@context": "https://schema.org",
+              "@type": "WebSite",
+              name: "Nutrition by Iballa",
+              description,
+              url: window.location.origin
+            }
+    );
+  }, [activePost, isBlogRoute]);
 
  const appointmentTypes = {
   en: [
@@ -147,10 +558,11 @@ export default function NutritionByIballa() {
     <div className="flex items-center gap-6 relative z-[1000]">
       <LanguageDropdown />
       <nav className="hidden md:flex space-x-6">
-        <a href="#services">{t("nav.services")}</a>
-        <a href="#about">{t("nav.about")}</a>
-        <a href="#appointments">{t("nav.appointments")}</a>
-        <a href="#contact">{t("nav.contact")}</a>
+        <a href="/#services">{t("nav.services")}</a>
+        <a href="/#about">{t("nav.about")}</a>
+        <a href="/#appointments">{t("nav.appointments")}</a>
+        <a href="/blog">Blog</a>
+        <a href="/#contact">{t("nav.contact")}</a>
       </nav>
 
       {/* Mobile Toggle */}
@@ -166,16 +578,19 @@ export default function NutritionByIballa() {
   {/* Mobile Navigation */}
   {navOpen && (
     <nav className="absolute top-24 left-0 w-full bg-white shadow-md flex flex-col items-center space-y-4 p-6 z-60 md:hidden">
-      <a href="#services" onClick={() => setNavOpen(false)}>
+      <a href="/#services" onClick={() => setNavOpen(false)}>
         {t("nav.services")}
       </a>
-      <a href="#about" onClick={() => setNavOpen(false)}>
+      <a href="/#about" onClick={() => setNavOpen(false)}>
         {t("nav.about")}
       </a>
-      <a href="#appointments" onClick={() => setNavOpen(false)}>
+      <a href="/#appointments" onClick={() => setNavOpen(false)}>
         {t("nav.appointments")}
       </a>
-      <a href="#contact" onClick={() => setNavOpen(false)}>
+      <a href="/blog" onClick={() => setNavOpen(false)}>
+        Blog
+      </a>
+      <a href="/#contact" onClick={() => setNavOpen(false)}>
         {t("nav.contact")}
       </a>
     </nav>
@@ -183,6 +598,24 @@ export default function NutritionByIballa() {
 </header>
 
 
+{isBlogRoute ? (
+  <BlogOverview />
+) : isArticleRoute && activePost ? (
+  <BlogArticle post={activePost} />
+) : isArticleRoute ? (
+  <main className="bg-gray-50 px-4 py-16 text-center">
+    <h1 className="text-3xl font-semibold mb-4">Article not found</h1>
+    <p className="text-gray-700 mb-6">The article you are looking for is not available.</p>
+    <a
+      href="/blog"
+      className="inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-[#a3c9b9] to-[#7fae9e] px-6 py-2 text-sm font-semibold text-white shadow hover:brightness-105 transition"
+    >
+      <ArrowLeft size={18} />
+      Back to Blog
+    </a>
+  </main>
+) : (
+<>
 {/* Hero Section */}
 <section className="pt-10 pb-10 text-center bg-gradient-to-r from-[#a3c9b9] to-[#7fae9e] text-white">
   <div className="max-w-[90rem] mx-auto w-full px-6 lg:px-12">
@@ -458,6 +891,9 @@ export default function NutritionByIballa() {
     </form>
   )}
 </section>
+
+      </>
+)}
 
       {/* Footer */}
       <footer className="bg-white text-[#1e1e5a] px-4 py-6 rounded-t-lg shadow-inner">
