@@ -241,11 +241,6 @@ function NewsletterSignupForm({ compact = false }) {
             {status.message}
           </p>
         )}
-        {!isSupabaseConfigured && (
-          <p className="text-sm text-gray-600">
-                Supabase is not configured yet. Add your project URL and publishable key to enable signups.
-          </p>
-        )}
         <button
           type="submit"
           disabled={submitting}
@@ -634,11 +629,6 @@ function AssessmentContactForm({ contact, onContactChange, onSubmit, submitting,
           </span>
         </label>
         {error && <p className="text-sm font-semibold text-red-600">{error}</p>}
-        {!isSupabaseConfigured && (
-          <p className="text-sm text-gray-600">
-            Supabase is not configured yet. Add your project URL and publishable key before saving assessment leads.
-          </p>
-        )}
         <button
           type="submit"
           disabled={submitting}
