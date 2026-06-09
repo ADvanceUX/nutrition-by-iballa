@@ -255,13 +255,16 @@ export const scoreLabels = {
 };
 
 export function getQuestionCount() {
-  return assessmentSteps.reduce((total, step) => total + step.questions.length, 0);
+  return assessmentSteps.reduce(
+    (total, step) => total + step.questions.filter((question) => !question.optional).length,
+    0
+  );
 }
 
 export function getCompletedQuestionCount(answers) {
   return assessmentSteps.reduce(
     (total, step) =>
-      total + step.questions.filter((question) => question.optional || answers[question.id]).length,
+      total + step.questions.filter((question) => !question.optional && answers[question.id]).length,
     0
   );
 }

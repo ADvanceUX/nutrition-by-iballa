@@ -5,7 +5,7 @@ import {
   Mail, Menu, X, Calendar, CreditCard, RotateCcw, Droplet, Leaf,
   Venus, Soup, HeartPulse, Stethoscope, Linkedin, Instagram, ChevronDown,
   ArrowLeft, ArrowRight, Clock, User, Tag, CheckCircle2, ClipboardList,
-  GlassWater, Wheat, Dumbbell, Apple, Utensils
+  GlassWater, Wheat, Dumbbell, Apple, Utensils, ShieldCheck, LogOut
 } from "lucide-react";
 import "./App.css";
 import "./flipcards.css";
@@ -20,6 +20,21 @@ import {
   getCompletedQuestionCount,
   getQuestionCount
 } from "./nutritionAssessment";
+import { isSupabaseConfigured, supabase } from "./supabaseClient";
+import {
+  clearAssessmentDraft,
+  createAssessmentLead,
+  getCurrentSession,
+  isCurrentUserAdmin,
+  listSubscribers,
+  loadAssessmentDraft,
+  saveAssessmentDraft,
+  saveAssessmentResponse,
+  signInAdmin,
+  signOutAdmin,
+  subscribeFromBlog,
+  updateUnsubscribeStatus
+} from "./submissionService";
 
 // Language Dropdown Component
 function LanguageDropdown() {
@@ -119,6 +134,131 @@ function upsertStructuredData(data) {
   tag.textContent = JSON.stringify(data);
 }
 
+function isValidEmail(email) {
+  return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.trim());
+}
+
+function NewsletterSignupForm({ compact = false }) {
+  const [form, setForm] = useState({ firstName: "", lastName: "", email: "", consent: false });
+  const [status, setStatus] = useState({ type: "", message: "" });
+  const [submitting, setSubmitting] = useState(false);
+
+  const updateField = (field, value) => {
+    setForm((current) => ({ ...current, [field]: value }));
+  };
+
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    setStatus({ type: "", message: "" });
+
+    if (!form.firstName.trim() || !form.lastName.trim() || !isValidEmail(form.email)) {
+      setStatus({ type: "error", message: "Please enter your first name, last name and a valid email address." });
+      return;
+    }
+
+    if (!form.consent) {
+      setStatus({ type: "error", message: "Please tick the consent box before subscribing." });
+      return;
+    }
+
+    setSubmitting(true);
+    try {
+      await subscribeFromBlog({
+        firstName: form.firstName,
+        lastName: form.lastName,
+        email: form.email
+      });
+      setForm({ firstName: "", lastName: "", email: "", consent: false });
+      setStatus({ type: "success", message: "Thanks for subscribing. You have been added to the newsletter list." });
+    } catch (error) {
+      setStatus({ type: "error", message: error.message });
+    } finally {
+      setSubmitting(false);
+    }
+  };
+
+  return (
+    <div className={`rounded-xl shadow-lg ring-1 ring-[#7fae9e] bg-white overflow-hidden ${compact ? "lg:h-full lg:flex lg:flex-col" : ""}`}>
+      <div className={`bg-gradient-to-r from-[#a3c9b9] to-[#7fae9e] px-5 py-6 text-white ${compact ? "" : "sm:px-8"}`}>
+        <h2 id="newsletter-signup-heading" className={`${compact ? "text-2xl" : "text-2xl sm:text-3xl"} font-semibold`}>
+          Get nutrition tips in your inbox
+        </h2>
+        <p className="mt-2 text-sm sm:text-base leading-relaxed text-white/95">
+          Receive new blog posts and practical nutrition guidance by email.
+        </p>
+      </div>
+      <form className={`space-y-4 p-5 ${compact ? "lg:flex-1 lg:flex lg:flex-col lg:justify-center" : "sm:p-8"}`} onSubmit={handleSubmit}>
+        <div className="grid gap-4 sm:grid-cols-2">
+          <label className="block">
+            <span className="mb-2 block text-sm font-semibold text-gray-800">First name</span>
+            <input
+              type="text"
+              value={form.firstName}
+              onChange={(event) => updateField("firstName", event.target.value)}
+              autoComplete="given-name"
+              className="w-full h-10 rounded-md border border-gray-300 bg-white px-3 text-gray-900 placeholder:text-gray-500 focus:outline-none focus:ring-2 focus:ring-[#cde4dc]"
+              required
+            />
+          </label>
+          <label className="block">
+            <span className="mb-2 block text-sm font-semibold text-gray-800">Last name</span>
+            <input
+              type="text"
+              value={form.lastName}
+              onChange={(event) => updateField("lastName", event.target.value)}
+              autoComplete="family-name"
+              className="w-full h-10 rounded-md border border-gray-300 bg-white px-3 text-gray-900 placeholder:text-gray-500 focus:outline-none focus:ring-2 focus:ring-[#cde4dc]"
+              required
+            />
+          </label>
+        </div>
+        <div>
+          <label className="block">
+            <span className="mb-2 block text-sm font-semibold text-gray-800">Email</span>
+            <input
+              type="email"
+              value={form.email}
+              onChange={(event) => updateField("email", event.target.value)}
+              autoComplete="email"
+              className="w-full h-10 rounded-md border border-gray-300 bg-white px-3 text-gray-900 placeholder:text-gray-500 focus:outline-none focus:ring-2 focus:ring-[#cde4dc]"
+              required
+            />
+          </label>
+        </div>
+        <label className="flex items-start gap-3 rounded-xl border border-gray-200 bg-gray-50 p-4 text-sm leading-relaxed text-gray-700">
+          <input
+            type="checkbox"
+            checked={form.consent}
+            onChange={(event) => updateField("consent", event.target.checked)}
+            className="mt-1 h-5 w-5 rounded border border-[#7fae9e] checked:bg-[#3b5f58] focus:ring-2 focus:ring-[#cde4dc]"
+          />
+          <span>
+            Yes, I’d like to receive nutrition tips and new blog posts by email. I can unsubscribe at any time.
+          </span>
+        </label>
+        {status.message && (
+          <p className={`text-sm font-semibold ${status.type === "success" ? "text-[#3b5f58]" : "text-red-600"}`}>
+            {status.message}
+          </p>
+        )}
+        {!isSupabaseConfigured && (
+          <p className="text-sm text-gray-600">
+                Supabase is not configured yet. Add your project URL and publishable key to enable signups.
+          </p>
+        )}
+        <button
+          type="submit"
+          disabled={submitting}
+          className="inline-flex items-center justify-center gap-2 rounded-full bg-gradient-to-r from-[#a3c9b9] to-[#7fae9e] px-6 py-2 text-sm font-semibold text-white shadow transition hover:brightness-105 disabled:cursor-not-allowed disabled:opacity-50"
+        >
+          {submitting ? "Saving..." : "Subscribe"}
+          <Mail size={18} />
+        </button>
+      </form>
+    </div>
+  );
+}
+
 function BlogOverview() {
   const latestPost = blogPosts[blogPosts.length - 1];
   const postsNewestFirst = [...blogPosts].reverse();
@@ -143,40 +283,48 @@ function BlogOverview() {
             Latest Blog
           </h2>
 
-          <article className="rounded-xl shadow-lg ring-1 ring-[#7fae9e] overflow-hidden bg-white transition-all duration-200 hover:ring-2">
-            <div className="grid md:grid-cols-2 min-h-[30rem]">
-              <img
-                src={latestPost.image}
-                alt=""
-                className="h-64 md:h-full w-full object-cover object-center"
-              />
-              <div className="flex flex-col justify-center p-6 sm:p-8">
-                <div className="flex flex-wrap items-center gap-3 text-sm text-gray-600 mb-4">
-                  <span className="inline-flex items-center rounded-full bg-[#cde4dc] px-3 py-1 font-semibold text-[#3b5f58]">
-                    {latestPost.category}
-                  </span>
-                  <span>{formatPostDate(latestPost.date)}</span>
-                  <span className="inline-flex items-center gap-1">
-                    <Clock size={16} />
-                    {latestPost.readingTime}
-                  </span>
+          <div className="grid gap-6 lg:grid-cols-[minmax(0,1.45fr)_minmax(22rem,0.8fr)] lg:items-stretch">
+            <div>
+              <article className="h-full rounded-xl shadow-lg ring-1 ring-[#7fae9e] overflow-hidden bg-white transition-all duration-200 hover:ring-2">
+                <div className="grid md:grid-cols-2 min-h-[30rem]">
+                  <img
+                    src={latestPost.image}
+                    alt=""
+                    className="h-64 md:h-full w-full object-cover object-center"
+                  />
+                  <div className="flex flex-col justify-center p-6 sm:p-8">
+                    <div className="flex flex-wrap items-center gap-3 text-sm text-gray-600 mb-4">
+                      <span className="inline-flex items-center rounded-full bg-[#cde4dc] px-3 py-1 font-semibold text-[#3b5f58]">
+                        {latestPost.category}
+                      </span>
+                      <span>{formatPostDate(latestPost.date)}</span>
+                      <span className="inline-flex items-center gap-1">
+                        <Clock size={16} />
+                        {latestPost.readingTime}
+                      </span>
+                    </div>
+                    <h3 className="text-2xl sm:text-3xl font-bold leading-tight mb-4">
+                      {latestPost.title}
+                    </h3>
+                    <p className="text-base sm:text-lg leading-relaxed text-gray-700 mb-6">
+                      {latestPost.excerpt}
+                    </p>
+                    <a
+                      href={`/blog/${latestPost.slug}`}
+                      className="self-start inline-flex items-center gap-2 bg-gradient-to-r from-[#a3c9b9] to-[#7fae9e] text-white text-sm font-semibold px-6 py-2 rounded-full shadow hover:brightness-105 transition"
+                    >
+                      Read More
+                      <ArrowRight size={18} />
+                    </a>
+                  </div>
                 </div>
-                <h3 className="text-2xl sm:text-3xl font-bold leading-tight mb-4">
-                  {latestPost.title}
-                </h3>
-                <p className="text-base sm:text-lg leading-relaxed text-gray-700 mb-6">
-                  {latestPost.excerpt}
-                </p>
-                <a
-                  href={`/blog/${latestPost.slug}`}
-                  className="self-start inline-flex items-center gap-2 bg-gradient-to-r from-[#a3c9b9] to-[#7fae9e] text-white text-sm font-semibold px-6 py-2 rounded-full shadow hover:brightness-105 transition"
-                >
-                  Read More
-                  <ArrowRight size={18} />
-                </a>
-              </div>
+              </article>
             </div>
-          </article>
+
+            <div className="h-full">
+              <NewsletterSignupForm compact />
+            </div>
+          </div>
         </div>
       </section>
 
@@ -214,6 +362,7 @@ function BlogOverview() {
           </div>
         </div>
       </section>
+
     </main>
   );
 }
@@ -417,10 +566,109 @@ const assessmentIcons = {
   lifestyle: Dumbbell
 };
 
+function AssessmentContactForm({ contact, onContactChange, onSubmit, submitting, error }) {
+  return (
+    <motion.div
+      key="assessment-contact"
+      initial={{ opacity: 0, y: 18 }}
+      animate={{ opacity: 1, y: 0 }}
+      exit={{ opacity: 0, y: -18 }}
+      transition={{ duration: 0.25 }}
+      className="rounded-xl shadow-lg ring-1 ring-[#7fae9e] bg-white overflow-hidden"
+    >
+      <div className="bg-gradient-to-r from-[#a3c9b9] to-[#7fae9e] px-5 py-6 text-white sm:px-8">
+        <div className="flex items-start gap-4">
+          <div className="rounded-full bg-white/90 p-3 text-[#3b5f58] shadow">
+            <User size={28} />
+          </div>
+          <div>
+            <h2 className="text-2xl sm:text-3xl font-semibold leading-tight">Before you start</h2>
+            <p className="mt-2 text-sm sm:text-base leading-relaxed text-white/95">
+              Add your details to begin your personalised nutrition overview.
+            </p>
+          </div>
+        </div>
+      </div>
+      <form className="space-y-4 p-5 sm:p-8" onSubmit={onSubmit}>
+        <div className="grid gap-4 sm:grid-cols-2">
+          <label className="block">
+            <span className="mb-2 block text-sm font-semibold text-gray-800">First name</span>
+            <input
+              type="text"
+              value={contact.firstName}
+              onChange={(event) => onContactChange("firstName", event.target.value)}
+              className="w-full h-10 rounded-md border border-gray-300 bg-white px-3 text-gray-900 placeholder:text-gray-500 focus:outline-none focus:ring-2 focus:ring-[#cde4dc]"
+              required
+            />
+          </label>
+          <label className="block">
+            <span className="mb-2 block text-sm font-semibold text-gray-800">Last name</span>
+            <input
+              type="text"
+              value={contact.lastName}
+              onChange={(event) => onContactChange("lastName", event.target.value)}
+              className="w-full h-10 rounded-md border border-gray-300 bg-white px-3 text-gray-900 placeholder:text-gray-500 focus:outline-none focus:ring-2 focus:ring-[#cde4dc]"
+              required
+            />
+          </label>
+        </div>
+        <label className="block">
+          <span className="mb-2 block text-sm font-semibold text-gray-800">Email</span>
+          <input
+            type="email"
+            value={contact.email}
+            onChange={(event) => onContactChange("email", event.target.value)}
+            className="w-full h-10 rounded-md border border-gray-300 bg-white px-3 text-gray-900 placeholder:text-gray-500 focus:outline-none focus:ring-2 focus:ring-[#cde4dc]"
+            required
+          />
+        </label>
+        <label className="flex items-start gap-3 rounded-xl border border-gray-200 bg-gray-50 p-4 text-sm leading-relaxed text-gray-700">
+          <input
+            type="checkbox"
+            checked={contact.newsletterOptIn}
+            onChange={(event) => onContactChange("newsletterOptIn", event.target.checked)}
+            className="mt-1 h-5 w-5 rounded border border-[#7fae9e] checked:bg-[#3b5f58] focus:ring-2 focus:ring-[#cde4dc]"
+          />
+          <span>
+            Yes, I’d like to receive nutrition tips and new blog posts by email. I can unsubscribe at any time.
+          </span>
+        </label>
+        {error && <p className="text-sm font-semibold text-red-600">{error}</p>}
+        {!isSupabaseConfigured && (
+          <p className="text-sm text-gray-600">
+            Supabase is not configured yet. Add your project URL and publishable key before saving assessment leads.
+          </p>
+        )}
+        <button
+          type="submit"
+          disabled={submitting}
+          className="inline-flex items-center justify-center gap-2 rounded-full bg-gradient-to-r from-[#a3c9b9] to-[#7fae9e] px-6 py-2 text-sm font-semibold text-white shadow transition hover:brightness-105 disabled:cursor-not-allowed disabled:opacity-50"
+        >
+          {submitting ? "Saving..." : "Start assessment"}
+          <ArrowRight size={18} />
+        </button>
+      </form>
+    </motion.div>
+  );
+}
+
 function NutritionAssessmentPage() {
-  const [answers, setAnswers] = useState({});
-  const [currentStep, setCurrentStep] = useState(0);
+  const draft = loadAssessmentDraft();
+  const [contact, setContact] = useState(draft?.contact || {
+    firstName: "",
+    lastName: "",
+    email: "",
+    newsletterOptIn: false
+  });
+  const [leadId, setLeadId] = useState(draft?.leadId || "");
+  const [contactSubmitted, setContactSubmitted] = useState(Boolean(draft?.leadId));
+  const [answers, setAnswers] = useState(draft?.answers || {});
+  const [currentStep, setCurrentStep] = useState(draft?.currentStep || 0);
   const [showResults, setShowResults] = useState(false);
+  const [contactError, setContactError] = useState("");
+  const [contactSubmitting, setContactSubmitting] = useState(false);
+  const [assessmentError, setAssessmentError] = useState("");
+  const [savingResults, setSavingResults] = useState(false);
   const totalQuestions = getQuestionCount();
   const completedQuestions = getCompletedQuestionCount(answers);
   const progress = showResults
@@ -432,11 +680,51 @@ function NutritionAssessmentPage() {
   const isLastStep = currentStep === assessmentSteps.length - 1;
   const currentStepComplete = step.questions.every((question) => question.optional || answers[question.id]);
 
+  useEffect(() => {
+    if (!showResults) {
+      saveAssessmentDraft({
+        contact,
+        leadId,
+        answers,
+        currentStep
+      });
+    }
+  }, [answers, contact, currentStep, leadId, showResults]);
+
+  const updateContact = (field, value) => {
+    setContact((currentContact) => ({
+      ...currentContact,
+      [field]: value
+    }));
+  };
+
   const updateAnswer = (questionId, value) => {
     setAnswers((currentAnswers) => ({
       ...currentAnswers,
       [questionId]: value
     }));
+  };
+
+  const submitContact = async (event) => {
+    event.preventDefault();
+    setContactError("");
+
+    if (!contact.firstName.trim() || !contact.lastName.trim() || !isValidEmail(contact.email)) {
+      setContactError("Please enter your first name, last name and a valid email address.");
+      return;
+    }
+
+    setContactSubmitting(true);
+    try {
+      const { leadId: savedLeadId } = await createAssessmentLead(contact);
+      setLeadId(savedLeadId);
+      setContactSubmitted(true);
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    } catch (error) {
+      setContactError(error.message);
+    } finally {
+      setContactSubmitting(false);
+    }
   };
 
   const goBack = () => {
@@ -449,12 +737,23 @@ function NutritionAssessmentPage() {
     setCurrentStep((stepIndex) => Math.max(0, stepIndex - 1));
   };
 
-  const goNext = () => {
+  const goNext = async () => {
     if (!currentStepComplete) return;
 
     if (isLastStep) {
-      setShowResults(true);
-      window.scrollTo({ top: 0, behavior: "smooth" });
+      const result = calculateAssessmentResults(answers);
+      setAssessmentError("");
+      setSavingResults(true);
+      try {
+        await saveAssessmentResponse({ leadId, answers, result });
+        clearAssessmentDraft();
+        setShowResults(true);
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      } catch (error) {
+        setAssessmentError(error.message);
+      } finally {
+        setSavingResults(false);
+      }
       return;
     }
 
@@ -463,9 +762,20 @@ function NutritionAssessmentPage() {
   };
 
   const restartAssessment = () => {
+    clearAssessmentDraft();
+    setContact({
+      firstName: "",
+      lastName: "",
+      email: "",
+      newsletterOptIn: false
+    });
+    setLeadId("");
+    setContactSubmitted(false);
     setAnswers({});
     setCurrentStep(0);
     setShowResults(false);
+    setAssessmentError("");
+    setContactError("");
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
@@ -491,7 +801,7 @@ function NutritionAssessmentPage() {
             <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
               <div>
                 <p className="text-sm font-semibold text-[#3b5f58]">
-                  {showResults ? "Assessment complete" : `Step ${currentStep + 1} of ${assessmentSteps.length}`}
+                  {showResults ? "Assessment complete" : contactSubmitted ? `Step ${currentStep + 1} of ${assessmentSteps.length}` : "Contact details"}
                 </p>
                 <p className="text-sm text-gray-600">
                   This tool provides general educational insights only. It does not diagnose or replace personalised medical or dietetic advice.
@@ -521,6 +831,14 @@ function NutritionAssessmentPage() {
               >
                 <AssessmentResults answers={answers} onBack={goBack} onRestart={restartAssessment} />
               </motion.div>
+            ) : !contactSubmitted ? (
+              <AssessmentContactForm
+                contact={contact}
+                onContactChange={updateContact}
+                onSubmit={submitContact}
+                submitting={contactSubmitting}
+                error={contactError}
+              />
             ) : (
               <motion.div
                 key={step.id}
@@ -594,13 +912,16 @@ function NutritionAssessmentPage() {
                     <button
                       type="button"
                       onClick={goNext}
-                      disabled={!currentStepComplete}
+                      disabled={!currentStepComplete || savingResults}
                       className="inline-flex items-center justify-center gap-2 rounded-full bg-gradient-to-r from-[#a3c9b9] to-[#7fae9e] px-6 py-2 text-sm font-semibold text-white shadow transition hover:brightness-105 disabled:cursor-not-allowed disabled:opacity-50"
                     >
-                      {isLastStep ? "View Results" : "Next"}
+                      {savingResults ? "Saving..." : isLastStep ? "View Results" : "Next"}
                       <ArrowRight size={18} />
                     </button>
                   </div>
+                  {assessmentError && (
+                    <p className="mt-4 text-sm font-semibold text-red-600">{assessmentError}</p>
+                  )}
                 </div>
               </motion.div>
             )}
@@ -709,6 +1030,279 @@ function AssessmentResults({ answers, onBack, onRestart }) {
   );
 }
 
+function AdminSubscribersPage() {
+  const [session, setSession] = useState(null);
+  const [checkingSession, setCheckingSession] = useState(true);
+  const [isAdmin, setIsAdmin] = useState(false);
+  const [subscribers, setSubscribers] = useState([]);
+  const [form, setForm] = useState({ email: "", password: "" });
+  const [status, setStatus] = useState({ type: "", message: "" });
+  const [loadingSubscribers, setLoadingSubscribers] = useState(false);
+
+  const loadAdminData = async () => {
+    setLoadingSubscribers(true);
+    setStatus({ type: "", message: "" });
+    try {
+      const admin = await isCurrentUserAdmin();
+      setIsAdmin(admin);
+      if (admin) {
+        setSubscribers(await listSubscribers());
+      }
+    } catch (error) {
+      setStatus({ type: "error", message: error.message });
+    } finally {
+      setLoadingSubscribers(false);
+    }
+  };
+
+  useEffect(() => {
+    if (!isSupabaseConfigured) {
+      setCheckingSession(false);
+      return undefined;
+    }
+
+    let mounted = true;
+
+    getCurrentSession()
+      .then((currentSession) => {
+        if (!mounted) return;
+        setSession(currentSession);
+        setCheckingSession(false);
+      })
+      .catch((error) => {
+        if (!mounted) return;
+        setStatus({ type: "error", message: error.message });
+        setCheckingSession(false);
+      });
+
+    const { data } = supabase.auth.onAuthStateChange((_event, newSession) => {
+      setSession(newSession);
+      setIsAdmin(false);
+      setSubscribers([]);
+    });
+
+    return () => {
+      mounted = false;
+      data.subscription.unsubscribe();
+    };
+  }, []);
+
+  useEffect(() => {
+    if (session) {
+      loadAdminData();
+    }
+  }, [session]);
+
+  const handleLogin = async (event) => {
+    event.preventDefault();
+    setStatus({ type: "", message: "" });
+
+    try {
+      await signInAdmin(form.email, form.password);
+    } catch (error) {
+      setStatus({ type: "error", message: error.message });
+    }
+  };
+
+  const handleSignOut = async () => {
+    try {
+      await signOutAdmin();
+      setSession(null);
+      setIsAdmin(false);
+      setSubscribers([]);
+    } catch (error) {
+      setStatus({ type: "error", message: error.message });
+    }
+  };
+
+  const toggleUnsubscribed = async (subscriber) => {
+    setStatus({ type: "", message: "" });
+    try {
+      await updateUnsubscribeStatus(subscriber.id, !subscriber.unsubscribed);
+      setSubscribers(await listSubscribers());
+    } catch (error) {
+      setStatus({ type: "error", message: error.message });
+    }
+  };
+
+  return (
+    <main className="bg-white text-gray-900">
+      <section className="pt-10 pb-10 text-center bg-gradient-to-r from-[#a3c9b9] to-[#7fae9e] text-white">
+        <div className="max-w-5xl mx-auto px-6">
+          <p className="text-sm font-semibold uppercase tracking-wide mb-3">Admin</p>
+          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-5 leading-tight">
+            Newsletter Subscribers
+          </h1>
+          <p className="text-base sm:text-lg leading-relaxed max-w-3xl mx-auto">
+            Review subscriber consent, signup source and unsubscribe status.
+          </p>
+        </div>
+      </section>
+
+      <section className="bg-gray-50 py-10 sm:py-14">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 md:px-12">
+          {!isSupabaseConfigured ? (
+            <div className="rounded-xl shadow-lg ring-1 ring-[#7fae9e] bg-white p-5 sm:p-8">
+              <h2 className="text-2xl font-semibold text-gray-900">Supabase is not configured</h2>
+              <p className="mt-3 text-gray-700">
+                Add REACT_APP_SUPABASE_URL and REACT_APP_SUPABASE_PUBLISHABLE_KEY to .env.local to enable admin login.
+              </p>
+            </div>
+          ) : checkingSession ? (
+            <div className="rounded-xl shadow-lg ring-1 ring-[#7fae9e] bg-white p-5 sm:p-8">
+              <p className="font-semibold text-[#3b5f58]">Checking session...</p>
+            </div>
+          ) : !session ? (
+            <form className="mx-auto max-w-md rounded-xl shadow-lg ring-1 ring-[#7fae9e] bg-white p-5 sm:p-8" onSubmit={handleLogin}>
+              <div className="mb-5 flex items-center gap-3">
+                <div className="rounded-full bg-[#cde4dc] p-3 text-[#3b5f58]">
+                  <ShieldCheck size={24} />
+                </div>
+                <div>
+                  <h2 className="text-2xl font-semibold text-gray-900">Admin sign in</h2>
+                  <p className="text-sm text-gray-600">Use your Supabase Auth admin account.</p>
+                </div>
+              </div>
+              <div className="space-y-4">
+                <label className="block">
+                  <span className="mb-2 block text-sm font-semibold text-gray-800">Email</span>
+                  <input
+                    type="email"
+                    value={form.email}
+                    onChange={(event) => setForm((current) => ({ ...current, email: event.target.value }))}
+                    className="w-full h-10 rounded-md border border-gray-300 bg-white px-3 text-gray-900 placeholder:text-gray-500 focus:outline-none focus:ring-2 focus:ring-[#cde4dc]"
+                    required
+                  />
+                </label>
+                <label className="block">
+                  <span className="mb-2 block text-sm font-semibold text-gray-800">Password</span>
+                  <input
+                    type="password"
+                    value={form.password}
+                    onChange={(event) => setForm((current) => ({ ...current, password: event.target.value }))}
+                    className="w-full h-10 rounded-md border border-gray-300 bg-white px-3 text-gray-900 placeholder:text-gray-500 focus:outline-none focus:ring-2 focus:ring-[#cde4dc]"
+                    required
+                  />
+                </label>
+                {status.message && <p className="text-sm font-semibold text-red-600">{status.message}</p>}
+                <button
+                  type="submit"
+                  className="inline-flex items-center justify-center gap-2 rounded-full bg-gradient-to-r from-[#a3c9b9] to-[#7fae9e] px-6 py-2 text-sm font-semibold text-white shadow transition hover:brightness-105"
+                >
+                  Sign in
+                  <ShieldCheck size={18} />
+                </button>
+              </div>
+            </form>
+          ) : !isAdmin ? (
+            <div className="rounded-xl shadow-lg ring-1 ring-[#7fae9e] bg-white p-5 sm:p-8">
+              <h2 className="text-2xl font-semibold text-gray-900">Admin access required</h2>
+              <p className="mt-3 text-gray-700">
+                You are signed in, but this account is not listed in the admin_users table.
+              </p>
+              {status.message && <p className="mt-3 text-sm font-semibold text-red-600">{status.message}</p>}
+              <button
+                type="button"
+                onClick={handleSignOut}
+                className="mt-5 inline-flex items-center justify-center gap-2 rounded-full bg-white px-6 py-2 text-sm font-semibold text-[#3b5f58] shadow ring-1 ring-[#7fae9e] transition hover:bg-gray-100"
+              >
+                Sign out
+                <LogOut size={18} />
+              </button>
+            </div>
+          ) : (
+            <div className="space-y-5">
+              <div className="flex flex-col gap-3 rounded-xl shadow-lg ring-1 ring-[#7fae9e] bg-white p-5 sm:flex-row sm:items-center sm:justify-between">
+                <div>
+                  <p className="text-sm font-semibold text-[#3b5f58]">Signed in as admin</p>
+                  <p className="text-sm text-gray-600">{session.user.email}</p>
+                </div>
+                <button
+                  type="button"
+                  onClick={handleSignOut}
+                  className="inline-flex items-center justify-center gap-2 rounded-full bg-white px-6 py-2 text-sm font-semibold text-[#3b5f58] shadow ring-1 ring-[#7fae9e] transition hover:bg-gray-100"
+                >
+                  Sign out
+                  <LogOut size={18} />
+                </button>
+              </div>
+
+              {status.message && (
+                <p className={`text-sm font-semibold ${status.type === "error" ? "text-red-600" : "text-[#3b5f58]"}`}>
+                  {status.message}
+                </p>
+              )}
+
+              <div className="overflow-hidden rounded-xl shadow-lg ring-1 ring-[#7fae9e] bg-white">
+                <div className="overflow-x-auto">
+                  <table className="min-w-full text-left text-sm">
+                    <thead className="bg-gradient-to-r from-[#a3c9b9] to-[#7fae9e] text-white">
+                      <tr>
+                        <th className="px-4 py-3 font-semibold">Name</th>
+                        <th className="px-4 py-3 font-semibold">Email</th>
+                        <th className="px-4 py-3 font-semibold">Source</th>
+                        <th className="px-4 py-3 font-semibold">Consent</th>
+                        <th className="px-4 py-3 font-semibold">Signup date</th>
+                        <th className="px-4 py-3 font-semibold">Unsubscribe status</th>
+                        <th className="px-4 py-3 font-semibold">MailerLite sync</th>
+                        <th className="px-4 py-3 font-semibold">Action</th>
+                      </tr>
+                    </thead>
+                    <tbody className="divide-y divide-[#cde4dc]">
+                      {loadingSubscribers ? (
+                        <tr>
+                          <td colSpan="8" className="px-4 py-6 text-center text-gray-700">Loading subscribers...</td>
+                        </tr>
+                      ) : subscribers.length === 0 ? (
+                        <tr>
+                          <td colSpan="8" className="px-4 py-6 text-center text-gray-700">No subscribers yet.</td>
+                        </tr>
+                      ) : (
+                        subscribers.map((subscriber) => (
+                          <tr key={subscriber.id} className="hover:bg-gray-50 transition">
+                            <td className="px-4 py-3 text-gray-800">
+                              {subscriber.first_name || subscriber.last_name
+                                ? `${subscriber.first_name || ""} ${subscriber.last_name || ""}`.trim()
+                                : subscriber.name}
+                            </td>
+                            <td className="px-4 py-3 text-gray-800">{subscriber.email}</td>
+                            <td className="px-4 py-3 text-gray-700 capitalize">{subscriber.source}</td>
+                            <td className="px-4 py-3 text-gray-700">
+                              {subscriber.newsletter_opt_in ? "Consented" : "No consent"}
+                            </td>
+                            <td className="px-4 py-3 text-gray-700">
+                              {formatPostDate(subscriber.signup_date)}
+                            </td>
+                            <td className="px-4 py-3 text-gray-700">
+                              {subscriber.unsubscribed ? "Unsubscribed" : "Subscribed"}
+                            </td>
+                            <td className="px-4 py-3 text-gray-700">
+                              {subscriber.provider_sync?.status || "not_configured"}
+                            </td>
+                            <td className="px-4 py-3">
+                              <button
+                                type="button"
+                                onClick={() => toggleUnsubscribed(subscriber)}
+                                className="rounded-full bg-white px-4 py-2 text-xs font-semibold text-[#3b5f58] shadow ring-1 ring-[#7fae9e] transition hover:bg-gray-100"
+                              >
+                                {subscriber.unsubscribed ? "Mark subscribed" : "Mark unsubscribed"}
+                              </button>
+                            </td>
+                          </tr>
+                        ))
+                      )}
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          )}
+        </div>
+      </section>
+    </main>
+  );
+}
+
 export default function NutritionByIballa() {
   const [state, handleSubmit] = useForm("xzzvqdlq");
   const [messageValue, setMessageValue] = useState("");
@@ -725,6 +1319,7 @@ export default function NutritionByIballa() {
   const isBlogRoute = path === "/blog";
   const isArticleRoute = path.startsWith("/blog/");
   const isAssessmentRoute = path === "/nutrition-assessment";
+  const isAdminSubscribersRoute = path === "/admin/subscribers";
 
   useEffect(() => {
     const handleResize = () => {
@@ -753,7 +1348,7 @@ export default function NutritionByIballa() {
         !href ||
         isModifiedClick ||
         anchor.target === "_blank" ||
-        (!href.startsWith("/blog") && !href.startsWith("/nutrition-assessment") && !href.startsWith("/#"))
+        (!href.startsWith("/blog") && !href.startsWith("/nutrition-assessment") && !href.startsWith("/admin/subscribers") && !href.startsWith("/#"))
       ) {
         return;
       }
@@ -801,6 +1396,8 @@ export default function NutritionByIballa() {
       ? `${activePost.title} | Nutrition by Iballa`
       : isAssessmentRoute
         ? "Nutrition Assessment | Nutrition by Iballa"
+      : isAdminSubscribersRoute
+        ? "Admin Subscribers | Nutrition by Iballa"
       : isBlogRoute
         ? "Blog | Nutrition by Iballa"
         : "Nutrition by Iballa";
@@ -808,14 +1405,16 @@ export default function NutritionByIballa() {
       ? activePost.excerpt
       : isAssessmentRoute
         ? "A general nutrition habits assessment from Nutrition by Iballa with educational insights and practical recommendations."
+      : isAdminSubscribersRoute
+        ? "Admin-only newsletter subscriber management for Nutrition by Iballa."
       : isBlogRoute
         ? "Evidence-based nutrition articles from Nutrition by Iballa."
         : "Personalised, evidence-based nutrition advice and care in English and Spanish.";
 
     document.title = title;
     upsertMeta("description", description);
-    upsertMeta("robots", "index, follow");
-    upsertCanonical(activePost ? `/blog/${activePost.slug}` : isAssessmentRoute ? "/nutrition-assessment" : isBlogRoute ? "/blog" : "/");
+    upsertMeta("robots", isAdminSubscribersRoute ? "noindex, nofollow" : "index, follow");
+    upsertCanonical(activePost ? `/blog/${activePost.slug}` : isAdminSubscribersRoute ? "/admin/subscribers" : isAssessmentRoute ? "/nutrition-assessment" : isBlogRoute ? "/blog" : "/");
     upsertStructuredData(
       activePost
         ? {
@@ -843,6 +1442,14 @@ export default function NutritionByIballa() {
             description,
             url: `${window.location.origin}/nutrition-assessment`
           }
+        : isAdminSubscribersRoute
+          ? {
+              "@context": "https://schema.org",
+              "@type": "WebPage",
+              name: "Admin Subscribers",
+              description,
+              url: `${window.location.origin}/admin/subscribers`
+            }
         : isBlogRoute
           ? {
             "@context": "https://schema.org",
@@ -859,7 +1466,7 @@ export default function NutritionByIballa() {
               url: window.location.origin
             }
     );
-  }, [activePost, isAssessmentRoute, isBlogRoute]);
+  }, [activePost, isAdminSubscribersRoute, isAssessmentRoute, isBlogRoute]);
 
  const appointmentTypes = {
   en: [
@@ -946,6 +1553,8 @@ export default function NutritionByIballa() {
   <BlogOverview />
 ) : isAssessmentRoute ? (
   <NutritionAssessmentPage />
+) : isAdminSubscribersRoute ? (
+  <AdminSubscribersPage />
 ) : isArticleRoute && activePost ? (
   <BlogArticle post={activePost} />
 ) : isArticleRoute ? (

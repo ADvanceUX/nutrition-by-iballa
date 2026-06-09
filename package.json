@@ -6,10 +6,15 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
+    "supabase:login": "npx supabase@latest login",
+    "supabase:functions:deploy": "npx supabase@latest functions deploy sync-mailerlite --project-ref znmiqgalznlgxrjdygir",
+    "supabase:functions:list": "npx supabase@latest functions list --project-ref znmiqgalznlgxrjdygir",
+    "supabase:secrets:list": "npx supabase@latest secrets list --project-ref znmiqgalznlgxrjdygir",
     "eject": "react-scripts eject"
   },
   "dependencies": {
     "@formspree/react": "^3.0.0",
+    "@supabase/supabase-js": "^2.106.2",
     "@vercel/analytics": "^1.5.0",
     "ajv": "^6.12.6",
     "framer-motion": "^12.23.12",

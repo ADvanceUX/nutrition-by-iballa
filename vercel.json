@@ -11,6 +11,10 @@
     {
       "source": "/nutrition-assessment",
       "destination": "/"
+    },
+    {
+      "source": "/admin/subscribers",
+      "destination": "/"
     }
   ]
 }
