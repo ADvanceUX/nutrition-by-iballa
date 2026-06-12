@@ -105,6 +105,26 @@ export const spanishBlogContent = {
           "Los consejos de este artículo están pensados para apoyar la salud y el bienestar intestinal general. No sustituyen el asesoramiento médico o nutricional personalizado. Si deseas una orientación adaptada sobre tu alimentación y salud intestinal, un dietista-nutricionista puede ayudarte a crear un plan adecuado a tus necesidades y objetivos."
         ]
       }
+    ],
+    references: [
+      {
+        label: "Valdes, A.M., Walter, J., Segal, E. y Spector, T.D. (2018) «Papel de la microbiota intestinal en la nutrición y la salud», BMJ, 361, k2179."
+      },
+      {
+        label: "Carabotti, M., Scirocco, A., Maselli, M.A. y Severi, C. (2015) «El eje intestino-cerebro: interacciones entre la microbiota entérica y los sistemas nerviosos central y entérico», Anales de Gastroenterología, 28(2), pp. 203-209."
+      },
+      {
+        label: "Conlon, M.A. y Bird, A.R. (2015) «El impacto de la alimentación y el estilo de vida en la microbiota intestinal y la salud humana», Nutrients, 7(1), pp. 17-44."
+      },
+      {
+        label: "Monda, V. et al. (2017) «El ejercicio modifica la microbiota intestinal con efectos positivos para la salud», Medicina Oxidativa y Longevidad Celular, 2017."
+      },
+      {
+        label: "Hou, K. et al. (2022) «La microbiota en la salud y la enfermedad», Transducción de Señales y Terapia Dirigida, 7, p. 135."
+      },
+      {
+        label: "Ahmed, F. et al. (2025) «Relación entre el estrés, la alimentación y la microbiota intestinal: un estudio transversal», PMC, PMID: 41102818."
+      }
     ]
   },
   "understanding-chronic-constipation-causes-diet-solutions": {
@@ -259,6 +279,14 @@ export const spanishBlogContent = {
           "Mucosidad en las heces",
           "Dolor abdominal intenso"
         ]
+      }
+    ],
+    references: [
+      {
+        label: "Forootan, M., Bagheri, N. y Darvishi, M. (2018) «Estreñimiento crónico: revisión de la literatura», Medicine, 97(20), e10631."
+      },
+      {
+        label: "Dimidi, E. et al. (2025) «Guías de la Asociación Británica de Dietética para el tratamiento dietético del estreñimiento crónico en adultos», Revista de Nutrición Humana y Dietética, 38(5), e70133."
       }
     ]
   }
