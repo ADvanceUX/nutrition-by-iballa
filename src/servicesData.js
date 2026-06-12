@@ -12,7 +12,6 @@ export const servicesContent = {
       book: "Book a consultation"
     },
     bookingText: "Ready to talk through your goals? Book an initial consultation or get in touch with a question.",
-    disclaimer: "Nutrition advice does not replace medical care. Please continue to follow advice from your GP or specialist.",
     services: [
       {
         key: "weight-management",
@@ -95,7 +94,6 @@ export const servicesContent = {
       book: "Reserva una consulta"
     },
     bookingText: "¿Quieres hablar sobre tus objetivos? Reserva una consulta inicial o ponte en contacto si tienes alguna pregunta.",
-    disclaimer: "El asesoramiento nutricional no sustituye la atención médica. Continúa siguiendo las recomendaciones de tu médico o especialista.",
     services: [
       {
         key: "weight-management",

@@ -1706,9 +1706,6 @@ export default function NutritionByIballa() {
       })}
     </div>
 
-    <p className="mx-auto mt-8 max-w-4xl text-center text-sm leading-relaxed text-gray-600">
-      {serviceCopy.disclaimer}
-    </p>
   </div>
 </section>
 
