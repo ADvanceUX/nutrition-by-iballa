@@ -289,7 +289,7 @@ function FooterNewsletterSignup() {
   };
 
   return (
-    <section className="bg-[#e8f3ee] px-4 py-6 sm:px-8" aria-labelledby="footer-newsletter-heading">
+    <section className="border-b border-[#e2eee9] bg-white px-4 py-6 sm:px-8" aria-labelledby="footer-newsletter-heading">
       <div className="mx-auto flex max-w-6xl flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
         <div className="max-w-xl">
           <h2 id="footer-newsletter-heading" className="text-xl font-semibold text-[#294b43]">
