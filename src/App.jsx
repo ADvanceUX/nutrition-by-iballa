@@ -1625,29 +1625,28 @@ export default function NutritionByIballa() {
               isExpanded ? "col-span-2" : ""
             }`}
           >
-            <div className="flex h-full flex-col p-3 sm:p-5 md:p-6">
-              <div className="flex flex-col items-start gap-3 sm:flex-row sm:gap-4">
-                <div className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-xl sm:h-12 sm:w-12 ${service.iconBackground}`}>
-                  <Icon size={23} className={`${service.iconColor} sm:h-[27px] sm:w-[27px]`} aria-hidden="true" />
-                </div>
-                <div>
-                  <h3 className="text-[15px] font-semibold leading-snug text-[#294b43] sm:text-lg md:text-xl">{service.title}</h3>
-                  <p className="mt-2 text-xs leading-relaxed text-gray-700 sm:text-sm md:text-[15px]">{service.summary}</p>
-                </div>
-              </div>
-
-              <div className="mt-auto pt-4 sm:pt-5">
-                <button
-                  type="button"
-                  aria-expanded={isExpanded}
-                  aria-controls={panelId}
-                  onClick={() => setExpandedServiceKey(isExpanded ? null : service.key)}
-                  className="inline-flex min-h-10 w-full items-center justify-center gap-1.5 rounded-full border-2 border-[#7fae9e] px-3 py-2 text-xs font-semibold text-[#315f55] transition hover:bg-[#edf6f2] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#315f55] focus-visible:ring-offset-2 sm:min-h-11 sm:w-auto sm:gap-2 sm:px-5 sm:text-sm"
-                >
-                  {isExpanded ? serviceCopy.readLess : serviceCopy.readMore}
-                  {isExpanded ? <ChevronUp size={17} aria-hidden="true" /> : <ChevronDown size={17} aria-hidden="true" />}
-                </button>
-              </div>
+            <div className="flex h-full flex-col">
+              <button
+                type="button"
+                aria-expanded={isExpanded}
+                aria-controls={panelId}
+                aria-label={`${isExpanded ? serviceCopy.readLess : serviceCopy.readMore}: ${service.title}`}
+                onClick={() => setExpandedServiceKey(isExpanded ? null : service.key)}
+                className="group relative flex h-full w-full flex-col p-3 pr-11 text-left transition-colors hover:bg-[#f7fbf9] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-[#477b6c] sm:p-5 sm:pr-14 md:p-6 md:pr-16"
+              >
+                <span className="absolute right-3 top-3 flex h-8 w-8 items-center justify-center rounded-full bg-[#edf6f2] text-[#315f55] transition group-hover:bg-[#dceee7] sm:right-5 sm:top-5">
+                  {isExpanded ? <ChevronUp size={18} aria-hidden="true" /> : <ChevronDown size={18} aria-hidden="true" />}
+                </span>
+                <span className="flex flex-col items-start gap-3 sm:flex-row sm:gap-4">
+                  <span className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-xl sm:h-12 sm:w-12 ${service.iconBackground}`}>
+                    <Icon size={23} className={`${service.iconColor} sm:h-[27px] sm:w-[27px]`} aria-hidden="true" />
+                  </span>
+                  <span>
+                    <span role="heading" aria-level="3" className="block text-[15px] font-semibold leading-snug text-[#294b43] sm:text-lg md:text-xl">{service.title}</span>
+                    <span className="mt-2 block text-xs leading-relaxed text-gray-700 sm:text-sm md:text-[15px]">{service.summary}</span>
+                  </span>
+                </span>
+              </button>
 
               <AnimatePresence initial={false}>
                 {isExpanded && (
@@ -1659,9 +1658,9 @@ export default function NutritionByIballa() {
                     animate={{ height: "auto", opacity: 1 }}
                     exit={{ height: 0, opacity: 0 }}
                     transition={{ height: { duration: 0.3 }, opacity: { duration: 0.2 } }}
-                    className="overflow-hidden"
+                    className="overflow-hidden px-3 pb-3 sm:px-5 sm:pb-5 md:px-6 md:pb-6"
                   >
-                    <div className="mt-6 border-t border-[#dbeae4] pt-6">
+                    <div className="border-t border-[#dbeae4] pt-6">
                       <div className="grid gap-5 md:grid-cols-3">
                         <div>
                           <h4 className="font-semibold text-[#315f55]">{serviceCopy.headings.what}</h4>
