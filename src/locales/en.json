@@ -1,9 +1,6 @@
 {
   "nav": {
-    "services": "Services",
-    "about": "About",
-    "appointments": "Appointments",
-    "contact": "Contact"
+    "home": "Home"
   },
   "logoAlt": "Nutrition by Iballa Logo",
   "hero": {

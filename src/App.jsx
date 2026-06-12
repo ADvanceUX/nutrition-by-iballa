@@ -1496,13 +1496,8 @@ export default function NutritionByIballa() {
 
     <div className="flex items-center gap-6 relative z-[1000]">
       <LanguageDropdown />
-      <nav className="hidden md:flex space-x-6">
-        <a href="/#services">{t("nav.services")}</a>
-        <a href="/#about">{t("nav.about")}</a>
-        <a href="/#appointments">{t("nav.appointments")}</a>
-        <a href="/nutrition-assessment">Assessment</a>
-        <a href="/blog">Blog</a>
-        <a href="/#contact">{t("nav.contact")}</a>
+      <nav className="hidden md:flex">
+        <a href="/">{t("nav.home")}</a>
       </nav>
 
       {/* Mobile Toggle */}
@@ -1518,23 +1513,8 @@ export default function NutritionByIballa() {
   {/* Mobile Navigation */}
   {navOpen && (
     <nav className="absolute top-24 left-0 w-full bg-white shadow-md flex flex-col items-center space-y-4 p-6 z-60 md:hidden">
-      <a href="/#services" onClick={() => setNavOpen(false)}>
-        {t("nav.services")}
-      </a>
-      <a href="/#about" onClick={() => setNavOpen(false)}>
-        {t("nav.about")}
-      </a>
-      <a href="/#appointments" onClick={() => setNavOpen(false)}>
-        {t("nav.appointments")}
-      </a>
-      <a href="/nutrition-assessment" onClick={() => setNavOpen(false)}>
-        Assessment
-      </a>
-      <a href="/blog" onClick={() => setNavOpen(false)}>
-        Blog
-      </a>
-      <a href="/#contact" onClick={() => setNavOpen(false)}>
-        {t("nav.contact")}
+      <a href="/" onClick={() => setNavOpen(false)}>
+        {t("nav.home")}
       </a>
     </nav>
   )}
