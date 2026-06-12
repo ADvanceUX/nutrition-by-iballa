@@ -138,7 +138,7 @@ function isValidEmail(email) {
   return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.trim());
 }
 
-function NewsletterSignupForm({ compact = false }) {
+function NewsletterSignupForm({ compact = false, requireConsent = true, source = "blog" }) {
   const [form, setForm] = useState({ firstName: "", lastName: "", email: "", consent: false });
   const [status, setStatus] = useState({ type: "", message: "" });
   const [submitting, setSubmitting] = useState(false);
@@ -156,7 +156,7 @@ function NewsletterSignupForm({ compact = false }) {
       return;
     }
 
-    if (!form.consent) {
+    if (requireConsent && !form.consent) {
       setStatus({ type: "error", message: "Please tick the consent box before subscribing." });
       return;
     }
@@ -166,7 +166,8 @@ function NewsletterSignupForm({ compact = false }) {
       await subscribeFromBlog({
         firstName: form.firstName,
         lastName: form.lastName,
-        email: form.email
+        email: form.email,
+        source
       });
       setForm({ firstName: "", lastName: "", email: "", consent: false });
       setStatus({ type: "success", message: "Thanks for subscribing. You have been added to the newsletter list." });
@@ -225,6 +226,7 @@ function NewsletterSignupForm({ compact = false }) {
             />
           </label>
         </div>
+        {requireConsent && (
         <label className="flex items-start gap-3 rounded-xl border border-gray-200 bg-gray-50 p-4 text-sm leading-relaxed text-gray-700">
           <input
             type="checkbox"
@@ -236,6 +238,7 @@ function NewsletterSignupForm({ compact = false }) {
             Yes, I’d like to receive nutrition tips and new blog posts by email. I can unsubscribe at any time.
           </span>
         </label>
+        )}
         {status.message && (
           <p className={`text-sm font-semibold ${status.type === "success" ? "text-[#3b5f58]" : "text-red-600"}`}>
             {status.message}
@@ -1893,6 +1896,12 @@ export default function NutritionByIballa() {
       </div>
     </form>
   )}
+</section>
+
+<section className="bg-[#f7faf8] px-4 py-10 sm:px-8 sm:py-14" aria-label="Newsletter signup">
+  <div className="mx-auto max-w-3xl">
+    <NewsletterSignupForm requireConsent={false} source="homepage" />
+  </div>
 </section>
 
       </>
