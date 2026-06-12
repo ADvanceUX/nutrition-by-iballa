@@ -257,6 +257,87 @@ function NewsletterSignupForm({ compact = false, requireConsent = true, source =
   );
 }
 
+function FooterNewsletterSignup() {
+  const [email, setEmail] = useState("");
+  const [status, setStatus] = useState({ type: "", message: "" });
+  const [submitting, setSubmitting] = useState(false);
+
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    setStatus({ type: "", message: "" });
+
+    if (!isValidEmail(email)) {
+      setStatus({ type: "error", message: "Please enter a valid email address." });
+      return;
+    }
+
+    setSubmitting(true);
+    try {
+      await subscribeFromBlog({
+        firstName: "",
+        lastName: "",
+        email,
+        source: "homepage"
+      });
+      setEmail("");
+      setStatus({ type: "success", message: "Thanks for subscribing." });
+    } catch (error) {
+      setStatus({ type: "error", message: error.message });
+    } finally {
+      setSubmitting(false);
+    }
+  };
+
+  return (
+    <section className="bg-[#e8f3ee] px-4 py-6 sm:px-8" aria-labelledby="footer-newsletter-heading">
+      <div className="mx-auto flex max-w-6xl flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
+        <div className="max-w-xl">
+          <h2 id="footer-newsletter-heading" className="text-xl font-semibold text-[#294b43]">
+            Want nutrition tips in your inbox?
+          </h2>
+          <p className="mt-1 text-sm leading-relaxed text-[#47645d]">
+            Get occasional recipes, blog posts and practical nutrition advice.
+          </p>
+        </div>
+        <div className="w-full lg:max-w-xl">
+          <form className="flex flex-col gap-2 sm:flex-row" onSubmit={handleSubmit} noValidate>
+            <label className="sr-only" htmlFor="footer-newsletter-email">Email address</label>
+            <input
+              id="footer-newsletter-email"
+              type="email"
+              value={email}
+              onChange={(event) => setEmail(event.target.value)}
+              autoComplete="email"
+              placeholder="Email address"
+              aria-describedby={status.message ? "footer-newsletter-status" : undefined}
+              className="h-11 min-w-0 flex-1 rounded-full border border-[#b7d5c9] bg-white px-4 text-gray-900 placeholder:text-gray-500 focus:border-[#477b6c] focus:outline-none focus:ring-2 focus:ring-[#a3c9b9]"
+              required
+            />
+            <button
+              type="submit"
+              disabled={submitting}
+              className="inline-flex h-11 shrink-0 items-center justify-center rounded-full bg-[#477b6c] px-6 text-sm font-semibold text-white transition hover:bg-[#365f54] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#315f55] focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-60"
+            >
+              {submitting ? "Subscribing..." : "Subscribe"}
+            </button>
+          </form>
+          {status.message && (
+            <p
+              id="footer-newsletter-status"
+              role="status"
+              className={`mt-2 text-sm font-semibold ${
+                status.type === "success" ? "text-[#315f55]" : "text-red-700"
+              }`}
+            >
+              {status.message}
+            </p>
+          )}
+        </div>
+      </div>
+    </section>
+  );
+}
+
 function BlogOverview() {
   const latestPost = blogPosts[blogPosts.length - 1];
   const postsNewestFirst = [...blogPosts].reverse();
@@ -1898,14 +1979,12 @@ export default function NutritionByIballa() {
   )}
 </section>
 
-<section className="bg-[#f7faf8] px-4 py-10 sm:px-8 sm:py-14" aria-label="Newsletter signup">
-  <div className="mx-auto max-w-3xl">
-    <NewsletterSignupForm requireConsent={false} source="homepage" />
-  </div>
-</section>
-
       </>
 )}
+
+      {!isBlogRoute && !isAssessmentRoute && !isAdminSubscribersRoute && !isArticleRoute && (
+        <FooterNewsletterSignup />
+      )}
 
       {/* Footer */}
       <footer className="bg-white text-[#1e1e5a] px-4 py-6 rounded-t-lg shadow-inner">
