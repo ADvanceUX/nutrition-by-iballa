@@ -1,3 +1,5 @@
+import { assessmentSpanish } from "./assessmentContent";
+
 export const assessmentSteps = [
   {
     id: "basics",
@@ -274,14 +276,24 @@ function getQuestionScore(question, answer) {
   return selected?.score;
 }
 
-function ratingForScore(score) {
-  if (score >= 80) return "Strong";
-  if (score >= 60) return "Developing well";
-  if (score >= 40) return "Could improve";
-  return "Needs attention";
+function ratingForScore(score, language) {
+  const ratings = language?.startsWith("es") ? assessmentSpanish.results.ratings : {
+    strong: "Strong",
+    developing: "Developing well",
+    improve: "Could improve",
+    attention: "Needs attention"
+  };
+  if (score >= 80) return ratings.strong;
+  if (score >= 60) return ratings.developing;
+  if (score >= 40) return ratings.improve;
+  return ratings.attention;
 }
 
-function categorySummary(category, score) {
+function categorySummary(category, score, language) {
+  if (language?.startsWith("es")) {
+    const summaries = assessmentSpanish.results.summaries;
+    return summaries[`${category}${score >= 70 ? "High" : "Low"}`];
+  }
   const summaries = {
     fibre: score >= 70
       ? "Your fibre habits appear positive. Continuing to include wholegrains, legumes, fruit, and vegetables can support a balanced diet."
@@ -306,7 +318,7 @@ function categorySummary(category, score) {
   return summaries[category];
 }
 
-export function calculateAssessmentResults(answers) {
+export function calculateAssessmentResults(answers, language = "en") {
   const categoryScores = {};
 
   assessmentSteps.forEach((step) => {
@@ -328,10 +340,10 @@ export function calculateAssessmentResults(answers) {
       return [
         category,
         {
-          label: scoreLabels[category],
+          label: language.startsWith("es") ? assessmentSpanish.results.scoreLabels[category] : scoreLabels[category],
           score,
-          rating: ratingForScore(score),
-          summary: categorySummary(category, score)
+          rating: ratingForScore(score, language),
+          summary: categorySummary(category, score, language)
         }
       ];
     })
@@ -345,47 +357,58 @@ export function calculateAssessmentResults(answers) {
 
   return {
     overall: {
-      label: scoreLabels.overall,
+      label: language.startsWith("es") ? assessmentSpanish.results.scoreLabels.overall : scoreLabels.overall,
       score: overall,
-      rating: ratingForScore(overall),
-      summary: overall >= 70
+      rating: ratingForScore(overall, language),
+      summary: language.startsWith("es")
+        ? assessmentSpanish.results.summaries[overall >= 70 ? "overallHigh" : "overallLow"]
+        : overall >= 70
         ? "Your answers suggest a generally supportive nutrition pattern with some useful habits already in place."
         : "Your answers suggest there are several realistic opportunities to strengthen your everyday nutrition habits."
     },
     categories: categoryResults,
-    recommendations: buildRecommendations(categoryResults)
+    recommendations: buildRecommendations(categoryResults, language)
   };
 }
 
-function buildRecommendations(categoryResults) {
+function buildRecommendations(categoryResults, language) {
   const recommendations = [];
+  const copy = language?.startsWith("es") ? assessmentSpanish.results.recommendations : {
+    fruitVegetables: "Add an extra serving of vegetables to lunch or dinner.",
+    fibre: "Choose wholegrain options more often, such as oats, wholegrain bread, brown rice, or wholegrain pasta.",
+    protein: "Include a protein source with breakfast or your least balanced meal of the day.",
+    hydration: "Carry a reusable water bottle to make regular fluid intake easier.",
+    lifestyle: "Plan short, realistic activity sessions during the week and keep a consistent wind-down routine when possible.",
+    mealPatterns: "Keep one simple backup meal or snack available for busier days.",
+    general: "Keep building meals around vegetables, protein-rich foods, wholegrains, and regular fluids."
+  };
 
   if ((categoryResults.fruitVegetables?.score ?? 100) < 75) {
-    recommendations.push("Add an extra serving of vegetables to lunch or dinner.");
+    recommendations.push(copy.fruitVegetables);
   }
 
   if ((categoryResults.fibre?.score ?? 100) < 75) {
-    recommendations.push("Choose wholegrain options more often, such as oats, wholegrain bread, brown rice, or wholegrain pasta.");
+    recommendations.push(copy.fibre);
   }
 
   if ((categoryResults.protein?.score ?? 100) < 75) {
-    recommendations.push("Include a protein source with breakfast or your least balanced meal of the day.");
+    recommendations.push(copy.protein);
   }
 
   if ((categoryResults.hydration?.score ?? 100) < 75) {
-    recommendations.push("Carry a reusable water bottle to make regular fluid intake easier.");
+    recommendations.push(copy.hydration);
   }
 
   if ((categoryResults.lifestyle?.score ?? 100) < 75) {
-    recommendations.push("Plan short, realistic activity sessions during the week and keep a consistent wind-down routine when possible.");
+    recommendations.push(copy.lifestyle);
   }
 
   if ((categoryResults.mealPatterns?.score ?? 100) < 75) {
-    recommendations.push("Keep one simple backup meal or snack available for busier days.");
+    recommendations.push(copy.mealPatterns);
   }
 
   if (recommendations.length < 3) {
-    recommendations.push("Keep building meals around vegetables, protein-rich foods, wholegrains, and regular fluids.");
+    recommendations.push(copy.general);
   }
 
   return recommendations.slice(0, 5);

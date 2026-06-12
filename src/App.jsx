@@ -14,7 +14,10 @@ import { useTranslation } from "react-i18next";
 import IntestineIcon from "./Icons/IntestineIcon";
 import { Analytics } from "@vercel/analytics/react"
 import { blogPosts, getBlogPost } from "./blogPosts";
+import { localizeBlogPosts } from "./blogContent.es";
 import { servicesContent } from "./servicesData";
+import { localizeAssessmentSteps } from "./assessmentContent";
+import { getUiContent } from "./uiContent";
 import {
   assessmentSteps,
   calculateAssessmentResults,
@@ -71,6 +74,7 @@ function LanguageDropdown() {
             <button
               key={lang.code}
               onClick={() => {
+                window.localStorage.setItem("nutritionByIballa.language", lang.code);
                 i18n.changeLanguage(lang.code);
                 setOpen(false);
               }}
@@ -95,8 +99,8 @@ const serviceIcons = {
   venus: Venus
 };
 
-function formatPostDate(date) {
-  return new Intl.DateTimeFormat("en-GB", {
+function formatPostDate(date, language = "en") {
+  return new Intl.DateTimeFormat(language.startsWith("es") ? "es-ES" : "en-GB", {
     day: "numeric",
     month: "long",
     year: "numeric"
@@ -139,6 +143,8 @@ function isValidEmail(email) {
 }
 
 function NewsletterSignupForm({ compact = false, requireConsent = true, source = "blog" }) {
+  const { i18n } = useTranslation();
+  const copy = getUiContent(i18n.language).newsletter;
   const [form, setForm] = useState({ firstName: "", lastName: "", email: "", consent: false });
   const [status, setStatus] = useState({ type: "", message: "" });
   const [submitting, setSubmitting] = useState(false);
@@ -152,12 +158,12 @@ function NewsletterSignupForm({ compact = false, requireConsent = true, source =
     setStatus({ type: "", message: "" });
 
     if (!form.firstName.trim() || !form.lastName.trim() || !isValidEmail(form.email)) {
-      setStatus({ type: "error", message: "Please enter your first name, last name and a valid email address." });
+      setStatus({ type: "error", message: copy.detailsError });
       return;
     }
 
     if (requireConsent && !form.consent) {
-      setStatus({ type: "error", message: "Please tick the consent box before subscribing." });
+      setStatus({ type: "error", message: copy.consentError });
       return;
     }
 
@@ -170,7 +176,7 @@ function NewsletterSignupForm({ compact = false, requireConsent = true, source =
         source
       });
       setForm({ firstName: "", lastName: "", email: "", consent: false });
-      setStatus({ type: "success", message: "Thanks for subscribing. You have been added to the newsletter list." });
+      setStatus({ type: "success", message: copy.success });
     } catch (error) {
       setStatus({ type: "error", message: error.message });
     } finally {
@@ -182,16 +188,16 @@ function NewsletterSignupForm({ compact = false, requireConsent = true, source =
     <div className={`rounded-xl shadow-lg ring-1 ring-[#7fae9e] bg-white overflow-hidden ${compact ? "lg:h-full lg:flex lg:flex-col" : ""}`}>
       <div className={`bg-gradient-to-r from-[#a3c9b9] to-[#7fae9e] px-5 py-6 text-white ${compact ? "" : "sm:px-8"}`}>
         <h2 id="newsletter-signup-heading" className={`${compact ? "text-2xl" : "text-2xl sm:text-3xl"} font-semibold`}>
-          Get nutrition tips in your inbox
+          {copy.heading}
         </h2>
         <p className="mt-2 text-sm sm:text-base leading-relaxed text-white/95">
-          Receive new blog posts and practical nutrition guidance by email.
+          {copy.intro}
         </p>
       </div>
       <form className={`space-y-4 p-5 ${compact ? "lg:flex-1 lg:flex lg:flex-col lg:justify-center" : "sm:p-8"}`} onSubmit={handleSubmit}>
         <div className="grid gap-4 sm:grid-cols-2">
           <label className="block">
-            <span className="mb-2 block text-sm font-semibold text-gray-800">First name</span>
+            <span className="mb-2 block text-sm font-semibold text-gray-800">{copy.firstName}</span>
             <input
               type="text"
               value={form.firstName}
@@ -202,7 +208,7 @@ function NewsletterSignupForm({ compact = false, requireConsent = true, source =
             />
           </label>
           <label className="block">
-            <span className="mb-2 block text-sm font-semibold text-gray-800">Last name</span>
+            <span className="mb-2 block text-sm font-semibold text-gray-800">{copy.lastName}</span>
             <input
               type="text"
               value={form.lastName}
@@ -215,7 +221,7 @@ function NewsletterSignupForm({ compact = false, requireConsent = true, source =
         </div>
         <div>
           <label className="block">
-            <span className="mb-2 block text-sm font-semibold text-gray-800">Email</span>
+            <span className="mb-2 block text-sm font-semibold text-gray-800">{copy.email}</span>
             <input
               type="email"
               value={form.email}
@@ -234,9 +240,7 @@ function NewsletterSignupForm({ compact = false, requireConsent = true, source =
             onChange={(event) => updateField("consent", event.target.checked)}
             className="mt-1 h-5 w-5 rounded border border-[#7fae9e] checked:bg-[#3b5f58] focus:ring-2 focus:ring-[#cde4dc]"
           />
-          <span>
-            Yes, I’d like to receive nutrition tips and new blog posts by email. I can unsubscribe at any time.
-          </span>
+          <span>{copy.consent}</span>
         </label>
         )}
         {status.message && (
@@ -249,7 +253,7 @@ function NewsletterSignupForm({ compact = false, requireConsent = true, source =
           disabled={submitting}
           className="inline-flex items-center justify-center gap-2 rounded-full bg-gradient-to-r from-[#a3c9b9] to-[#7fae9e] px-6 py-2 text-sm font-semibold text-white shadow transition hover:brightness-105 disabled:cursor-not-allowed disabled:opacity-50"
         >
-          {submitting ? "Saving..." : "Subscribe"}
+          {submitting ? copy.saving : copy.subscribe}
           <Mail size={18} />
         </button>
       </form>
@@ -258,6 +262,8 @@ function NewsletterSignupForm({ compact = false, requireConsent = true, source =
 }
 
 function FooterNewsletterSignup() {
+  const { i18n } = useTranslation();
+  const copy = getUiContent(i18n.language).newsletter;
   const [email, setEmail] = useState("");
   const [status, setStatus] = useState({ type: "", message: "" });
   const [submitting, setSubmitting] = useState(false);
@@ -267,7 +273,7 @@ function FooterNewsletterSignup() {
     setStatus({ type: "", message: "" });
 
     if (!isValidEmail(email)) {
-      setStatus({ type: "error", message: "Please enter a valid email address." });
+      setStatus({ type: "error", message: copy.emailError });
       return;
     }
 
@@ -280,9 +286,9 @@ function FooterNewsletterSignup() {
         source: "homepage"
       });
       setEmail("");
-      setStatus({ type: "success", message: "Thanks for subscribing." });
+      setStatus({ type: "success", message: copy.shortSuccess });
     } catch (error) {
-      setStatus({ type: "error", message: error.message });
+      setStatus({ type: "error", message: i18n.language.startsWith("es") ? getUiContent("es").common.genericError : error.message });
     } finally {
       setSubmitting(false);
     }
@@ -293,22 +299,22 @@ function FooterNewsletterSignup() {
       <div className="mx-auto flex max-w-6xl flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
         <div className="max-w-xl">
           <h2 id="footer-newsletter-heading" className="text-xl font-semibold text-[#294b43]">
-            Want nutrition tips in your inbox?
+            {copy.footerHeading}
           </h2>
           <p className="mt-1 text-sm leading-relaxed text-[#47645d]">
-            Get occasional recipes, blog posts and practical nutrition advice.
+            {copy.footerIntro}
           </p>
         </div>
         <div className="w-full lg:max-w-xl">
           <form className="flex flex-col gap-2 sm:flex-row" onSubmit={handleSubmit} noValidate>
-            <label className="sr-only" htmlFor="footer-newsletter-email">Email address</label>
+            <label className="sr-only" htmlFor="footer-newsletter-email">{copy.emailAddress}</label>
             <input
               id="footer-newsletter-email"
               type="email"
               value={email}
               onChange={(event) => setEmail(event.target.value)}
               autoComplete="email"
-              placeholder="Email address"
+              placeholder={copy.emailAddress}
               aria-describedby={status.message ? "footer-newsletter-status" : undefined}
               className="h-11 min-w-0 flex-1 rounded-full border border-[#b7d5c9] bg-white px-4 text-gray-900 placeholder:text-gray-500 focus:border-[#477b6c] focus:outline-none focus:ring-2 focus:ring-[#a3c9b9]"
               required
@@ -318,7 +324,7 @@ function FooterNewsletterSignup() {
               disabled={submitting}
               className="inline-flex h-11 shrink-0 items-center justify-center rounded-full bg-[#477b6c] px-6 text-sm font-semibold text-white transition hover:bg-[#365f54] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#315f55] focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-60"
             >
-              {submitting ? "Subscribing..." : "Subscribe"}
+              {submitting ? copy.subscribing : copy.subscribe}
             </button>
           </form>
           {status.message && (
@@ -339,19 +345,22 @@ function FooterNewsletterSignup() {
 }
 
 function BlogOverview() {
-  const latestPost = blogPosts[blogPosts.length - 1];
-  const postsNewestFirst = [...blogPosts].reverse();
+  const { i18n } = useTranslation();
+  const copy = getUiContent(i18n.language).blog;
+  const localizedPosts = localizeBlogPosts(blogPosts, i18n.language);
+  const latestPost = localizedPosts[localizedPosts.length - 1];
+  const postsNewestFirst = [...localizedPosts].reverse();
 
   return (
     <main className="bg-white text-gray-900">
       <section className="pt-10 pb-10 text-center bg-gradient-to-r from-[#a3c9b9] to-[#7fae9e] text-white">
         <div className="max-w-5xl mx-auto px-6">
-          <p className="text-sm font-semibold uppercase tracking-wide mb-3">Nutrition by Iballa Blogs</p>
+          <p className="text-sm font-semibold uppercase tracking-wide mb-3">{copy.eyebrow}</p>
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-5 leading-tight">
-            Evidence-based nutrition guidance
+            {copy.heading}
           </h1>
           <p className="text-base sm:text-lg leading-relaxed max-w-3xl mx-auto">
-            Practical, supportive articles to help you understand your health and build sustainable nutrition habits.
+            {copy.intro}
           </p>
         </div>
       </section>
@@ -359,7 +368,7 @@ function BlogOverview() {
       <section className="relative bg-gray-50 py-10 sm:py-14" aria-labelledby="latest-blog-heading">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 md:px-12">
           <h2 id="latest-blog-heading" className="text-3xl font-semibold mb-6">
-            Latest Blog
+            {copy.latest}
           </h2>
 
           <div className="grid gap-6 lg:grid-cols-[minmax(0,1.45fr)_minmax(22rem,0.8fr)] lg:items-stretch">
@@ -376,7 +385,7 @@ function BlogOverview() {
                       <span className="inline-flex items-center rounded-full bg-[#cde4dc] px-3 py-1 font-semibold text-[#3b5f58]">
                         {latestPost.category}
                       </span>
-                      <span>{formatPostDate(latestPost.date)}</span>
+                      <span>{formatPostDate(latestPost.date, i18n.language)}</span>
                       <span className="inline-flex items-center gap-1">
                         <Clock size={16} />
                         {latestPost.readingTime}
@@ -392,7 +401,7 @@ function BlogOverview() {
                       href={`/blog/${latestPost.slug}`}
                       className="self-start inline-flex items-center gap-2 bg-gradient-to-r from-[#a3c9b9] to-[#7fae9e] text-white text-sm font-semibold px-6 py-2 rounded-full shadow hover:brightness-105 transition"
                     >
-                      Read More
+                      {copy.readMore}
                       <ArrowRight size={18} />
                     </a>
                   </div>
@@ -410,7 +419,7 @@ function BlogOverview() {
       <section className="bg-white py-10 sm:py-14" aria-labelledby="all-blog-posts-heading">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 md:px-12">
           <h2 id="all-blog-posts-heading" className="text-3xl font-semibold mb-6">
-            All Posts
+            {copy.allPosts}
           </h2>
           <div className="space-y-5">
             {postsNewestFirst.map((post) => (
@@ -422,7 +431,7 @@ function BlogOverview() {
                       <span className="inline-flex items-center rounded-full bg-[#cde4dc] px-3 py-1 font-semibold text-[#3b5f58]">
                         {post.category}
                       </span>
-                      <span>{formatPostDate(post.date)}</span>
+                      <span>{formatPostDate(post.date, i18n.language)}</span>
                       <span className="inline-flex items-center gap-1">
                         <Clock size={16} />
                         {post.readingTime}
@@ -533,9 +542,12 @@ function BlogSection({ section }) {
 }
 
 function BlogArticle({ post }) {
-  const currentIndex = blogPosts.findIndex((item) => item.slug === post.slug);
-  const previousPost = currentIndex > 0 ? blogPosts[currentIndex - 1] : null;
-  const nextPost = currentIndex < blogPosts.length - 1 ? blogPosts[currentIndex + 1] : null;
+  const { i18n } = useTranslation();
+  const copy = getUiContent(i18n.language).blog;
+  const localizedPosts = localizeBlogPosts(blogPosts, i18n.language);
+  const currentIndex = localizedPosts.findIndex((item) => item.slug === post.slug);
+  const previousPost = currentIndex > 0 ? localizedPosts[currentIndex - 1] : null;
+  const nextPost = currentIndex < localizedPosts.length - 1 ? localizedPosts[currentIndex + 1] : null;
 
   return (
     <main className="bg-white text-gray-900">
@@ -549,14 +561,14 @@ function BlogArticle({ post }) {
               className="inline-flex items-center gap-2 mb-5 text-sm font-semibold hover:text-gray-100 transition"
             >
               <ArrowLeft size={18} />
-              Back to Blog
+              {copy.back}
             </a>
             <div className="flex flex-wrap items-center gap-3 text-sm mb-4">
               <span className="inline-flex items-center gap-1 rounded-full bg-white/90 px-3 py-1 font-semibold text-[#3b5f58]">
                 <Tag size={15} />
                 {post.category}
               </span>
-              <span>{formatPostDate(post.date)}</span>
+              <span>{formatPostDate(post.date, i18n.language)}</span>
               <span className="inline-flex items-center gap-1">
                 <Clock size={16} />
                 {post.readingTime}
@@ -582,7 +594,7 @@ function BlogArticle({ post }) {
           ))}
 
           <section className="border-t border-[#cde4dc] pt-8">
-            <h2 className="text-2xl sm:text-3xl font-semibold mb-4">References</h2>
+            <h2 className="text-2xl sm:text-3xl font-semibold mb-4">{copy.references}</h2>
             <ol className="list-decimal pl-6 space-y-3 text-sm sm:text-base leading-relaxed text-gray-700">
               {post.references.map((reference) => (
                 <li key={reference.url}>
@@ -608,7 +620,7 @@ function BlogArticle({ post }) {
             className="inline-flex items-center justify-center gap-2 rounded-full bg-white px-5 py-2 text-sm font-semibold text-[#3b5f58] shadow ring-1 ring-[#7fae9e] hover:bg-gray-100 transition"
           >
             <ArrowLeft size={18} />
-            Previous Article
+            {copy.previous}
           </a>
         ) : (
           <span></span>
@@ -618,7 +630,7 @@ function BlogArticle({ post }) {
             href={`/blog/${nextPost.slug}`}
             className="inline-flex items-center justify-center gap-2 rounded-full bg-gradient-to-r from-[#a3c9b9] to-[#7fae9e] px-5 py-2 text-sm font-semibold text-white shadow hover:brightness-105 transition"
           >
-            Next Article
+            {copy.next}
             <ArrowRight size={18} />
           </a>
         ) : (
@@ -626,7 +638,7 @@ function BlogArticle({ post }) {
             href="/blog"
             className="inline-flex items-center justify-center gap-2 rounded-full bg-gradient-to-r from-[#a3c9b9] to-[#7fae9e] px-5 py-2 text-sm font-semibold text-white shadow hover:brightness-105 transition"
           >
-            Back to Blog
+            {copy.back}
             <ArrowRight size={18} />
           </a>
         )}
@@ -646,6 +658,8 @@ const assessmentIcons = {
 };
 
 function AssessmentContactForm({ contact, onContactChange, onSubmit, submitting, error }) {
+  const { i18n } = useTranslation();
+  const copy = getUiContent(i18n.language).assessment;
   return (
     <motion.div
       key="assessment-contact"
@@ -661,9 +675,9 @@ function AssessmentContactForm({ contact, onContactChange, onSubmit, submitting,
             <User size={28} />
           </div>
           <div>
-            <h2 className="text-2xl sm:text-3xl font-semibold leading-tight">Before you start</h2>
+            <h2 className="text-2xl sm:text-3xl font-semibold leading-tight">{copy.beforeTitle}</h2>
             <p className="mt-2 text-sm sm:text-base leading-relaxed text-white/95">
-              Add your details to begin your personalised nutrition overview.
+              {copy.beforeIntro}
             </p>
           </div>
         </div>
@@ -671,7 +685,7 @@ function AssessmentContactForm({ contact, onContactChange, onSubmit, submitting,
       <form className="space-y-4 p-5 sm:p-8" onSubmit={onSubmit}>
         <div className="grid gap-4 sm:grid-cols-2">
           <label className="block">
-            <span className="mb-2 block text-sm font-semibold text-gray-800">First name</span>
+            <span className="mb-2 block text-sm font-semibold text-gray-800">{copy.firstName}</span>
             <input
               type="text"
               value={contact.firstName}
@@ -681,7 +695,7 @@ function AssessmentContactForm({ contact, onContactChange, onSubmit, submitting,
             />
           </label>
           <label className="block">
-            <span className="mb-2 block text-sm font-semibold text-gray-800">Last name</span>
+            <span className="mb-2 block text-sm font-semibold text-gray-800">{copy.lastName}</span>
             <input
               type="text"
               value={contact.lastName}
@@ -692,7 +706,7 @@ function AssessmentContactForm({ contact, onContactChange, onSubmit, submitting,
           </label>
         </div>
         <label className="block">
-          <span className="mb-2 block text-sm font-semibold text-gray-800">Email</span>
+          <span className="mb-2 block text-sm font-semibold text-gray-800">{copy.email}</span>
           <input
             type="email"
             value={contact.email}
@@ -708,9 +722,7 @@ function AssessmentContactForm({ contact, onContactChange, onSubmit, submitting,
             onChange={(event) => onContactChange("newsletterOptIn", event.target.checked)}
             className="mt-1 h-5 w-5 rounded border border-[#7fae9e] checked:bg-[#3b5f58] focus:ring-2 focus:ring-[#cde4dc]"
           />
-          <span>
-            Yes, I’d like to receive nutrition tips and new blog posts by email. I can unsubscribe at any time.
-          </span>
+          <span>{copy.consent}</span>
         </label>
         {error && <p className="text-sm font-semibold text-red-600">{error}</p>}
         <button
@@ -718,7 +730,7 @@ function AssessmentContactForm({ contact, onContactChange, onSubmit, submitting,
           disabled={submitting}
           className="inline-flex items-center justify-center gap-2 rounded-full bg-gradient-to-r from-[#a3c9b9] to-[#7fae9e] px-6 py-2 text-sm font-semibold text-white shadow transition hover:brightness-105 disabled:cursor-not-allowed disabled:opacity-50"
         >
-          {submitting ? "Saving..." : "Start assessment"}
+          {submitting ? copy.saving : copy.start}
           <ArrowRight size={18} />
         </button>
       </form>
@@ -727,6 +739,9 @@ function AssessmentContactForm({ contact, onContactChange, onSubmit, submitting,
 }
 
 function NutritionAssessmentPage() {
+  const { i18n } = useTranslation();
+  const copy = getUiContent(i18n.language).assessment;
+  const localizedSteps = localizeAssessmentSteps(assessmentSteps, i18n.language);
   const draft = loadAssessmentDraft();
   const [contact, setContact] = useState(draft?.contact || {
     firstName: "",
@@ -748,10 +763,10 @@ function NutritionAssessmentPage() {
   const progress = showResults
     ? 100
     : Math.round((completedQuestions / totalQuestions) * 100);
-  const step = assessmentSteps[currentStep];
+  const step = localizedSteps[currentStep];
   const StepIcon = assessmentIcons[step.id] || ClipboardList;
   const isFirstStep = currentStep === 0;
-  const isLastStep = currentStep === assessmentSteps.length - 1;
+  const isLastStep = currentStep === localizedSteps.length - 1;
   const currentStepComplete = step.questions.every((question) => question.optional || answers[question.id]);
 
   useEffect(() => {
@@ -784,7 +799,7 @@ function NutritionAssessmentPage() {
     setContactError("");
 
     if (!contact.firstName.trim() || !contact.lastName.trim() || !isValidEmail(contact.email)) {
-      setContactError("Please enter your first name, last name and a valid email address.");
+      setContactError(copy.detailsError);
       return;
     }
 
@@ -795,7 +810,7 @@ function NutritionAssessmentPage() {
       setContactSubmitted(true);
       window.scrollTo({ top: 0, behavior: "smooth" });
     } catch (error) {
-      setContactError(error.message);
+      setContactError(i18n.language.startsWith("es") ? getUiContent("es").common.genericError : error.message);
     } finally {
       setContactSubmitting(false);
     }
@@ -804,7 +819,7 @@ function NutritionAssessmentPage() {
   const goBack = () => {
     if (showResults) {
       setShowResults(false);
-      setCurrentStep(assessmentSteps.length - 1);
+      setCurrentStep(localizedSteps.length - 1);
       return;
     }
 
@@ -815,7 +830,7 @@ function NutritionAssessmentPage() {
     if (!currentStepComplete) return;
 
     if (isLastStep) {
-      const result = calculateAssessmentResults(answers);
+      const result = calculateAssessmentResults(answers, i18n.language);
       setAssessmentError("");
       setSavingResults(true);
       try {
@@ -824,7 +839,7 @@ function NutritionAssessmentPage() {
         setShowResults(true);
         window.scrollTo({ top: 0, behavior: "smooth" });
       } catch (error) {
-        setAssessmentError(error.message);
+        setAssessmentError(i18n.language.startsWith("es") ? getUiContent("es").common.genericError : error.message);
       } finally {
         setSavingResults(false);
       }
@@ -861,10 +876,10 @@ function NutritionAssessmentPage() {
             Nutrition by Iballa
           </p>
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-5 leading-tight">
-            Nutrition Assessment
+            {copy.title}
           </h1>
           <p className="text-base sm:text-lg leading-relaxed max-w-3xl mx-auto">
-            Get a general overview of your everyday nutrition habits and simple ideas to support your goals.
+            {copy.intro}
           </p>
         </div>
       </section>
@@ -875,15 +890,15 @@ function NutritionAssessmentPage() {
             <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
               <div>
                 <p className="text-sm font-semibold text-[#3b5f58]">
-                  {showResults ? "Assessment complete" : contactSubmitted ? `Step ${currentStep + 1} of ${assessmentSteps.length}` : "Contact details"}
+                  {showResults ? copy.complete : contactSubmitted ? copy.step(currentStep + 1, localizedSteps.length) : copy.contactDetails}
                 </p>
                 <p className="text-sm text-gray-600">
-                  This tool provides general educational insights only. It does not diagnose or replace personalised medical or dietetic advice.
+                  {copy.disclaimer}
                 </p>
               </div>
               <span className="inline-flex items-center gap-2 self-start rounded-full bg-[#cde4dc] px-3 py-1 text-sm font-semibold text-[#3b5f58]">
                 <CheckCircle2 size={16} />
-                {progress}% complete
+                {copy.percentComplete(progress)}
               </span>
             </div>
             <div className="mt-4 h-3 overflow-hidden rounded-full bg-gray-100" aria-hidden="true">
@@ -981,7 +996,7 @@ function NutritionAssessmentPage() {
                       className="inline-flex items-center justify-center gap-2 rounded-full bg-white px-6 py-2 text-sm font-semibold text-[#3b5f58] shadow ring-1 ring-[#7fae9e] transition hover:bg-gray-100 disabled:cursor-not-allowed disabled:opacity-40"
                     >
                       <ArrowLeft size={18} />
-                      Back
+                      {copy.back}
                     </button>
                     <button
                       type="button"
@@ -989,7 +1004,7 @@ function NutritionAssessmentPage() {
                       disabled={!currentStepComplete || savingResults}
                       className="inline-flex items-center justify-center gap-2 rounded-full bg-gradient-to-r from-[#a3c9b9] to-[#7fae9e] px-6 py-2 text-sm font-semibold text-white shadow transition hover:brightness-105 disabled:cursor-not-allowed disabled:opacity-50"
                     >
-                      {savingResults ? "Saving..." : isLastStep ? "View Results" : "Next"}
+                      {savingResults ? copy.saving : isLastStep ? copy.viewResults : copy.next}
                       <ArrowRight size={18} />
                     </button>
                   </div>
@@ -1007,7 +1022,9 @@ function NutritionAssessmentPage() {
 }
 
 function AssessmentResults({ answers, onBack, onRestart }) {
-  const results = calculateAssessmentResults(answers);
+  const { i18n } = useTranslation();
+  const copy = getUiContent(i18n.language).assessment;
+  const results = calculateAssessmentResults(answers, i18n.language);
   const categoryOrder = ["fibre", "protein", "fruitVegetables", "hydration", "lifestyle"];
 
   return (
@@ -1015,7 +1032,7 @@ function AssessmentResults({ answers, onBack, onRestart }) {
       <section className="rounded-xl shadow-lg ring-1 ring-[#7fae9e] bg-white p-5 sm:p-8">
         <div className="flex flex-col gap-6 lg:flex-row lg:items-center lg:justify-between">
           <div className="max-w-2xl">
-            <p className="text-sm font-semibold uppercase tracking-wide text-[#3b5f58]">Your general summary</p>
+            <p className="text-sm font-semibold uppercase tracking-wide text-[#3b5f58]">{copy.summary}</p>
             <h2 className="mt-2 text-2xl sm:text-3xl font-semibold text-gray-900">
               {results.overall.rating}
             </h2>
@@ -1026,7 +1043,7 @@ function AssessmentResults({ answers, onBack, onRestart }) {
           <div className="flex h-36 w-36 shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-[#cde4dc] to-[#a3c9b9] text-[#3b5f58] shadow mx-auto lg:mx-0">
             <div className="text-center">
               <div className="text-4xl font-bold">{results.overall.score}</div>
-              <div className="text-sm font-semibold">out of 100</div>
+              <div className="text-sm font-semibold">{copy.outOf}</div>
             </div>
           </div>
         </div>
@@ -1053,7 +1070,7 @@ function AssessmentResults({ answers, onBack, onRestart }) {
       </section>
 
       <section className="rounded-xl shadow-lg ring-1 ring-[#7fae9e] bg-white p-5 sm:p-8">
-        <h3 className="text-2xl font-semibold text-gray-900">Practical recommendations</h3>
+        <h3 className="text-2xl font-semibold text-gray-900">{copy.recommendations}</h3>
         <ul className="mt-5 space-y-3">
           {results.recommendations.map((recommendation) => (
             <li key={recommendation} className="flex gap-3 text-base leading-relaxed text-gray-700">
@@ -1067,16 +1084,16 @@ function AssessmentResults({ answers, onBack, onRestart }) {
       <section className="rounded-xl shadow-lg bg-gradient-to-r from-[#a3c9b9] to-[#7fae9e] p-6 text-white sm:p-8">
         <div className="flex flex-col gap-5 lg:flex-row lg:items-center lg:justify-between">
           <div className="max-w-2xl">
-            <h3 className="text-2xl sm:text-3xl font-semibold">Looking for tailored nutrition guidance?</h3>
+            <h3 className="text-2xl sm:text-3xl font-semibold">{copy.tailoredHeading}</h3>
             <p className="mt-3 text-base sm:text-lg leading-relaxed">
-              While this assessment provides general nutrition insights, a consultation can provide personalised recommendations based on your goals, lifestyle, and health history.
+              {copy.tailoredText}
             </p>
           </div>
           <a
             href="/#appointments"
             className="inline-flex items-center justify-center gap-2 rounded-full bg-white px-6 py-3 text-sm font-semibold text-[#3b5f58] shadow transition hover:bg-gray-100"
           >
-            BOOK A CONSULTATION
+            {copy.book}
             <Calendar size={18} />
           </a>
         </div>
@@ -1089,7 +1106,7 @@ function AssessmentResults({ answers, onBack, onRestart }) {
           className="inline-flex items-center justify-center gap-2 rounded-full bg-white px-6 py-2 text-sm font-semibold text-[#3b5f58] shadow ring-1 ring-[#7fae9e] transition hover:bg-gray-100"
         >
           <ArrowLeft size={18} />
-          Back to answers
+          {copy.backAnswers}
         </button>
         <button
           type="button"
@@ -1097,7 +1114,7 @@ function AssessmentResults({ answers, onBack, onRestart }) {
           className="inline-flex items-center justify-center gap-2 rounded-full bg-gradient-to-r from-[#a3c9b9] to-[#7fae9e] px-6 py-2 text-sm font-semibold text-white shadow transition hover:brightness-105"
         >
           <RotateCcw size={18} />
-          Restart assessment
+          {copy.restart}
         </button>
       </div>
     </div>
@@ -1105,6 +1122,9 @@ function AssessmentResults({ answers, onBack, onRestart }) {
 }
 
 function AdminSubscribersPage() {
+  const { i18n } = useTranslation();
+  const copy = getUiContent(i18n.language).admin;
+  const genericError = getUiContent(i18n.language).common.genericError;
   const [session, setSession] = useState(null);
   const [checkingSession, setCheckingSession] = useState(true);
   const [isAdmin, setIsAdmin] = useState(false);
@@ -1123,7 +1143,7 @@ function AdminSubscribersPage() {
         setSubscribers(await listSubscribers());
       }
     } catch (error) {
-      setStatus({ type: "error", message: error.message });
+      setStatus({ type: "error", message: i18n.language.startsWith("es") ? genericError : error.message });
     } finally {
       setLoadingSubscribers(false);
     }
@@ -1145,7 +1165,7 @@ function AdminSubscribersPage() {
       })
       .catch((error) => {
         if (!mounted) return;
-        setStatus({ type: "error", message: error.message });
+        setStatus({ type: "error", message: i18n.language.startsWith("es") ? genericError : error.message });
         setCheckingSession(false);
       });
 
@@ -1174,7 +1194,7 @@ function AdminSubscribersPage() {
     try {
       await signInAdmin(form.email, form.password);
     } catch (error) {
-      setStatus({ type: "error", message: error.message });
+      setStatus({ type: "error", message: i18n.language.startsWith("es") ? genericError : error.message });
     }
   };
 
@@ -1185,7 +1205,7 @@ function AdminSubscribersPage() {
       setIsAdmin(false);
       setSubscribers([]);
     } catch (error) {
-      setStatus({ type: "error", message: error.message });
+      setStatus({ type: "error", message: i18n.language.startsWith("es") ? genericError : error.message });
     }
   };
 
@@ -1195,7 +1215,7 @@ function AdminSubscribersPage() {
       await updateUnsubscribeStatus(subscriber.id, !subscriber.unsubscribed);
       setSubscribers(await listSubscribers());
     } catch (error) {
-      setStatus({ type: "error", message: error.message });
+      setStatus({ type: "error", message: i18n.language.startsWith("es") ? genericError : error.message });
     }
   };
 
@@ -1203,12 +1223,12 @@ function AdminSubscribersPage() {
     <main className="bg-white text-gray-900">
       <section className="pt-10 pb-10 text-center bg-gradient-to-r from-[#a3c9b9] to-[#7fae9e] text-white">
         <div className="max-w-5xl mx-auto px-6">
-          <p className="text-sm font-semibold uppercase tracking-wide mb-3">Admin</p>
+          <p className="text-sm font-semibold uppercase tracking-wide mb-3">{copy.eyebrow}</p>
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-5 leading-tight">
-            Newsletter Subscribers
+            {copy.heading}
           </h1>
           <p className="text-base sm:text-lg leading-relaxed max-w-3xl mx-auto">
-            Review subscriber consent, signup source and unsubscribe status.
+            {copy.intro}
           </p>
         </div>
       </section>
@@ -1217,14 +1237,14 @@ function AdminSubscribersPage() {
         <div className="max-w-6xl mx-auto px-4 sm:px-6 md:px-12">
           {!isSupabaseConfigured ? (
             <div className="rounded-xl shadow-lg ring-1 ring-[#7fae9e] bg-white p-5 sm:p-8">
-              <h2 className="text-2xl font-semibold text-gray-900">Supabase is not configured</h2>
+              <h2 className="text-2xl font-semibold text-gray-900">{copy.notConfigured}</h2>
               <p className="mt-3 text-gray-700">
-                Add REACT_APP_SUPABASE_URL and REACT_APP_SUPABASE_PUBLISHABLE_KEY to .env.local to enable admin login.
+                {copy.notConfiguredText}
               </p>
             </div>
           ) : checkingSession ? (
             <div className="rounded-xl shadow-lg ring-1 ring-[#7fae9e] bg-white p-5 sm:p-8">
-              <p className="font-semibold text-[#3b5f58]">Checking session...</p>
+              <p className="font-semibold text-[#3b5f58]">{copy.checking}</p>
             </div>
           ) : !session ? (
             <form className="mx-auto max-w-md rounded-xl shadow-lg ring-1 ring-[#7fae9e] bg-white p-5 sm:p-8" onSubmit={handleLogin}>
@@ -1233,13 +1253,13 @@ function AdminSubscribersPage() {
                   <ShieldCheck size={24} />
                 </div>
                 <div>
-                  <h2 className="text-2xl font-semibold text-gray-900">Admin sign in</h2>
-                  <p className="text-sm text-gray-600">Use your Supabase Auth admin account.</p>
+                  <h2 className="text-2xl font-semibold text-gray-900">{copy.signIn}</h2>
+                  <p className="text-sm text-gray-600">{copy.signInHelp}</p>
                 </div>
               </div>
               <div className="space-y-4">
                 <label className="block">
-                  <span className="mb-2 block text-sm font-semibold text-gray-800">Email</span>
+                  <span className="mb-2 block text-sm font-semibold text-gray-800">{copy.email}</span>
                   <input
                     type="email"
                     value={form.email}
@@ -1249,7 +1269,7 @@ function AdminSubscribersPage() {
                   />
                 </label>
                 <label className="block">
-                  <span className="mb-2 block text-sm font-semibold text-gray-800">Password</span>
+                  <span className="mb-2 block text-sm font-semibold text-gray-800">{copy.password}</span>
                   <input
                     type="password"
                     value={form.password}
@@ -1263,16 +1283,16 @@ function AdminSubscribersPage() {
                   type="submit"
                   className="inline-flex items-center justify-center gap-2 rounded-full bg-gradient-to-r from-[#a3c9b9] to-[#7fae9e] px-6 py-2 text-sm font-semibold text-white shadow transition hover:brightness-105"
                 >
-                  Sign in
+                  {copy.signInButton}
                   <ShieldCheck size={18} />
                 </button>
               </div>
             </form>
           ) : !isAdmin ? (
             <div className="rounded-xl shadow-lg ring-1 ring-[#7fae9e] bg-white p-5 sm:p-8">
-              <h2 className="text-2xl font-semibold text-gray-900">Admin access required</h2>
+              <h2 className="text-2xl font-semibold text-gray-900">{copy.accessRequired}</h2>
               <p className="mt-3 text-gray-700">
-                You are signed in, but this account is not listed in the admin_users table.
+                {copy.accessText}
               </p>
               {status.message && <p className="mt-3 text-sm font-semibold text-red-600">{status.message}</p>}
               <button
@@ -1280,7 +1300,7 @@ function AdminSubscribersPage() {
                 onClick={handleSignOut}
                 className="mt-5 inline-flex items-center justify-center gap-2 rounded-full bg-white px-6 py-2 text-sm font-semibold text-[#3b5f58] shadow ring-1 ring-[#7fae9e] transition hover:bg-gray-100"
               >
-                Sign out
+                {copy.signOut}
                 <LogOut size={18} />
               </button>
             </div>
@@ -1288,7 +1308,7 @@ function AdminSubscribersPage() {
             <div className="space-y-5">
               <div className="flex flex-col gap-3 rounded-xl shadow-lg ring-1 ring-[#7fae9e] bg-white p-5 sm:flex-row sm:items-center sm:justify-between">
                 <div>
-                  <p className="text-sm font-semibold text-[#3b5f58]">Signed in as admin</p>
+                  <p className="text-sm font-semibold text-[#3b5f58]">{copy.signedIn}</p>
                   <p className="text-sm text-gray-600">{session.user.email}</p>
                 </div>
                 <button
@@ -1296,7 +1316,7 @@ function AdminSubscribersPage() {
                   onClick={handleSignOut}
                   className="inline-flex items-center justify-center gap-2 rounded-full bg-white px-6 py-2 text-sm font-semibold text-[#3b5f58] shadow ring-1 ring-[#7fae9e] transition hover:bg-gray-100"
                 >
-                  Sign out
+                  {copy.signOut}
                   <LogOut size={18} />
                 </button>
               </div>
@@ -1312,24 +1332,19 @@ function AdminSubscribersPage() {
                   <table className="min-w-full text-left text-sm">
                     <thead className="bg-gradient-to-r from-[#a3c9b9] to-[#7fae9e] text-white">
                       <tr>
-                        <th className="px-4 py-3 font-semibold">Name</th>
-                        <th className="px-4 py-3 font-semibold">Email</th>
-                        <th className="px-4 py-3 font-semibold">Source</th>
-                        <th className="px-4 py-3 font-semibold">Consent</th>
-                        <th className="px-4 py-3 font-semibold">Signup date</th>
-                        <th className="px-4 py-3 font-semibold">Unsubscribe status</th>
-                        <th className="px-4 py-3 font-semibold">MailerLite sync</th>
-                        <th className="px-4 py-3 font-semibold">Action</th>
+                        {copy.columns.map((column) => (
+                          <th key={column} className="px-4 py-3 font-semibold">{column}</th>
+                        ))}
                       </tr>
                     </thead>
                     <tbody className="divide-y divide-[#cde4dc]">
                       {loadingSubscribers ? (
                         <tr>
-                          <td colSpan="8" className="px-4 py-6 text-center text-gray-700">Loading subscribers...</td>
+                          <td colSpan="8" className="px-4 py-6 text-center text-gray-700">{copy.loading}</td>
                         </tr>
                       ) : subscribers.length === 0 ? (
                         <tr>
-                          <td colSpan="8" className="px-4 py-6 text-center text-gray-700">No subscribers yet.</td>
+                          <td colSpan="8" className="px-4 py-6 text-center text-gray-700">{copy.empty}</td>
                         </tr>
                       ) : (
                         subscribers.map((subscriber) => (
@@ -1340,18 +1355,22 @@ function AdminSubscribersPage() {
                                 : subscriber.name}
                             </td>
                             <td className="px-4 py-3 text-gray-800">{subscriber.email}</td>
-                            <td className="px-4 py-3 text-gray-700 capitalize">{subscriber.source}</td>
                             <td className="px-4 py-3 text-gray-700">
-                              {subscriber.newsletter_opt_in ? "Consented" : "No consent"}
+                              {copy.sources[subscriber.source] || subscriber.source}
                             </td>
                             <td className="px-4 py-3 text-gray-700">
-                              {formatPostDate(subscriber.signup_date)}
+                              {subscriber.newsletter_opt_in ? copy.consented : copy.noConsent}
                             </td>
                             <td className="px-4 py-3 text-gray-700">
-                              {subscriber.unsubscribed ? "Unsubscribed" : "Subscribed"}
+                              {formatPostDate(subscriber.signup_date, i18n.language)}
                             </td>
                             <td className="px-4 py-3 text-gray-700">
-                              {subscriber.provider_sync?.status || "not_configured"}
+                              {subscriber.unsubscribed ? copy.unsubscribed : copy.subscribed}
+                            </td>
+                            <td className="px-4 py-3 text-gray-700">
+                              {copy.providerStatuses[subscriber.provider_sync?.status || "not_configured"]
+                                || subscriber.provider_sync?.status
+                                || copy.providerStatuses.not_configured}
                             </td>
                             <td className="px-4 py-3">
                               <button
@@ -1359,7 +1378,7 @@ function AdminSubscribersPage() {
                                 onClick={() => toggleUnsubscribed(subscriber)}
                                 className="rounded-full bg-white px-4 py-2 text-xs font-semibold text-[#3b5f58] shadow ring-1 ring-[#7fae9e] transition hover:bg-gray-100"
                               >
-                                {subscriber.unsubscribed ? "Mark subscribed" : "Mark unsubscribed"}
+                                {subscriber.unsubscribed ? copy.markSubscribed : copy.markUnsubscribed}
                               </button>
                             </td>
                           </tr>
@@ -1384,13 +1403,15 @@ export default function NutritionByIballa() {
   const [navOpen, setNavOpen] = useState(false);
   const { t, i18n } = useTranslation();
   const lang = i18n.language;
+  const uiCopy = getUiContent(lang);
+  const localizedBlogPosts = localizeBlogPosts(blogPosts, lang);
   const [expanded, setExpanded] = useState(false);
   const [expandedServiceKey, setExpandedServiceKey] = useState(null);
   const [isMobile, setIsMobile] = useState(false);
   const [path, setPath] = useState(window.location.pathname);
 
   const slug = path.startsWith("/blog/") ? path.replace("/blog/", "") : "";
-  const activePost = slug ? getBlogPost(slug) : null;
+  const activePost = slug ? localizedBlogPosts.find((post) => post.slug === slug) || getBlogPost(slug) : null;
   const isBlogRoute = path === "/blog";
   const isArticleRoute = path.startsWith("/blog/");
   const isAssessmentRoute = path === "/nutrition-assessment";
@@ -1471,21 +1492,21 @@ export default function NutritionByIballa() {
     const title = activePost
       ? `${activePost.title} | Nutrition by Iballa`
       : isAssessmentRoute
-        ? "Nutrition Assessment | Nutrition by Iballa"
+        ? `${uiCopy.assessment.title} | Nutrition by Iballa`
       : isAdminSubscribersRoute
-        ? "Admin Subscribers | Nutrition by Iballa"
+        ? `${uiCopy.admin.heading} | Nutrition by Iballa`
       : isBlogRoute
         ? "Blog | Nutrition by Iballa"
         : "Nutrition by Iballa";
     const description = activePost
       ? activePost.excerpt
       : isAssessmentRoute
-        ? "A general nutrition habits assessment from Nutrition by Iballa with educational insights and practical recommendations."
+        ? uiCopy.assessment.intro
       : isAdminSubscribersRoute
-        ? "Admin-only newsletter subscriber management for Nutrition by Iballa."
+        ? uiCopy.admin.intro
       : isBlogRoute
-        ? "Evidence-based nutrition articles from Nutrition by Iballa."
-        : "Personalised, evidence-based nutrition advice and care in English and Spanish.";
+        ? uiCopy.blog.intro
+        : t("hero.subtitle");
 
     document.title = title;
     upsertMeta("description", description);
@@ -1514,7 +1535,7 @@ export default function NutritionByIballa() {
           ? {
             "@context": "https://schema.org",
             "@type": "WebPage",
-            name: "Nutrition Assessment",
+            name: uiCopy.assessment.title,
             description,
             url: `${window.location.origin}/nutrition-assessment`
           }
@@ -1542,7 +1563,7 @@ export default function NutritionByIballa() {
               url: window.location.origin
             }
     );
-  }, [activePost, isAdminSubscribersRoute, isAssessmentRoute, isBlogRoute]);
+  }, [activePost, isAdminSubscribersRoute, isAssessmentRoute, isBlogRoute, t, uiCopy]);
 
  const appointmentTypes = {
   en: [
@@ -1576,15 +1597,15 @@ export default function NutritionByIballa() {
     {/* Header */}
   <header className="h-24 shadow-md bg-white relative z-[999]">
   <div className="max-w-7xl mx-auto w-full px-4 flex justify-between items-center relative z-[1000]">
-    <img src="/logo.png" alt="Logo" className="h-20 w-[180px] object-contain" />
+    <img src="/logo.png" alt={t("logoAlt")} className="h-20 w-[180px] object-contain" />
 
     <div className="flex items-center gap-6 relative z-[1000]">
       <LanguageDropdown />
       <nav className="hidden md:flex space-x-6">
         <a href="/">{t("nav.home")}</a>
         <a href="/#appointments">{t("nav.appointments")}</a>
-        <a href="/nutrition-assessment">Assessment</a>
-        <a href="/blog">Blog</a>
+        <a href="/nutrition-assessment">{uiCopy.nav.assessment}</a>
+        <a href="/blog">{uiCopy.nav.blog}</a>
         <a href="/#contact">{t("nav.contact")}</a>
       </nav>
 
@@ -1608,10 +1629,10 @@ export default function NutritionByIballa() {
         {t("nav.appointments")}
       </a>
       <a href="/nutrition-assessment" onClick={() => setNavOpen(false)}>
-        Assessment
+        {uiCopy.nav.assessment}
       </a>
       <a href="/blog" onClick={() => setNavOpen(false)}>
-        Blog
+        {uiCopy.nav.blog}
       </a>
       <a href="/#contact" onClick={() => setNavOpen(false)}>
         {t("nav.contact")}
@@ -1631,14 +1652,14 @@ export default function NutritionByIballa() {
   <BlogArticle post={activePost} />
 ) : isArticleRoute ? (
   <main className="bg-gray-50 px-4 py-16 text-center">
-    <h1 className="text-3xl font-semibold mb-4">Article not found</h1>
-    <p className="text-gray-700 mb-6">The article you are looking for is not available.</p>
+    <h1 className="text-3xl font-semibold mb-4">{uiCopy.blog.notFound}</h1>
+    <p className="text-gray-700 mb-6">{uiCopy.blog.notFoundText}</p>
     <a
       href="/blog"
       className="inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-[#a3c9b9] to-[#7fae9e] px-6 py-2 text-sm font-semibold text-white shadow hover:brightness-105 transition"
     >
       <ArrowLeft size={18} />
-      Back to Blog
+      {uiCopy.blog.back}
     </a>
   </main>
 ) : (
@@ -1678,7 +1699,7 @@ export default function NutritionByIballa() {
   {/* Background Image Layer */}
   <img
     src="/banner2.png"
-    alt="Services Banner"
+    alt=""
     className="absolute inset-0 w-full h-full object-cover object-top sm:object-center z-0"
   />
 
@@ -1828,7 +1849,7 @@ export default function NutritionByIballa() {
                 onClick={() => setExpanded(!expanded)}
                 className="mt-2 text-sm underline text-white hover:text-gray-200 transition"
               >
-                {expanded ? "Read less" : "Read more"}
+                {expanded ? uiCopy.common.readLess : uiCopy.common.readMore}
               </button>
             </>
           ) : (
@@ -1970,9 +1991,10 @@ export default function NutritionByIballa() {
       <div className="text-center pt-2">
         <button
           type="submit"
-          className="cursor-pointer rounded-md bg-white px-8 py-3 text-sm font-medium text-green-700 hover:bg-gray-100 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-white"
+          disabled={state.submitting}
+          className="cursor-pointer rounded-md bg-white px-8 py-3 text-sm font-medium text-green-700 hover:bg-gray-100 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-white disabled:cursor-not-allowed disabled:opacity-60"
         >
-          {t("contact.fields.submit")}
+          {state.submitting ? t("contact.fields.sending") : t("contact.fields.submit")}
         </button>
       </div>
     </form>

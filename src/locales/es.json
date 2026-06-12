@@ -86,7 +86,8 @@
       "email": "Correo electrónico",
       "message": "Mensaje",
       "note": "Responderé personalmente en un plazo de 1 a 2 días hábiles.",
-      "submit": "Enviar"
+      "submit": "Enviar",
+      "sending": "Enviando..."
     }
   },
   "footer": {
