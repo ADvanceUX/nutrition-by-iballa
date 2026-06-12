@@ -5,15 +5,16 @@ import {
   Mail, Menu, X, Calendar, CreditCard, RotateCcw, Droplet, Leaf,
   Venus, Soup, HeartPulse, Stethoscope, Linkedin, Instagram, ChevronDown,
   ArrowLeft, ArrowRight, Clock, User, Tag, CheckCircle2, ClipboardList,
-  GlassWater, Wheat, Dumbbell, Apple, Utensils, ShieldCheck, LogOut
+  GlassWater, Wheat, Dumbbell, Apple, Utensils, ShieldCheck, LogOut,
+  Scale, Syringe, ChevronUp
 } from "lucide-react";
 import "./App.css";
-import "./flipcards.css";
 import "./index.css";
 import { useTranslation } from "react-i18next";
 import IntestineIcon from "./Icons/IntestineIcon";
 import { Analytics } from "@vercel/analytics/react"
 import { blogPosts, getBlogPost } from "./blogPosts";
+import { servicesContent } from "./servicesData";
 import {
   assessmentSteps,
   calculateAssessmentResults,
@@ -85,15 +86,14 @@ function LanguageDropdown() {
   );
 }
 
-// Services Array
-const services = [
-  { key: "diabetes", icon: Droplet, iconColor: "text-red-500", backColor: "bg-red-100" },
-  { key: "gut", icon: IntestineIcon, iconColor: "text-orange-500", backColor: "bg-orange-100" },
-  { key: "heart", icon: HeartPulse, iconColor: "text-pink-500", backColor: "bg-pink-100" },
-  { key: "women", icon: Venus, iconColor: "text-purple-500", backColor: "bg-purple-100" },
-  { key: "healthy", icon: Leaf, iconColor: "text-green-500", backColor: "bg-green-100" },
-  { key: "malnutrition", icon: Soup, iconColor: "text-sky-500", backColor: "bg-sky-100" }
-];
+const serviceIcons = {
+  clipboard: ClipboardList,
+  droplet: Droplet,
+  gut: IntestineIcon,
+  scale: Scale,
+  syringe: Syringe,
+  venus: Venus
+};
 
 function formatPostDate(date) {
   return new Intl.DateTimeFormat("en-GB", {
@@ -1301,6 +1301,7 @@ export default function NutritionByIballa() {
   const { t, i18n } = useTranslation();
   const lang = i18n.language;
   const [expanded, setExpanded] = useState(false);
+  const [expandedServiceKey, setExpandedServiceKey] = useState(null);
   const [isMobile, setIsMobile] = useState(false);
   const [path, setPath] = useState(window.location.pathname);
 
@@ -1310,6 +1311,7 @@ export default function NutritionByIballa() {
   const isArticleRoute = path.startsWith("/blog/");
   const isAssessmentRoute = path === "/nutrition-assessment";
   const isAdminSubscribersRoute = path === "/admin/subscribers";
+  const serviceCopy = servicesContent[lang] || servicesContent.en;
 
   useEffect(() => {
     const handleResize = () => {
@@ -1592,7 +1594,7 @@ export default function NutritionByIballa() {
 </section>
 
 
- <section id="services" className="relative bg-white overflow-hidden">
+ <section id="services" className="relative overflow-hidden bg-[#f7faf8]">
   {/* Background Image Layer */}
   <img
     src="/banner2.png"
@@ -1601,48 +1603,132 @@ export default function NutritionByIballa() {
   />
 
   {/* Optional overlay for readability */}
-  <div className="absolute inset-0 bg-white/80 z-10"></div>
+  <div className="absolute inset-0 bg-white/90 z-10"></div>
 
   {/* Content Layer */}
-  <div className="relative z-20 px-4 sm:px-8 md:px-12 py-12">
-    <h2 className="text-3xl font-semibold mb-12 text-center">
+  <div className="relative z-20 px-4 py-12 sm:px-8 sm:py-16 md:px-12">
+    <div className="mx-auto mb-9 max-w-3xl text-center">
+    <h2 className="mb-3 text-3xl font-semibold text-[#294b43] sm:text-4xl">
       {t("services.heading")}
     </h2>
-    <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
-      {services.map((service, idx) => {
-        const Icon = service.icon;
+      <p className="text-base leading-relaxed text-gray-700 sm:text-lg">{serviceCopy.intro}</p>
+    </div>
+    <div className="mx-auto grid max-w-6xl grid-cols-1 gap-5 md:grid-cols-2">
+      {serviceCopy.services.map((service) => {
+        const Icon = serviceIcons[service.icon];
+        const isExpanded = expandedServiceKey === service.key;
+        const panelId = `service-panel-${service.key}`;
         return (
-          <div key={idx} className="flip-card h-56 overflow-hidden">
-            <div className="flip-card-inner relative w-full h-full rounded-xl shadow-lg">
-              <div className="flip-card-front absolute inset-0 flex flex-col justify-start items-center bg-gradient-to-br from-[#cde4dc] to-[#a3c9b9] text-white rounded-xl p-6">
-                <RotateCcw className="absolute top-3 right-3 w-5 h-5 text-white opacity-70" />
-                <div className="h-6"></div>
-                <Icon size={36} className={`${service.iconColor} mb-3`} />
-                <h3 className="text-sm sm:text-base md:text-lg font-bold text-center leading-snug max-w-[14ch] sm:max-w-none mx-auto break-words">
-                  {t(`services.items.${service.key}.title`)}
-                </h3>
+          <article
+            key={service.key}
+            className={`overflow-hidden rounded-2xl border border-[#cde4dc] bg-white shadow-[0_8px_30px_rgba(59,95,88,0.09)] transition-shadow duration-300 hover:shadow-[0_12px_36px_rgba(59,95,88,0.14)] ${
+              isExpanded ? "md:col-span-2" : ""
+            }`}
+          >
+            <div className="flex h-full flex-col p-5 sm:p-6">
+              <div className="flex items-start gap-4">
+                <div className={`flex h-12 w-12 shrink-0 items-center justify-center rounded-xl ${service.iconBackground}`}>
+                  <Icon size={27} className={service.iconColor} aria-hidden="true" />
+                </div>
+                <div>
+                  <h3 className="text-xl font-semibold leading-snug text-[#294b43]">{service.title}</h3>
+                  <p className="mt-2 text-[15px] leading-relaxed text-gray-700">{service.summary}</p>
+                </div>
               </div>
-              <div className={`flip-card-back absolute inset-0 flex flex-col justify-center items-center ${service.backColor} text-gray-900 rounded-xl p-6`}>
-                {(() => {
-                  const desc = t(`services.items.${service.key}.description`, { returnObjects: true });
-                  return Array.isArray(desc) ? (
-                    <ul className="list-disc list-inside text-left text-sm leading-relaxed space-y-1">
-                      {desc.map((item, idx) => (
-                        <li key={idx}>{item}</li>
-                      ))}
-                    </ul>
-                  ) : (
-                    <p className="text-sm text-center leading-relaxed">
-                      {desc}
-                    </p>
-                  );
-                })()}
+
+              <div className="mt-5 flex flex-wrap gap-3">
+                <button
+                  type="button"
+                  aria-expanded={isExpanded}
+                  aria-controls={panelId}
+                  onClick={() => setExpandedServiceKey(isExpanded ? null : service.key)}
+                  className="inline-flex min-h-11 items-center justify-center gap-2 rounded-full border-2 border-[#7fae9e] px-5 py-2 text-sm font-semibold text-[#315f55] transition hover:bg-[#edf6f2] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#315f55] focus-visible:ring-offset-2"
+                >
+                  {isExpanded ? serviceCopy.readLess : serviceCopy.readMore}
+                  {isExpanded ? <ChevronUp size={17} aria-hidden="true" /> : <ChevronDown size={17} aria-hidden="true" />}
+                </button>
+                <a
+                  href={appointmentTypes[lang]?.[0]?.calendlyUrl || appointmentTypes.en[0].calendlyUrl}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="inline-flex min-h-11 items-center justify-center rounded-full bg-gradient-to-r from-[#7fae9e] to-[#5f9282] px-5 py-2 text-sm font-semibold text-white shadow-sm transition hover:brightness-105 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#315f55] focus-visible:ring-offset-2"
+                >
+                  {serviceCopy.bookConsultation}
+                </a>
               </div>
+
+              <AnimatePresence initial={false}>
+                {isExpanded && (
+                  <motion.div
+                    id={panelId}
+                    role="region"
+                    aria-label={service.title}
+                    initial={{ height: 0, opacity: 0 }}
+                    animate={{ height: "auto", opacity: 1 }}
+                    exit={{ height: 0, opacity: 0 }}
+                    transition={{ height: { duration: 0.3 }, opacity: { duration: 0.2 } }}
+                    className="overflow-hidden"
+                  >
+                    <div className="mt-6 border-t border-[#dbeae4] pt-6">
+                      <div className="grid gap-5 md:grid-cols-3">
+                        <div>
+                          <h4 className="font-semibold text-[#315f55]">{serviceCopy.headings.what}</h4>
+                          <p className="mt-2 text-sm leading-relaxed text-gray-700">{service.what}</p>
+                        </div>
+                        <div>
+                          <h4 className="font-semibold text-[#315f55]">{serviceCopy.headings.who}</h4>
+                          <p className="mt-2 text-sm leading-relaxed text-gray-700">{service.who}</p>
+                        </div>
+                        <div>
+                          <h4 className="font-semibold text-[#315f55]">{serviceCopy.headings.expect}</h4>
+                          <p className="mt-2 text-sm leading-relaxed text-gray-700">{service.expect}</p>
+                        </div>
+                      </div>
+                      <div className="mt-6 rounded-xl bg-[#edf6f2] p-5">
+                        <h4 className="font-semibold text-[#294b43]">{serviceCopy.headings.book}</h4>
+                        <p className="mt-1 text-sm leading-relaxed text-gray-700">{serviceCopy.bookingText}</p>
+                        <div className="mt-4 flex flex-wrap gap-3">
+                          <a
+                            href={appointmentTypes[lang]?.[0]?.calendlyUrl || appointmentTypes.en[0].calendlyUrl}
+                            target="_blank"
+                            rel="noreferrer"
+                            className="inline-flex min-h-11 items-center justify-center rounded-full bg-[#477b6c] px-5 py-2 text-sm font-semibold text-white transition hover:bg-[#365f54] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#315f55] focus-visible:ring-offset-2"
+                          >
+                            {serviceCopy.bookConsultation}
+                          </a>
+                          <a
+                            href="#contact"
+                            className="inline-flex min-h-11 items-center justify-center rounded-full border-2 border-[#7fae9e] bg-white px-5 py-2 text-sm font-semibold text-[#315f55] transition hover:bg-gray-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#315f55] focus-visible:ring-offset-2"
+                          >
+                            {serviceCopy.contactMe}
+                          </a>
+                        </div>
+                      </div>
+                    </div>
+                  </motion.div>
+                )}
+              </AnimatePresence>
             </div>
-          </div>
+          </article>
         );
       })}
     </div>
+
+    <div className="mx-auto mt-10 max-w-6xl rounded-2xl border border-[#cde4dc] bg-white/95 p-6 shadow-sm sm:p-8">
+      <h3 className="text-center text-2xl font-semibold text-[#294b43]">{serviceCopy.additionalHeading}</h3>
+      <p className="mt-2 text-center text-sm text-gray-700">{serviceCopy.additionalIntro}</p>
+      <ul className="mt-5 flex flex-wrap justify-center gap-3">
+        {serviceCopy.additionalAreas.map((area) => (
+          <li key={area} className="rounded-full bg-[#edf6f2] px-4 py-2 text-sm font-medium text-[#315f55]">
+            {area}
+          </li>
+        ))}
+      </ul>
+    </div>
+
+    <p className="mx-auto mt-6 max-w-4xl text-center text-sm leading-relaxed text-gray-600">
+      {serviceCopy.disclaimer}
+    </p>
   </div>
 </section>
 
