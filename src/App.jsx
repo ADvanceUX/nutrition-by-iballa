@@ -1636,7 +1636,7 @@ export default function NutritionByIballa() {
                 </div>
               </div>
 
-              <div className="mt-5 flex flex-wrap gap-3">
+              <div className="mt-5">
                 <button
                   type="button"
                   aria-expanded={isExpanded}
@@ -1647,14 +1647,6 @@ export default function NutritionByIballa() {
                   {isExpanded ? serviceCopy.readLess : serviceCopy.readMore}
                   {isExpanded ? <ChevronUp size={17} aria-hidden="true" /> : <ChevronDown size={17} aria-hidden="true" />}
                 </button>
-                <a
-                  href={appointmentTypes[lang]?.[0]?.calendlyUrl || appointmentTypes.en[0].calendlyUrl}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="inline-flex min-h-11 items-center justify-center rounded-full bg-gradient-to-r from-[#7fae9e] to-[#5f9282] px-5 py-2 text-sm font-semibold text-white shadow-sm transition hover:brightness-105 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#315f55] focus-visible:ring-offset-2"
-                >
-                  {serviceCopy.bookConsultation}
-                </a>
               </div>
 
               <AnimatePresence initial={false}>
