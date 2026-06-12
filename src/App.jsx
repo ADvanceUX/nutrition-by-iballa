@@ -1720,20 +1720,24 @@ export default function NutritionByIballa() {
         const isExpanded = expandedServiceKey === service.key;
         const panelId = `service-panel-${service.key}`;
         return (
-          <article
+          <motion.article
             key={service.key}
-            className={`overflow-hidden rounded-2xl border border-[#cde4dc] bg-white shadow-[0_8px_30px_rgba(59,95,88,0.09)] transition-shadow duration-300 hover:shadow-[0_12px_36px_rgba(59,95,88,0.14)] ${
-              isExpanded ? "col-span-2" : ""
+            layout
+            transition={{ layout: { duration: 0.25, ease: "easeOut" } }}
+            className={`min-h-0 overflow-hidden rounded-2xl border bg-white transition-[box-shadow,border-color] duration-300 ${
+              isExpanded
+                ? "col-span-2 border-[#7fae9e] shadow-[0_12px_36px_rgba(59,95,88,0.14)]"
+                : "border-[#cde4dc] shadow-[0_8px_30px_rgba(59,95,88,0.09)] hover:shadow-[0_12px_36px_rgba(59,95,88,0.14)]"
             }`}
           >
-            <div className="flex h-full flex-col">
+            <div>
               <button
                 type="button"
                 aria-expanded={isExpanded}
                 aria-controls={panelId}
                 aria-label={`${isExpanded ? serviceCopy.readLess : serviceCopy.readMore}: ${service.title}`}
                 onClick={() => setExpandedServiceKey(isExpanded ? null : service.key)}
-                className="group relative flex h-full w-full flex-col p-3 pr-11 text-left transition-colors hover:bg-[#f7fbf9] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-[#477b6c] sm:p-5 sm:pr-14 md:p-6 md:pr-16"
+                className="group relative block w-full p-3 pr-11 text-left transition-colors hover:bg-[#f7fbf9] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-[#477b6c] sm:p-5 sm:pr-14 md:p-6 md:pr-16"
               >
                 <span className="absolute right-3 top-3 flex h-8 w-8 items-center justify-center rounded-full bg-[#edf6f2] text-[#315f55] transition group-hover:bg-[#dceee7] sm:right-5 sm:top-5">
                   {isExpanded ? <ChevronUp size={18} aria-hidden="true" /> : <ChevronDown size={18} aria-hidden="true" />}
@@ -1758,11 +1762,11 @@ export default function NutritionByIballa() {
                     initial={{ height: 0, opacity: 0 }}
                     animate={{ height: "auto", opacity: 1 }}
                     exit={{ height: 0, opacity: 0 }}
-                    transition={{ height: { duration: 0.3 }, opacity: { duration: 0.2 } }}
+                    transition={{ height: { duration: 0.25, ease: "easeOut" }, opacity: { duration: 0.18 } }}
                     className="overflow-hidden px-3 pb-3 sm:px-5 sm:pb-5 md:px-6 md:pb-6"
                   >
-                    <div className="border-t border-[#dbeae4] pt-6">
-                      <div className="grid gap-5 md:grid-cols-3">
+                    <div className="border-t border-[#dbeae4] pt-4 sm:pt-5">
+                      <div className="grid gap-4 md:grid-cols-3 md:gap-5">
                         <div>
                           <h4 className="font-semibold text-[#315f55]">{serviceCopy.headings.what}</h4>
                           <p className="mt-2 text-sm leading-relaxed text-gray-700">{service.what}</p>
@@ -1776,7 +1780,7 @@ export default function NutritionByIballa() {
                           <p className="mt-2 text-sm leading-relaxed text-gray-700">{service.expect}</p>
                         </div>
                       </div>
-                      <div className="mt-6 rounded-xl bg-[#edf6f2] p-5">
+                      <div className="mt-5 rounded-xl bg-[#edf6f2] p-4 sm:p-5">
                         <h4 className="font-semibold text-[#294b43]">{serviceCopy.headings.book}</h4>
                         <p className="mt-1 text-sm leading-relaxed text-gray-700">{serviceCopy.bookingText}</p>
                         <div className="mt-4 flex flex-wrap gap-3">
@@ -1801,7 +1805,7 @@ export default function NutritionByIballa() {
                 )}
               </AnimatePresence>
             </div>
-          </article>
+          </motion.article>
         );
       })}
     </div>
