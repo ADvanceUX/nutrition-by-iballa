@@ -1,6 +1,8 @@
 {
   "nav": {
-    "home": "Inicio"
+    "home": "Inicio",
+    "appointments": "Citas",
+    "contact": "Contacto"
   },
   "logoAlt": "Logotipo de Nutrición por Iballa",
   "hero": {

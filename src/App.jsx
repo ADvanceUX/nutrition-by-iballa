@@ -1496,8 +1496,12 @@ export default function NutritionByIballa() {
 
     <div className="flex items-center gap-6 relative z-[1000]">
       <LanguageDropdown />
-      <nav className="hidden md:flex">
+      <nav className="hidden md:flex space-x-6">
         <a href="/">{t("nav.home")}</a>
+        <a href="/#appointments">{t("nav.appointments")}</a>
+        <a href="/nutrition-assessment">Assessment</a>
+        <a href="/blog">Blog</a>
+        <a href="/#contact">{t("nav.contact")}</a>
       </nav>
 
       {/* Mobile Toggle */}
@@ -1515,6 +1519,18 @@ export default function NutritionByIballa() {
     <nav className="absolute top-24 left-0 w-full bg-white shadow-md flex flex-col items-center space-y-4 p-6 z-60 md:hidden">
       <a href="/" onClick={() => setNavOpen(false)}>
         {t("nav.home")}
+      </a>
+      <a href="/#appointments" onClick={() => setNavOpen(false)}>
+        {t("nav.appointments")}
+      </a>
+      <a href="/nutrition-assessment" onClick={() => setNavOpen(false)}>
+        Assessment
+      </a>
+      <a href="/blog" onClick={() => setNavOpen(false)}>
+        Blog
+      </a>
+      <a href="/#contact" onClick={() => setNavOpen(false)}>
+        {t("nav.contact")}
       </a>
     </nav>
   )}

@@ -1,6 +1,8 @@
 {
   "nav": {
-    "home": "Home"
+    "home": "Home",
+    "appointments": "Appointments",
+    "contact": "Contact"
   },
   "logoAlt": "Nutrition by Iballa Logo",
   "hero": {
