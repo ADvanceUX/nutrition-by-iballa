@@ -75,13 +75,13 @@ export async function saveAssessmentResponse({ leadId, answers, result }) {
   assertNoError(error);
 }
 
-export async function subscribeFromBlog({ firstName, lastName, email }) {
+export async function subscribeFromBlog({ firstName, lastName, email, source = "blog" }) {
   const supabase = requireSupabase();
   const { data, error } = await supabase.rpc("subscribe_newsletter", {
     p_first_name: firstName.trim(),
     p_last_name: lastName.trim(),
     p_email: email.trim().toLowerCase(),
-    p_source: "blog",
+    p_source: source,
     p_consent_timestamp: new Date().toISOString()
   });
 

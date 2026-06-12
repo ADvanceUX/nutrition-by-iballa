@@ -1,8 +1,7 @@
 {
   "nav": {
-    "services": "Services",
-    "about": "About",
-    "appointments": "Appointments",
+    "home": "Home",
+    "appointments": "Consultations",
     "contact": "Contact"
   },
   "logoAlt": "Nutrition by Iballa Logo",
@@ -87,7 +86,8 @@
       "email": "Email",
       "message": "Message",
       "note": " I will respond personally within 1-2 business days.",
-      "submit": "Send"
+      "submit": "Send",
+      "sending": "Sending..."
     }
   },
   "footer": {

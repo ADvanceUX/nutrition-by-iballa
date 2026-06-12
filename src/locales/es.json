@@ -1,8 +1,7 @@
 {
   "nav": {
-    "services": "Servicios",
-    "about": "Sobre mí",
-    "appointments": "Citas",
+    "home": "Inicio",
+    "appointments": "Consultas",
     "contact": "Contacto"
   },
   "logoAlt": "Logotipo de Nutrición por Iballa",
@@ -87,7 +86,8 @@
       "email": "Correo electrónico",
       "message": "Mensaje",
       "note": "Responderé personalmente en un plazo de 1 a 2 días hábiles.",
-      "submit": "Enviar"
+      "submit": "Enviar",
+      "sending": "Enviando..."
     }
   },
   "footer": {
