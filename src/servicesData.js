@@ -12,15 +12,6 @@ export const servicesContent = {
       book: "Book a consultation"
     },
     bookingText: "Ready to talk through your goals? Book an initial consultation or get in touch with a question.",
-    additionalHeading: "Additional Areas of Support",
-    additionalIntro: "I also offer personalised guidance in the following areas:",
-    additionalAreas: [
-      "Pregnancy Nutrition",
-      "Menopause Nutrition",
-      "Cancer & Oncology Nutrition",
-      "Malnutrition & Unintentional Weight Loss",
-      "General Healthy Eating"
-    ],
     disclaimer: "Nutrition advice does not replace medical care. Please continue to follow advice from your GP or specialist.",
     services: [
       {
@@ -104,15 +95,6 @@ export const servicesContent = {
       book: "Reserva una consulta"
     },
     bookingText: "¿Quieres hablar sobre tus objetivos? Reserva una consulta inicial o ponte en contacto si tienes alguna pregunta.",
-    additionalHeading: "Otras áreas de apoyo",
-    additionalIntro: "También ofrezco orientación personalizada en las siguientes áreas:",
-    additionalAreas: [
-      "Nutrición durante el embarazo",
-      "Nutrición en la menopausia",
-      "Nutrición oncológica",
-      "Desnutrición y pérdida de peso involuntaria",
-      "Alimentación saludable general"
-    ],
     disclaimer: "El asesoramiento nutricional no sustituye la atención médica. Continúa siguiendo las recomendaciones de tu médico o especialista.",
     services: [
       {

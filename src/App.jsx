@@ -1613,7 +1613,7 @@ export default function NutritionByIballa() {
     </h2>
       <p className="text-base leading-relaxed text-gray-700 sm:text-lg">{serviceCopy.intro}</p>
     </div>
-    <div className="mx-auto grid max-w-6xl grid-cols-1 gap-5 md:grid-cols-2">
+    <div className="mx-auto grid max-w-6xl grid-cols-2 gap-3 md:gap-5">
       {serviceCopy.services.map((service) => {
         const Icon = serviceIcons[service.icon];
         const isExpanded = expandedServiceKey === service.key;
@@ -1622,27 +1622,27 @@ export default function NutritionByIballa() {
           <article
             key={service.key}
             className={`overflow-hidden rounded-2xl border border-[#cde4dc] bg-white shadow-[0_8px_30px_rgba(59,95,88,0.09)] transition-shadow duration-300 hover:shadow-[0_12px_36px_rgba(59,95,88,0.14)] ${
-              isExpanded ? "md:col-span-2" : ""
+              isExpanded ? "col-span-2" : ""
             }`}
           >
-            <div className="flex h-full flex-col p-5 sm:p-6">
-              <div className="flex items-start gap-4">
-                <div className={`flex h-12 w-12 shrink-0 items-center justify-center rounded-xl ${service.iconBackground}`}>
-                  <Icon size={27} className={service.iconColor} aria-hidden="true" />
+            <div className="flex h-full flex-col p-3 sm:p-5 md:p-6">
+              <div className="flex flex-col items-start gap-3 sm:flex-row sm:gap-4">
+                <div className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-xl sm:h-12 sm:w-12 ${service.iconBackground}`}>
+                  <Icon size={23} className={`${service.iconColor} sm:h-[27px] sm:w-[27px]`} aria-hidden="true" />
                 </div>
                 <div>
-                  <h3 className="text-xl font-semibold leading-snug text-[#294b43]">{service.title}</h3>
-                  <p className="mt-2 text-[15px] leading-relaxed text-gray-700">{service.summary}</p>
+                  <h3 className="text-[15px] font-semibold leading-snug text-[#294b43] sm:text-lg md:text-xl">{service.title}</h3>
+                  <p className="mt-2 text-xs leading-relaxed text-gray-700 sm:text-sm md:text-[15px]">{service.summary}</p>
                 </div>
               </div>
 
-              <div className="mt-5">
+              <div className="mt-auto pt-4 sm:pt-5">
                 <button
                   type="button"
                   aria-expanded={isExpanded}
                   aria-controls={panelId}
                   onClick={() => setExpandedServiceKey(isExpanded ? null : service.key)}
-                  className="inline-flex min-h-11 items-center justify-center gap-2 rounded-full border-2 border-[#7fae9e] px-5 py-2 text-sm font-semibold text-[#315f55] transition hover:bg-[#edf6f2] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#315f55] focus-visible:ring-offset-2"
+                  className="inline-flex min-h-10 w-full items-center justify-center gap-1.5 rounded-full border-2 border-[#7fae9e] px-3 py-2 text-xs font-semibold text-[#315f55] transition hover:bg-[#edf6f2] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#315f55] focus-visible:ring-offset-2 sm:min-h-11 sm:w-auto sm:gap-2 sm:px-5 sm:text-sm"
                 >
                   {isExpanded ? serviceCopy.readLess : serviceCopy.readMore}
                   {isExpanded ? <ChevronUp size={17} aria-hidden="true" /> : <ChevronDown size={17} aria-hidden="true" />}
@@ -1706,19 +1706,7 @@ export default function NutritionByIballa() {
       })}
     </div>
 
-    <div className="mx-auto mt-10 max-w-6xl rounded-2xl border border-[#cde4dc] bg-white/95 p-6 shadow-sm sm:p-8">
-      <h3 className="text-center text-2xl font-semibold text-[#294b43]">{serviceCopy.additionalHeading}</h3>
-      <p className="mt-2 text-center text-sm text-gray-700">{serviceCopy.additionalIntro}</p>
-      <ul className="mt-5 flex flex-wrap justify-center gap-3">
-        {serviceCopy.additionalAreas.map((area) => (
-          <li key={area} className="rounded-full bg-[#edf6f2] px-4 py-2 text-sm font-medium text-[#315f55]">
-            {area}
-          </li>
-        ))}
-      </ul>
-    </div>
-
-    <p className="mx-auto mt-6 max-w-4xl text-center text-sm leading-relaxed text-gray-600">
+    <p className="mx-auto mt-8 max-w-4xl text-center text-sm leading-relaxed text-gray-600">
       {serviceCopy.disclaimer}
     </p>
   </div>
