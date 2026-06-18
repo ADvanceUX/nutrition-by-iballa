@@ -156,7 +156,7 @@ function NewsletterConsentChoice({ value, onChange, copy, name }) {
         return (
           <label
             key={String(choice.value)}
-            className={`flex items-start gap-3 rounded-xl border p-4 text-sm leading-relaxed transition ${
+            className={`flex cursor-pointer items-start gap-3 rounded-xl border p-4 text-sm leading-relaxed transition ${
               selected
                 ? "border-[#3b5f58] bg-[#cde4dc] text-[#294b43] shadow"
                 : "border-gray-200 bg-gray-50 text-gray-700 hover:border-[#7fae9e]"
@@ -982,12 +982,14 @@ function NutritionAssessmentPage() {
   const copy = getUiContent(i18n.language).assessment;
   const localizedSteps = localizeAssessmentSteps(assessmentSteps, i18n.language);
   const draft = loadAssessmentDraft();
-  const [contact, setContact] = useState(draft?.contact || {
+  const initialContact = {
     firstName: "",
     lastName: "",
     email: "",
+    ...(draft?.contact || {}),
     newsletterOptIn: true
-  });
+  };
+  const [contact, setContact] = useState(initialContact);
   const [leadId, setLeadId] = useState(draft?.leadId || "");
   const [contactSubmitted, setContactSubmitted] = useState(Boolean(draft?.leadId));
   const [answers, setAnswers] = useState(draft?.answers || {});
