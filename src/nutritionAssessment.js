@@ -1,5 +1,7 @@
 import { assessmentSpanish } from "./assessmentContent";
 
+const makeOption = (label, value, score = undefined) => ({ label, value, score });
+
 export const assessmentSteps = [
   {
     id: "basics",
@@ -11,12 +13,12 @@ export const assessmentSteps = [
         label: "What is your age range?",
         type: "single",
         options: [
-          { label: "18-24", value: "18-24" },
-          { label: "25-34", value: "25-34" },
-          { label: "35-44", value: "35-44" },
-          { label: "45-54", value: "45-54" },
-          { label: "55-64", value: "55-64" },
-          { label: "65+", value: "65-plus" }
+          makeOption("18-24", "18-24"),
+          makeOption("25-34", "25-34"),
+          makeOption("35-44", "35-44"),
+          makeOption("45-54", "45-54"),
+          makeOption("55-64", "55-64"),
+          makeOption("65+", "65-plus")
         ]
       },
       {
@@ -26,10 +28,10 @@ export const assessmentSteps = [
         type: "single",
         optional: true,
         options: [
-          { label: "Female", value: "female" },
-          { label: "Male", value: "male" },
-          { label: "Non-binary", value: "non-binary" },
-          { label: "Prefer not to say", value: "prefer-not" }
+          makeOption("Female", "female"),
+          makeOption("Male", "male"),
+          makeOption("Non-binary", "non-binary"),
+          makeOption("Prefer not to say", "prefer-not")
         ]
       },
       {
@@ -37,11 +39,13 @@ export const assessmentSteps = [
         label: "What is your main nutrition goal?",
         type: "single",
         options: [
-          { label: "Improve health", value: "improve-health" },
-          { label: "Weight management", value: "weight-management" },
-          { label: "Sports performance", value: "sports-performance" },
-          { label: "Improve energy levels", value: "energy" },
-          { label: "General wellbeing", value: "wellbeing" }
+          makeOption("Improve health", "improve-health"),
+          makeOption("Weight management", "weight-management"),
+          makeOption("Sports performance", "sports-performance"),
+          makeOption("Improve energy levels", "improve-energy"),
+          makeOption("General wellbeing", "general-wellbeing"),
+          makeOption("Support hormone health", "hormone-health"),
+          makeOption("Digestive and gut health", "digestive-gut-health")
         ]
       }
     ]
@@ -57,41 +61,42 @@ export const assessmentSteps = [
         category: "fruitVegetables",
         type: "single",
         options: [
-          { label: "None", value: "none", score: 0 },
-          { label: "1 portion", value: "one", score: 35 },
-          { label: "2 portions", value: "two", score: 80 },
-          { label: "3 or more portions", value: "three-plus", score: 100 }
+          makeOption("None", "none", 0),
+          makeOption("1 portion", "one", 50),
+          makeOption("2 or more portions", "two", 100),
+          makeOption("3 or more portions", "three-plus", 100)
         ]
       },
       {
         id: "vegetablePortions",
-        label: "How many portions of vegetables or salad do you eat on a typical day?",
+        label: "How many portions of vegetables do you eat on a typical day?",
         category: "fruitVegetables",
         type: "single",
         options: [
-          { label: "None", value: "none", score: 0 },
-          { label: "1 portion", value: "one", score: 35 },
-          { label: "2 portions", value: "two", score: 70 },
-          { label: "3 or more portions", value: "three-plus", score: 100 }
+          makeOption("None", "none", 0),
+          makeOption("1 portion", "one", 25),
+          makeOption("3 portions", "three", 50),
+          makeOption("5 or more portions", "five-plus", 100)
         ]
       }
     ]
   },
   {
     id: "fibre-wholegrains",
-    title: "Fibre and wholegrains",
-    intro: "Wholegrains and legumes can support fibre intake and help make meals more satisfying.",
+    title: "Fibre, wholegrains, and carbohydrates",
+    intro: "Wholegrains, legumes, nuts, seeds, and balanced carbohydrate portions can support fibre intake and energy.",
     questions: [
       {
         id: "wholegrains",
-        label: "How often do you eat wholegrain bread, oats, brown rice, or wholegrain pasta?",
+        label: "How often do you eat wholegrain bread or bread products, oats or wholegrain cereal, brown rice or pasta, quinoa or other grains?",
         category: "fibre",
         type: "single",
         options: [
-          { label: "Rarely or never", value: "rarely", score: 10 },
-          { label: "1-2 times per week", value: "weekly", score: 40 },
-          { label: "Most days", value: "most-days", score: 80 },
-          { label: "Daily", value: "daily", score: 100 }
+          makeOption("Rarely or never", "rarely", 0),
+          makeOption("1-2 times per week", "weekly", 20),
+          makeOption("Most days", "most-days", 40),
+          makeOption("Daily, but not with all meals", "daily", 80),
+          makeOption("Daily, with most meals", "daily-most-meals", 100)
         ]
       },
       {
@@ -100,10 +105,33 @@ export const assessmentSteps = [
         category: "fibre",
         type: "single",
         options: [
-          { label: "Rarely or never", value: "rarely", score: 10 },
-          { label: "1-2 times per month", value: "monthly", score: 35 },
-          { label: "1-2 times per week", value: "weekly", score: 70 },
-          { label: "3 or more times per week", value: "often", score: 100 }
+          makeOption("Rarely or never", "rarely", 0),
+          makeOption("1-2 times per month", "monthly", 35),
+          makeOption("1-2 times per week", "weekly", 70),
+          makeOption("3 or more times per week", "often", 100)
+        ]
+      },
+      {
+        id: "nutsSeeds",
+        label: "How often do you include nuts and seeds in your meals?",
+        category: "fibre",
+        type: "single",
+        options: [
+          makeOption("Never", "never", 0),
+          makeOption("Rarely", "rarely", 20),
+          makeOption("Sometimes", "sometimes", 50),
+          makeOption("Most of the time", "most-of-the-time", 100)
+        ]
+      },
+      {
+        id: "carbohydratePlate",
+        label: "At meal times, how much of your plate is taken up by carbohydrate-rich foods such as pasta, rice, bread, potato, sweet potato, quinoa, or couscous?",
+        category: "carbohydrates",
+        type: "single",
+        options: [
+          makeOption("I do not include carbohydrates in my meals", "none", 20),
+          makeOption("About a quarter to a third of my plate", "quarter-third", 100),
+          makeOption("Half or most of my plate", "half-most", 55)
         ]
       }
     ]
@@ -119,22 +147,29 @@ export const assessmentSteps = [
         category: "protein",
         type: "single",
         options: [
-          { label: "Less than once daily", value: "low", score: 25 },
-          { label: "Once daily", value: "once", score: 60 },
-          { label: "Twice daily", value: "twice", score: 85 },
-          { label: "With most meals", value: "most-meals", score: 100 }
+          makeOption("Less than once daily", "low", 0),
+          makeOption("Once daily", "once", 35),
+          makeOption("Twice daily", "twice", 70),
+          makeOption("With all meals", "all-meals", 100)
         ]
-      },
+      }
+    ]
+  },
+  {
+    id: "calcium",
+    title: "Calcium habits",
+    intro: "Dairy foods and fortified plant-based alternatives can contribute to calcium intake.",
+    questions: [
       {
-        id: "proteinMeals",
-        label: "Do most of your meals contain a source of protein?",
-        category: "protein",
+        id: "calciumServings",
+        label: "How many servings of dairy or fortified plant-based dairy alternatives do you have per day?",
+        category: "calcium",
         type: "single",
         options: [
-          { label: "Rarely", value: "rarely", score: 15 },
-          { label: "Sometimes", value: "sometimes", score: 50 },
-          { label: "Often", value: "often", score: 80 },
-          { label: "Almost always", value: "always", score: 100 }
+          makeOption("0 servings", "zero", 0),
+          makeOption("1 serving", "one", 50),
+          makeOption("2 servings", "two", 85),
+          makeOption("3 servings", "three", 100)
         ]
       }
     ]
@@ -142,7 +177,7 @@ export const assessmentSteps = [
   {
     id: "hydration",
     title: "Hydration",
-    intro: "Fluid intake and drink choices both contribute to everyday nutrition habits.",
+    intro: "Fluid intake contributes to everyday nutrition habits, energy, and concentration.",
     questions: [
       {
         id: "fluidIntake",
@@ -150,22 +185,10 @@ export const assessmentSteps = [
         category: "hydration",
         type: "single",
         options: [
-          { label: "Less than 1 litre", value: "under-one", score: 25 },
-          { label: "1-1.5 litres", value: "one-to-one-half", score: 65 },
-          { label: "1.5-2 litres", value: "one-half-to-two", score: 100 },
-          { label: "More than 2 litres", value: "over-two", score: 90 }
-        ]
-      },
-      {
-        id: "sugaryDrinks",
-        label: "How often do you consume sugary drinks?",
-        category: "hydration",
-        type: "single",
-        options: [
-          { label: "Daily", value: "daily", score: 20 },
-          { label: "Several times per week", value: "weekly", score: 50 },
-          { label: "Occasionally", value: "occasionally", score: 80 },
-          { label: "Rarely or never", value: "rarely", score: 100 }
+          makeOption("Less than 1 litre", "under-one", 0),
+          makeOption("1-1.5 litres", "one-to-one-half", 60),
+          makeOption("1.5-2 litres", "one-half-to-two", 80),
+          makeOption("More than 2 litres", "over-two", 100)
         ]
       }
     ]
@@ -181,22 +204,21 @@ export const assessmentSteps = [
         category: "mealPatterns",
         type: "single",
         options: [
-          { label: "Rarely", value: "rarely", score: 30 },
-          { label: "A few days per week", value: "few-days", score: 55 },
-          { label: "Most days", value: "most-days", score: 85 },
-          { label: "Daily", value: "daily", score: 100 }
+          makeOption("Rarely or never", "rarely", 0),
+          makeOption("A few days per week", "few-days", 25),
+          makeOption("Most days", "most-days", 80),
+          makeOption("Daily", "daily", 100)
         ]
       },
       {
-        id: "skippingMeals",
-        label: "How often do you skip meals?",
+        id: "mealsPerDay",
+        label: "On average, how many meals do you have per day?",
         category: "mealPatterns",
         type: "single",
         options: [
-          { label: "Most days", value: "most-days", score: 25 },
-          { label: "A few times per week", value: "few-times", score: 55 },
-          { label: "Occasionally", value: "occasionally", score: 80 },
-          { label: "Rarely or never", value: "rarely", score: 100 }
+          makeOption("1 meal", "one", 0),
+          makeOption("2 meals", "two", 50),
+          makeOption("3 meals", "three", 100)
         ]
       },
       {
@@ -205,10 +227,10 @@ export const assessmentSteps = [
         category: "mealPatterns",
         type: "single",
         options: [
-          { label: "Rarely", value: "rarely", score: 35 },
-          { label: "Sometimes", value: "sometimes", score: 60 },
-          { label: "Often", value: "often", score: 85 },
-          { label: "Almost always", value: "always", score: 100 }
+          makeOption("Rarely", "rarely", 25),
+          makeOption("Sometimes", "sometimes", 50),
+          makeOption("Often", "often", 75),
+          makeOption("Almost always", "always", 100)
         ]
       }
     ]
@@ -224,10 +246,22 @@ export const assessmentSteps = [
         category: "lifestyle",
         type: "single",
         options: [
-          { label: "0 days", value: "zero", score: 15 },
-          { label: "1-2 days", value: "one-two", score: 50 },
-          { label: "3-4 days", value: "three-four", score: 85 },
-          { label: "5 or more days", value: "five-plus", score: 100 }
+          makeOption("0 days", "zero", 0),
+          makeOption("1-2 days", "one-two", 30),
+          makeOption("3-4 days", "three-four", 80),
+          makeOption("5 or more days", "five-plus", 100)
+        ]
+      },
+      {
+        id: "stepsAverage",
+        label: "How many steps do you get on average per day?",
+        category: "lifestyle",
+        type: "single",
+        options: [
+          makeOption("Less than 5,000", "under-5000", 0),
+          makeOption("Between 5,000 and 8,000", "5000-8000", 30),
+          makeOption("8,000-10,000", "8000-10000", 75),
+          makeOption("10,000 plus", "10000-plus", 100)
         ]
       },
       {
@@ -236,25 +270,89 @@ export const assessmentSteps = [
         category: "lifestyle",
         type: "single",
         options: [
-          { label: "Poor", value: "poor", score: 25 },
-          { label: "Fair", value: "fair", score: 55 },
-          { label: "Good", value: "good", score: 85 },
-          { label: "Very good", value: "very-good", score: 100 }
+          makeOption("Poor", "poor", 25),
+          makeOption("Fair", "fair", 50),
+          makeOption("Good", "good", 75),
+          makeOption("Very good", "very-good", 100)
         ]
       }
     ]
   }
 ];
 
-export const scoreLabels = {
-  overall: "Overall Nutrition Score",
-  fibre: "Fibre Habits",
-  protein: "Protein Habits",
-  fruitVegetables: "Fruit & Vegetable Intake",
-  hydration: "Hydration Habits",
-  lifestyle: "Lifestyle Habits",
-  mealPatterns: "Meal Regularity"
+export const categoryRules = {
+  fibre: {
+    label: "Fibre Habits",
+    includedInOverall: true,
+    displayed: true,
+    positive: "Well done! Your fibre habits look strong. Including fibre-rich foods such as vegetables, fruits, legumes, nuts, seeds, and wholegrains can support digestive health, cholesterol, blood sugar balance, and fullness.",
+    improvement: "Your fibre intake appears to be lower than recommended. Increasing vegetables, fruit, wholegrains, legumes, nuts, and seeds can support digestion, fullness, cholesterol, blood sugar balance, and long-term wellbeing.",
+    advice: "Choose wholegrain options more often and add fibre-rich foods such as beans, lentils, chickpeas, nuts, seeds, vegetables, and fruit."
+  },
+  carbohydrates: {
+    label: "Carbohydrate Balance",
+    includedInOverall: true,
+    displayed: true,
+    positive: "Your carbohydrate balance looks supportive. Including a sensible portion of carbohydrate-rich foods, especially wholegrain or higher-fibre choices, can help fuel training, concentration, mood, and everyday energy.",
+    improvement: "Your carbohydrate pattern may need more balance. Very low carbohydrate intake can affect energy, while very large portions may crowd out protein and vegetables. Aim for a steady portion that fits your goals and activity level.",
+    advice: "At meals, aim for carbohydrate-rich foods to take up around a quarter to a third of the plate, choosing oats, wholegrain bread, brown rice, potatoes, quinoa, couscous, or wholegrain pasta more often."
+  },
+  protein: {
+    label: "Protein Habits",
+    includedInOverall: true,
+    displayed: true,
+    positive: "Well done! Your protein habits appear strong and are likely supporting fullness, muscle maintenance, recovery, and overall health.",
+    improvement: "Your protein intake could be more consistent. Including protein-rich foods regularly through the day can support appetite, muscle maintenance, recovery, and balanced meals.",
+    advice: "Include a protein source with breakfast or your least balanced meal, such as eggs, Greek yoghurt, fish, dairy, tofu, beans, pulses, poultry, lean meat, nuts, or seeds."
+  },
+  fruitVegetables: {
+    label: "Fruit & Vegetable Intake",
+    includedInOverall: true,
+    displayed: true,
+    positive: "Well done! Your fruit and vegetable intake appears supportive of good overall diet quality, with useful vitamins, minerals, fibre, and antioxidants.",
+    improvement: "Your fruit and vegetable intake could be increased. Small additions through the day can improve fibre, micronutrient intake, digestion, immunity, and long-term wellbeing.",
+    advice: "Add an extra serving of vegetables to lunch or dinner, or add fruit to breakfast or snacks."
+  },
+  calcium: {
+    label: "Calcium Habits",
+    includedInOverall: true,
+    displayed: true,
+    positive: "Your calcium habits look supportive. Regular dairy or fortified plant-based alternatives can contribute to calcium intake for bone health and overall nutrition.",
+    improvement: "Your calcium intake may be worth strengthening. Dairy or fortified plant-based alternatives can help support calcium intake, especially when included consistently.",
+    advice: "Consider adding a serving of dairy or a fortified plant-based alternative, such as yoghurt, milk, fortified soy drink, or calcium-fortified alternatives."
+  },
+  hydration: {
+    label: "Hydration Habits",
+    includedInOverall: true,
+    displayed: true,
+    positive: "Well done! Your hydration habits appear supportive of energy, concentration, physical performance, digestion, and overall body function.",
+    improvement: "Your hydration habits could be improved by increasing daily fluid intake. Good hydration supports energy, concentration, physical performance, digestion, and overall health.",
+    advice: "Carry a reusable water bottle and drink fluids regularly across the day."
+  },
+  lifestyle: {
+    label: "Lifestyle Habits",
+    includedInOverall: true,
+    displayed: true,
+    positive: "Well done! Your movement and sleep habits appear to support your general wellbeing, energy, recovery, and long-term health.",
+    improvement: "Your lifestyle habits may benefit from more regular movement and greater attention to sleep quality. Small, consistent changes can make this feel more achievable.",
+    advice: "Plan short, realistic movement sessions during the week and keep a consistent wind-down routine when possible."
+  },
+  mealPatterns: {
+    label: "Meal Regularity",
+    includedInOverall: false,
+    displayed: false,
+    positive: "Your meal routine appears steady, which can make balanced nutrition easier to maintain.",
+    improvement: "Your meal routine could be more regular. A consistent eating pattern may help reduce skipped meals and support better nutrition through the day.",
+    advice: "Keep one simple backup meal or snack available for busier days."
+  }
 };
+
+const categoryOrder = Object.keys(categoryRules);
+
+export const scoreLabels = Object.fromEntries(
+  Object.entries(categoryRules).map(([id, rule]) => [id, rule.label])
+);
+scoreLabels.overall = "Overall Nutrition Score";
 
 export function getQuestionCount() {
   return assessmentSteps.reduce(
@@ -289,33 +387,61 @@ function ratingForScore(score, language) {
   return ratings.attention;
 }
 
-function categorySummary(category, score, language) {
-  if (language?.startsWith("es")) {
-    const summaries = assessmentSpanish.results.summaries;
-    return summaries[`${category}${score >= 70 ? "High" : "Low"}`];
-  }
-  const summaries = {
-    fibre: score >= 70
-      ? "Your fibre habits appear positive. Continuing to include wholegrains, legumes, fruit, and vegetables can support a balanced diet."
-      : "Your fibre intake appears lower than ideal. Increasing wholegrains, legumes, fruit, and vegetables may help support digestive health.",
-    protein: score >= 70
-      ? "Your protein habits appear strong and are likely supporting satiety and muscle maintenance."
-      : "Your protein intake could be more consistent. Adding a protein source to more meals may help meals feel more balanced.",
-    fruitVegetables: score >= 70
-      ? "Your fruit and vegetable intake appears supportive of good overall diet quality."
-      : "Your fruit and vegetable intake could be increased. Small additions across the day can make this easier to sustain.",
-    hydration: score >= 70
-      ? "Your hydration habits appear supportive. Keeping water available during the day can help maintain this routine."
-      : "Your hydration habits could be improved by increasing daily fluid intake and choosing unsweetened drinks more often.",
-    lifestyle: score >= 70
-      ? "Your activity and sleep habits appear to be supporting your general wellbeing."
-      : "Your lifestyle habits may benefit from more regular movement and attention to sleep quality.",
-    mealPatterns: score >= 70
-      ? "Your meal routine appears steady, which can make balanced nutrition easier to maintain."
-      : "Your meal routine could be more regular. Planning simple meals or snacks may help reduce skipped meals."
+function translateRule(rule, language) {
+  if (!language?.startsWith("es")) return rule;
+  return {
+    ...rule,
+    label: assessmentSpanish.results.scoreLabels[rule.id] || rule.label,
+    positive: assessmentSpanish.results.positive?.[rule.id] || rule.positive,
+    improvement: assessmentSpanish.results.improvement?.[rule.id] || rule.improvement,
+    advice: assessmentSpanish.results.recommendations[rule.id] || rule.advice
   };
+}
 
-  return summaries[category];
+function sortBestCategory(a, b) {
+  if (b.score !== a.score) return b.score - a.score;
+  return categoryOrder.indexOf(a.id) - categoryOrder.indexOf(b.id);
+}
+
+function sortWorstCategory(a, b) {
+  if (a.score !== b.score) return a.score - b.score;
+  return categoryOrder.indexOf(a.id) - categoryOrder.indexOf(b.id);
+}
+
+function buildRecommendations(categoryResults, language) {
+  const copy = language?.startsWith("es") ? assessmentSpanish.results.recommendations : {};
+  const recommendations = Object.values(categoryResults)
+    .filter((category) => category.score < 75)
+    .map((category) => category.advice);
+
+  if (recommendations.length < 3) {
+    recommendations.push(
+      copy.general ||
+        "Keep building meals around vegetables, protein-rich foods, higher-fibre carbohydrates, and regular fluids."
+    );
+  }
+
+  return [...new Set(recommendations)].slice(0, 5);
+}
+
+function getImprovementMessage(category, language) {
+  const translatedAdvice = language?.startsWith("es")
+    ? assessmentSpanish.results.recommendations[category.id] || category.advice
+    : category.advice;
+
+  if (category.score >= 80) {
+    return language?.startsWith("es")
+      ? `Es tu área con menor puntuación, pero aun así está en un nivel sólido. Mantén este hábito como foco de continuidad. ${translatedAdvice}`
+      : `This is your lowest scoring area, but it is still rated Strong. Keep this habit consistent and use it as a maintenance focus rather than a concern. ${translatedAdvice}`;
+  }
+
+  if (category.score >= 70) {
+    return language?.startsWith("es")
+      ? `Es tu área con menor puntuación, aunque evoluciona bien. Un pequeño ajuste aquí podría mejorar tu patrón general. ${translatedAdvice}`
+      : `This is your lowest scoring area, although it is already developing well. A small refinement here could lift your overall pattern. ${translatedAdvice}`;
+  }
+
+  return category.improvement;
 }
 
 export function calculateAssessmentResults(answers, language = "en") {
@@ -337,23 +463,26 @@ export function calculateAssessmentResults(answers, language = "en") {
   const categoryResults = Object.fromEntries(
     Object.entries(categoryScores).map(([category, scores]) => {
       const score = Math.round(scores.reduce((sum, value) => sum + value, 0) / scores.length);
+      const rule = translateRule({ id: category, ...categoryRules[category] }, language);
       return [
         category,
         {
-          label: language.startsWith("es") ? assessmentSpanish.results.scoreLabels[category] : scoreLabels[category],
+          ...rule,
           score,
           rating: ratingForScore(score, language),
-          summary: categorySummary(category, score, language)
+          summary: score >= 70 ? rule.positive : rule.improvement
         }
       ];
     })
   );
 
-  const visibleCategories = ["fibre", "protein", "fruitVegetables", "hydration", "lifestyle"];
-  const overallBase = visibleCategories
-    .map((category) => categoryResults[category]?.score)
-    .filter((score) => typeof score === "number");
+  const displayedCategories = Object.values(categoryResults).filter((category) => category.displayed);
+  const overallBase = displayedCategories
+    .filter((category) => category.includedInOverall)
+    .map((category) => category.score);
   const overall = Math.round(overallBase.reduce((sum, value) => sum + value, 0) / overallBase.length);
+  const highestCategory = [...displayedCategories].sort(sortBestCategory)[0];
+  const lowestCategory = [...displayedCategories].sort(sortWorstCategory)[0];
 
   return {
     overall: {
@@ -367,49 +496,15 @@ export function calculateAssessmentResults(answers, language = "en") {
         : "Your answers suggest there are several realistic opportunities to strengthen your everyday nutrition habits."
     },
     categories: categoryResults,
+    displayedCategoryIds: categoryOrder.filter((category) => categoryResults[category]?.displayed),
+    positive: {
+      category: highestCategory?.label,
+      message: highestCategory?.positive
+    },
+    improvement: {
+      category: lowestCategory?.label,
+      message: lowestCategory ? getImprovementMessage(lowestCategory, language) : ""
+    },
     recommendations: buildRecommendations(categoryResults, language)
   };
-}
-
-function buildRecommendations(categoryResults, language) {
-  const recommendations = [];
-  const copy = language?.startsWith("es") ? assessmentSpanish.results.recommendations : {
-    fruitVegetables: "Add an extra serving of vegetables to lunch or dinner.",
-    fibre: "Choose wholegrain options more often, such as oats, wholegrain bread, brown rice, or wholegrain pasta.",
-    protein: "Include a protein source with breakfast or your least balanced meal of the day.",
-    hydration: "Carry a reusable water bottle to make regular fluid intake easier.",
-    lifestyle: "Plan short, realistic activity sessions during the week and keep a consistent wind-down routine when possible.",
-    mealPatterns: "Keep one simple backup meal or snack available for busier days.",
-    general: "Keep building meals around vegetables, protein-rich foods, wholegrains, and regular fluids."
-  };
-
-  if ((categoryResults.fruitVegetables?.score ?? 100) < 75) {
-    recommendations.push(copy.fruitVegetables);
-  }
-
-  if ((categoryResults.fibre?.score ?? 100) < 75) {
-    recommendations.push(copy.fibre);
-  }
-
-  if ((categoryResults.protein?.score ?? 100) < 75) {
-    recommendations.push(copy.protein);
-  }
-
-  if ((categoryResults.hydration?.score ?? 100) < 75) {
-    recommendations.push(copy.hydration);
-  }
-
-  if ((categoryResults.lifestyle?.score ?? 100) < 75) {
-    recommendations.push(copy.lifestyle);
-  }
-
-  if ((categoryResults.mealPatterns?.score ?? 100) < 75) {
-    recommendations.push(copy.mealPatterns);
-  }
-
-  if (recommendations.length < 3) {
-    recommendations.push(copy.general);
-  }
-
-  return recommendations.slice(0, 5);
 }

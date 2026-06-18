@@ -4,7 +4,7 @@ import { AnimatePresence, motion } from "framer-motion";
 import {
   Mail, Menu, X, Calendar, CreditCard, RotateCcw, Droplet, Leaf,
   Venus, Soup, HeartPulse, Stethoscope, Linkedin, Instagram, ChevronDown,
-  ArrowLeft, ArrowRight, Clock, User, Tag, CheckCircle2, ClipboardList,
+  ArrowLeft, ArrowRight, Clock, User, Tag, Check, CheckCircle2, ClipboardList,
   GlassWater, Wheat, Dumbbell, Apple, Utensils, ShieldCheck, LogOut,
   Scale, Syringe, ChevronUp
 } from "lucide-react";
@@ -142,10 +142,53 @@ function isValidEmail(email) {
   return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.trim());
 }
 
+function NewsletterConsentChoice({ value, onChange, copy, name }) {
+  const choices = [
+    { value: true, label: copy.signupButton || copy.consent },
+    { value: false, label: copy.noConsent }
+  ];
+
+  return (
+    <fieldset className="space-y-3">
+      <legend className="sr-only">{copy.consentHeading}</legend>
+      {choices.map((choice) => {
+        const selected = value === choice.value;
+        return (
+          <label
+            key={String(choice.value)}
+            className={`flex items-start gap-3 rounded-xl border p-4 text-sm leading-relaxed transition ${
+              selected
+                ? "border-[#3b5f58] bg-[#cde4dc] text-[#294b43] shadow"
+                : "border-gray-200 bg-gray-50 text-gray-700 hover:border-[#7fae9e]"
+            }`}
+          >
+            <input
+              type="checkbox"
+              name={name}
+              checked={selected}
+              onChange={() => onChange(choice.value)}
+              className="sr-only"
+            />
+            <span
+              className={`mt-1 flex h-5 w-5 shrink-0 items-center justify-center rounded border ${
+                selected ? "border-[#3b5f58] bg-[#3b5f58] text-white" : "border-[#7fae9e] bg-white"
+              }`}
+              aria-hidden="true"
+            >
+              {selected && <Check size={14} strokeWidth={3} />}
+            </span>
+            <span>{choice.label}</span>
+          </label>
+        );
+      })}
+    </fieldset>
+  );
+}
+
 function NewsletterSignupForm({ compact = false, requireConsent = true, source = "blog" }) {
   const { i18n } = useTranslation();
   const copy = getUiContent(i18n.language).newsletter;
-  const [form, setForm] = useState({ firstName: "", lastName: "", email: "", consent: false });
+  const [form, setForm] = useState({ firstName: "", lastName: "", email: "", consent: true });
   const [status, setStatus] = useState({ type: "", message: "" });
   const [submitting, setSubmitting] = useState(false);
 
@@ -163,7 +206,7 @@ function NewsletterSignupForm({ compact = false, requireConsent = true, source =
     }
 
     if (requireConsent && !form.consent) {
-      setStatus({ type: "error", message: copy.consentError });
+      setStatus({ type: "success", message: copy.noConsentSuccess });
       return;
     }
 
@@ -175,7 +218,7 @@ function NewsletterSignupForm({ compact = false, requireConsent = true, source =
         email: form.email,
         source
       });
-      setForm({ firstName: "", lastName: "", email: "", consent: false });
+      setForm({ firstName: "", lastName: "", email: "", consent: true });
       setStatus({ type: "success", message: copy.success });
     } catch (error) {
       setStatus({ type: "error", message: error.message });
@@ -186,15 +229,15 @@ function NewsletterSignupForm({ compact = false, requireConsent = true, source =
 
   return (
     <div className={`rounded-xl shadow-lg ring-1 ring-[#7fae9e] bg-white overflow-hidden ${compact ? "lg:h-full lg:flex lg:flex-col" : ""}`}>
-      <div className={`bg-gradient-to-r from-[#a3c9b9] to-[#7fae9e] px-5 py-6 text-white ${compact ? "" : "sm:px-8"}`}>
-        <h2 id="newsletter-signup-heading" className={`${compact ? "text-2xl" : "text-2xl sm:text-3xl"} font-semibold`}>
+      <div className={`bg-gradient-to-r from-[#a3c9b9] to-[#7fae9e] px-5 text-white ${compact ? "py-5" : "py-6 sm:px-8"}`}>
+        <h2 id="newsletter-signup-heading" className={`${compact ? "whitespace-nowrap text-[1.2rem] xl:text-[1.35rem]" : "text-2xl sm:text-3xl"} font-semibold`}>
           {copy.heading}
         </h2>
         <p className="mt-2 text-sm sm:text-base leading-relaxed text-white/95">
           {copy.intro}
         </p>
       </div>
-      <form className={`space-y-4 p-5 ${compact ? "lg:flex-1 lg:flex lg:flex-col lg:justify-center" : "sm:p-8"}`} onSubmit={handleSubmit}>
+      <form className={`${compact ? "space-y-3 p-4 lg:flex-1" : "space-y-4 p-5 sm:p-8"}`} onSubmit={handleSubmit}>
         <div className="grid gap-4 sm:grid-cols-2">
           <label className="block">
             <span className="mb-2 block text-sm font-semibold text-gray-800">{copy.firstName}</span>
@@ -233,15 +276,12 @@ function NewsletterSignupForm({ compact = false, requireConsent = true, source =
           </label>
         </div>
         {requireConsent && (
-        <label className="flex items-start gap-3 rounded-xl border border-gray-200 bg-gray-50 p-4 text-sm leading-relaxed text-gray-700">
-          <input
-            type="checkbox"
-            checked={form.consent}
-            onChange={(event) => updateField("consent", event.target.checked)}
-            className="mt-1 h-5 w-5 rounded border border-[#7fae9e] checked:bg-[#3b5f58] focus:ring-2 focus:ring-[#cde4dc]"
+          <NewsletterConsentChoice
+            value={form.consent}
+            onChange={(value) => updateField("consent", value)}
+            copy={copy}
+            name={`newsletter-consent-${source}`}
           />
-          <span>{copy.consent}</span>
-        </label>
         )}
         {status.message && (
           <p className={`text-sm font-semibold ${status.type === "success" ? "text-[#3b5f58]" : "text-red-600"}`}>
@@ -344,6 +384,200 @@ function FooterNewsletterSignup() {
   );
 }
 
+const privacyPolicySections = [
+  {
+    title: "1. Information We Collect",
+    body: [
+      "We may collect the following types of information:",
+      "Personal information you provide: name, email address, phone number, health and dietary information when booking consultations, and any other information you voluntarily submit via forms, emails, subscriptions and appointments.",
+      "Non-personal information automatically collected: IP address, browser type, device information, date and time of access, pages visited on our website, and referring website or search engine."
+    ]
+  },
+  {
+    title: "2. How We Use Your Information",
+    body: [
+      "We use your information to provide our nutrition consultation services and book appointments, communicate with you about your health plan or inquiries, send updates, promotions, and newsletters only if you opt in, improve our website, services, and user experience, and ensure security and prevent fraud or misuse of our website."
+    ]
+  },
+  {
+    title: "3. Sharing Your Information",
+    body: [
+      "Third-party service providers: we may share information with providers who help us run our services.",
+      "Legal compliance: we may disclose your information if required by law or to protect our legal rights.",
+      "We do not sell or rent your personal information to third parties for marketing purposes."
+    ]
+  },
+  {
+    title: "4. Cookies",
+    body: [
+      "We use cookies and similar technologies to improve website functionality, analyze traffic, and deliver personalized content.",
+      "You can manage or block cookies through your browser settings.",
+      "Google Analytics is used for anonymous traffic analysis."
+    ]
+  },
+  {
+    title: "5. Data Security",
+    body: [
+      "We implement appropriate technical and organizational measures to protect your personal information.",
+      "No method of transmission over the internet or electronic storage is 100% secure; any data you provide is at your own risk."
+    ]
+  },
+  {
+    title: "6. Your Rights",
+    body: [
+      "You have the right to access the personal data we hold about you, correct or update inaccurate information, request the deletion of your personal data, and withdraw consent for marketing communications at any time.",
+      "To exercise your rights, contact us at nutritionbyiballa@gmail.com. We will respond within 30 days of receiving a valid request."
+    ]
+  },
+  {
+    title: "7. Third-Party Links",
+    body: [
+      "Our website may contain links to external websites. We are not responsible for their content or privacy practices. Please review their privacy policies before submitting personal information."
+    ]
+  },
+  {
+    title: "8. Children’s Privacy",
+    body: [
+      "Our website and services are not intended for individuals under 18 years old. We do not knowingly collect personal information from children."
+    ]
+  },
+  {
+    title: "9. Updates to this Privacy Policy",
+    body: [
+      "We may update this Privacy Policy from time to time. The most recent version will always be available on our website."
+    ]
+  },
+  {
+    title: "Contact Us",
+    body: [
+      "If you have questions or concerns about this Privacy Policy, please contact us at info@nutritionbyiballa.com."
+    ]
+  }
+];
+
+const privacyPolicySectionsEs = [
+  {
+    title: "1. Información que recopilamos",
+    body: [
+      "Podemos recopilar los siguientes tipos de información:",
+      "Información personal que nos facilitas: nombre, dirección de correo electrónico, número de teléfono, información de salud y alimentación al reservar consultas, y cualquier otra información que envíes voluntariamente mediante formularios, correos electrónicos, suscripciones y citas.",
+      "Información no personal recopilada automáticamente: dirección IP, tipo de navegador, información del dispositivo, fecha y hora de acceso, páginas visitadas en nuestro sitio web y sitio web o buscador de referencia."
+    ]
+  },
+  {
+    title: "2. Cómo usamos tu información",
+    body: [
+      "Usamos tu información para prestar nuestros servicios de consulta nutricional y gestionar reservas, comunicarnos contigo sobre tu plan de salud o tus consultas, enviar actualizaciones, promociones y boletines solo si das tu consentimiento, mejorar nuestro sitio web, nuestros servicios y la experiencia de usuario, y garantizar la seguridad y prevenir el fraude o el uso indebido de nuestro sitio web."
+    ]
+  },
+  {
+    title: "3. Compartir tu información",
+    body: [
+      "Proveedores externos de servicios: podemos compartir información con proveedores que nos ayudan a prestar nuestros servicios.",
+      "Cumplimiento legal: podemos divulgar tu información si lo exige la ley o para proteger nuestros derechos legales.",
+      "No vendemos ni alquilamos tu información personal a terceros con fines de marketing."
+    ]
+  },
+  {
+    title: "4. Cookies",
+    body: [
+      "Usamos cookies y tecnologías similares para mejorar el funcionamiento del sitio web, analizar el tráfico y ofrecer contenido personalizado.",
+      "Puedes gestionar o bloquear las cookies desde la configuración de tu navegador.",
+      "Google Analytics se utiliza para el análisis anónimo del tráfico."
+    ]
+  },
+  {
+    title: "5. Seguridad de los datos",
+    body: [
+      "Aplicamos medidas técnicas y organizativas adecuadas para proteger tu información personal.",
+      "Ningún método de transmisión por internet o almacenamiento electrónico es 100 % seguro; cualquier dato que proporciones se facilita bajo tu propio riesgo."
+    ]
+  },
+  {
+    title: "6. Tus derechos",
+    body: [
+      "Tienes derecho a acceder a los datos personales que conservamos sobre ti, corregir o actualizar información inexacta, solicitar la eliminación de tus datos personales y retirar tu consentimiento para comunicaciones de marketing en cualquier momento.",
+      "Para ejercer tus derechos, contacta con nosotros en nutritionbyiballa@gmail.com. Responderemos en un plazo de 30 días desde la recepción de una solicitud válida."
+    ]
+  },
+  {
+    title: "7. Enlaces de terceros",
+    body: [
+      "Nuestro sitio web puede contener enlaces a sitios web externos. No somos responsables de su contenido ni de sus prácticas de privacidad. Revisa sus políticas de privacidad antes de enviar información personal."
+    ]
+  },
+  {
+    title: "8. Privacidad de menores",
+    body: [
+      "Nuestro sitio web y nuestros servicios no están dirigidos a personas menores de 18 años. No recopilamos de forma consciente información personal de menores."
+    ]
+  },
+  {
+    title: "9. Actualizaciones de esta Política de privacidad",
+    body: [
+      "Podemos actualizar esta Política de privacidad ocasionalmente. La versión más reciente estará siempre disponible en nuestro sitio web."
+    ]
+  },
+  {
+    title: "Contacto",
+    body: [
+      "Si tienes preguntas o inquietudes sobre esta Política de privacidad, contacta con nosotros en info@nutritionbyiballa.com."
+    ]
+  }
+];
+
+function PrivacyPolicyPage() {
+  const { i18n } = useTranslation();
+  const isSpanish = i18n.language.startsWith("es");
+  const sections = isSpanish ? privacyPolicySectionsEs : privacyPolicySections;
+  const title = isSpanish ? "Política de privacidad" : "Privacy Policy";
+  const lastUpdated = isSpanish ? "Última actualización: febrero de 2026" : "Last updated: February 2026";
+  const intro = isSpanish
+    ? "Nutrition by Iballa se compromete a proteger tu privacidad y tu información personal. Esta Política de privacidad explica cómo recopilamos, usamos y protegemos tus datos cuando visitas o utilizas nuestro sitio web y nuestros servicios online. Al utilizar nuestro sitio web, aceptas las prácticas descritas en esta política."
+    : "Nutrition by Iballa is committed to protecting your privacy and personal information. This Privacy Policy explains how we collect, use, and safeguard your data when you visit or use our website and online services. By using our website, you consent to the practices described in this policy.";
+
+  return (
+    <main className="bg-gray-50 text-gray-900">
+      <section className="pt-10 pb-10 text-center bg-gradient-to-r from-[#a3c9b9] to-[#7fae9e] text-white">
+        <div className="max-w-5xl mx-auto px-6">
+          <p className="text-sm font-semibold uppercase tracking-wide mb-3">Nutrition by Iballa</p>
+          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-5 leading-tight">
+            {title}
+          </h1>
+          <p className="text-base sm:text-lg leading-relaxed max-w-3xl mx-auto">
+            {lastUpdated}
+          </p>
+        </div>
+      </section>
+
+      <section className="py-10 sm:py-14">
+        <div className="mx-auto max-w-4xl px-4 sm:px-6 md:px-12">
+          <article className="rounded-xl bg-white p-5 shadow-lg ring-1 ring-[#7fae9e] sm:p-8">
+            <p className="text-base leading-relaxed text-gray-700">
+              {intro}
+            </p>
+
+            <div className="mt-8 space-y-8">
+              {sections.map((section) => (
+                <section key={section.title}>
+                  <h2 className="text-xl font-semibold text-[#294b43]">{section.title}</h2>
+                  <div className="mt-3 space-y-3">
+                    {section.body.map((paragraph) => (
+                      <p key={paragraph} className="text-base leading-relaxed text-gray-700">
+                        {paragraph}
+                      </p>
+                    ))}
+                  </div>
+                </section>
+              ))}
+            </div>
+          </article>
+        </div>
+      </section>
+    </main>
+  );
+}
+
 function BlogOverview() {
   const { i18n } = useTranslation();
   const copy = getUiContent(i18n.language).blog;
@@ -365,16 +599,16 @@ function BlogOverview() {
         </div>
       </section>
 
-      <section className="relative bg-gray-50 py-10 sm:py-14" aria-labelledby="latest-blog-heading">
+      <section className="relative bg-gray-50 pt-10 pb-8 sm:pt-14 sm:pb-10" aria-labelledby="latest-blog-heading">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 md:px-12">
           <h2 id="latest-blog-heading" className="text-3xl font-semibold mb-6">
             {copy.latest}
           </h2>
 
-          <div className="grid gap-6 lg:grid-cols-[minmax(0,1.45fr)_minmax(22rem,0.8fr)] lg:items-stretch">
+          <div className="grid gap-6 lg:grid-cols-[minmax(0,1.35fr)_minmax(24rem,0.9fr)] lg:items-stretch">
             <div>
               <article className="h-full rounded-xl shadow-lg ring-1 ring-[#7fae9e] overflow-hidden bg-white transition-all duration-200 hover:ring-2">
-                <div className="grid md:grid-cols-2 min-h-[30rem]">
+                <div className="grid md:grid-cols-2 min-h-[26rem]">
                   <img
                     src={latestPost.image}
                     alt=""
@@ -715,15 +949,20 @@ function AssessmentContactForm({ contact, onContactChange, onSubmit, submitting,
             required
           />
         </label>
-        <label className="flex items-start gap-3 rounded-xl border border-gray-200 bg-gray-50 p-4 text-sm leading-relaxed text-gray-700">
-          <input
-            type="checkbox"
-            checked={contact.newsletterOptIn}
-            onChange={(event) => onContactChange("newsletterOptIn", event.target.checked)}
-            className="mt-1 h-5 w-5 rounded border border-[#7fae9e] checked:bg-[#3b5f58] focus:ring-2 focus:ring-[#cde4dc]"
-          />
-          <span>{copy.consent}</span>
-        </label>
+        <p className="text-sm leading-relaxed text-gray-700">
+          <span className="block font-semibold text-[#294b43]">
+            {copy.consentTitle || copy.consentHeading}
+          </span>
+          <span className="mt-1 block">
+            {copy.consentDescription || copy.consent}
+          </span>
+        </p>
+        <NewsletterConsentChoice
+          value={contact.newsletterOptIn}
+          onChange={(value) => onContactChange("newsletterOptIn", value)}
+          copy={copy}
+          name="assessment-newsletter-consent"
+        />
         {error && <p className="text-sm font-semibold text-red-600">{error}</p>}
         <button
           type="submit"
@@ -747,7 +986,7 @@ function NutritionAssessmentPage() {
     firstName: "",
     lastName: "",
     email: "",
-    newsletterOptIn: false
+    newsletterOptIn: true
   });
   const [leadId, setLeadId] = useState(draft?.leadId || "");
   const [contactSubmitted, setContactSubmitted] = useState(Boolean(draft?.leadId));
@@ -856,7 +1095,7 @@ function NutritionAssessmentPage() {
       firstName: "",
       lastName: "",
       email: "",
-      newsletterOptIn: false
+      newsletterOptIn: true
     });
     setLeadId("");
     setContactSubmitted(false);
@@ -1025,60 +1264,26 @@ function AssessmentResults({ answers, onBack, onRestart }) {
   const { i18n } = useTranslation();
   const copy = getUiContent(i18n.language).assessment;
   const results = calculateAssessmentResults(answers, i18n.language);
-  const categoryOrder = ["fibre", "protein", "fruitVegetables", "hydration", "lifestyle"];
 
   return (
     <div className="space-y-6">
-      <section className="rounded-xl shadow-lg ring-1 ring-[#7fae9e] bg-white p-5 sm:p-8">
-        <div className="flex flex-col gap-6 lg:flex-row lg:items-center lg:justify-between">
-          <div className="max-w-2xl">
-            <p className="text-sm font-semibold uppercase tracking-wide text-[#3b5f58]">{copy.summary}</p>
-            <h2 className="mt-2 text-2xl sm:text-3xl font-semibold text-gray-900">
-              {results.overall.rating}
-            </h2>
-            <p className="mt-3 text-base sm:text-lg leading-relaxed text-gray-700">
-              {results.overall.summary}
-            </p>
-          </div>
-          <div className="flex h-36 w-36 shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-[#cde4dc] to-[#a3c9b9] text-[#3b5f58] shadow mx-auto lg:mx-0">
-            <div className="text-center">
-              <div className="text-4xl font-bold">{results.overall.score}</div>
-              <div className="text-sm font-semibold">{copy.outOf}</div>
-            </div>
-          </div>
-        </div>
-      </section>
-
       <section className="grid gap-4 md:grid-cols-2">
-        {categoryOrder.map((category) => {
-          const item = results.categories[category];
-          return (
-            <article key={category} className="rounded-xl shadow-lg ring-1 ring-[#7fae9e] bg-white p-5 transition hover:ring-2">
-              <div className="flex items-start justify-between gap-4">
-                <div>
-                  <h3 className="text-lg font-semibold text-gray-900">{item.label}</h3>
-                  <p className="mt-1 text-sm font-semibold text-[#3b5f58]">{item.rating}</p>
-                </div>
-                <span className="rounded-full bg-[#cde4dc] px-3 py-1 text-sm font-bold text-[#3b5f58]">
-                  {item.score}/100
-                </span>
-              </div>
-              <p className="mt-4 text-sm sm:text-base leading-relaxed text-gray-700">{item.summary}</p>
-            </article>
-          );
-        })}
-      </section>
-
-      <section className="rounded-xl shadow-lg ring-1 ring-[#7fae9e] bg-white p-5 sm:p-8">
-        <h3 className="text-2xl font-semibold text-gray-900">{copy.recommendations}</h3>
-        <ul className="mt-5 space-y-3">
-          {results.recommendations.map((recommendation) => (
-            <li key={recommendation} className="flex gap-3 text-base leading-relaxed text-gray-700">
-              <CheckCircle2 className="mt-1 shrink-0 text-[#3b5f58]" size={20} />
-              <span>{recommendation}</span>
-            </li>
-          ))}
-        </ul>
+        <article className="rounded-xl shadow-lg ring-1 ring-[#7fae9e] bg-white p-5 transition hover:ring-2">
+          <p className="text-sm font-semibold uppercase tracking-wide text-[#3b5f58]">
+            Positive focus: {results.positive.category}
+          </p>
+          <p className="mt-3 text-sm sm:text-base leading-relaxed text-gray-700">
+            {results.positive.message}
+          </p>
+        </article>
+        <article className="rounded-xl shadow-lg ring-1 ring-[#e7c978] bg-white p-5 transition hover:ring-2">
+          <p className="text-sm font-semibold uppercase tracking-wide text-[#8a6b17]">
+            Improvement focus: {results.improvement.category}
+          </p>
+          <p className="mt-3 text-sm sm:text-base leading-relaxed text-gray-700">
+            {results.improvement.message}
+          </p>
+        </article>
       </section>
 
       <section className="rounded-xl shadow-lg bg-gradient-to-r from-[#a3c9b9] to-[#7fae9e] p-6 text-white sm:p-8">
@@ -1416,6 +1621,7 @@ export default function NutritionByIballa() {
   const isArticleRoute = path.startsWith("/blog/");
   const isAssessmentRoute = path === "/nutrition-assessment";
   const isAdminSubscribersRoute = path === "/admin/subscribers";
+  const isPrivacyRoute = path === "/privacy-policy";
   const serviceCopy = servicesContent[lang] || servicesContent.en;
 
   useEffect(() => {
@@ -1445,7 +1651,7 @@ export default function NutritionByIballa() {
         !href ||
         isModifiedClick ||
         anchor.target === "_blank" ||
-        (!href.startsWith("/blog") && !href.startsWith("/nutrition-assessment") && !href.startsWith("/admin/subscribers") && !href.startsWith("/#"))
+        (!href.startsWith("/blog") && !href.startsWith("/nutrition-assessment") && !href.startsWith("/privacy-policy") && !href.startsWith("/admin/subscribers") && !href.startsWith("/#"))
       ) {
         return;
       }
@@ -1495,6 +1701,8 @@ export default function NutritionByIballa() {
         ? `${uiCopy.assessment.title} | Nutrition by Iballa`
       : isAdminSubscribersRoute
         ? `${uiCopy.admin.heading} | Nutrition by Iballa`
+      : isPrivacyRoute
+        ? `${i18n.language.startsWith("es") ? "Política de privacidad" : "Privacy Policy"} | Nutrition by Iballa`
       : isBlogRoute
         ? "Blog | Nutrition by Iballa"
         : "Nutrition by Iballa";
@@ -1504,6 +1712,10 @@ export default function NutritionByIballa() {
         ? uiCopy.assessment.intro
       : isAdminSubscribersRoute
         ? uiCopy.admin.intro
+      : isPrivacyRoute
+        ? i18n.language.startsWith("es")
+          ? "Política de privacidad de Nutrition by Iballa."
+          : "Privacy Policy for Nutrition by Iballa."
       : isBlogRoute
         ? uiCopy.blog.intro
         : t("hero.subtitle");
@@ -1511,7 +1723,7 @@ export default function NutritionByIballa() {
     document.title = title;
     upsertMeta("description", description);
     upsertMeta("robots", isAdminSubscribersRoute ? "noindex, nofollow" : "index, follow");
-    upsertCanonical(activePost ? `/blog/${activePost.slug}` : isAdminSubscribersRoute ? "/admin/subscribers" : isAssessmentRoute ? "/nutrition-assessment" : isBlogRoute ? "/blog" : "/");
+    upsertCanonical(activePost ? `/blog/${activePost.slug}` : isAdminSubscribersRoute ? "/admin/subscribers" : isPrivacyRoute ? "/privacy-policy" : isAssessmentRoute ? "/nutrition-assessment" : isBlogRoute ? "/blog" : "/");
     upsertStructuredData(
       activePost
         ? {
@@ -1547,6 +1759,14 @@ export default function NutritionByIballa() {
               description,
               url: `${window.location.origin}/admin/subscribers`
             }
+        : isPrivacyRoute
+          ? {
+              "@context": "https://schema.org",
+              "@type": "WebPage",
+              name: i18n.language.startsWith("es") ? "Política de privacidad" : "Privacy Policy",
+              description,
+              url: `${window.location.origin}/privacy-policy`
+            }
         : isBlogRoute
           ? {
             "@context": "https://schema.org",
@@ -1563,7 +1783,7 @@ export default function NutritionByIballa() {
               url: window.location.origin
             }
     );
-  }, [activePost, isAdminSubscribersRoute, isAssessmentRoute, isBlogRoute, t, uiCopy]);
+  }, [activePost, i18n.language, isAdminSubscribersRoute, isAssessmentRoute, isBlogRoute, isPrivacyRoute, t, uiCopy]);
 
  const appointmentTypes = {
   en: [
@@ -1648,6 +1868,8 @@ export default function NutritionByIballa() {
   <NutritionAssessmentPage />
 ) : isAdminSubscribersRoute ? (
   <AdminSubscribersPage />
+) : isPrivacyRoute ? (
+  <PrivacyPolicyPage />
 ) : isArticleRoute && activePost ? (
   <BlogArticle post={activePost} />
 ) : isArticleRoute ? (
@@ -2008,7 +2230,7 @@ export default function NutritionByIballa() {
       </>
 )}
 
-      {!isBlogRoute && !isAssessmentRoute && !isAdminSubscribersRoute && !isArticleRoute && (
+      {!isBlogRoute && !isAssessmentRoute && !isAdminSubscribersRoute && !isPrivacyRoute && !isArticleRoute && (
         <FooterNewsletterSignup />
       )}
 
@@ -2016,11 +2238,19 @@ export default function NutritionByIballa() {
       <footer className="bg-white text-[#1e1e5a] px-4 py-6 rounded-t-lg shadow-inner">
         <div className="flex flex-row items-center justify-between gap-4 w-full">
           {/* Logo */}
-          <img
-            src="/favicon.png"
-            alt={t("footer.logoAlt")}
-            className="w-10 h-10 rounded-full object-cover shrink-0"
-          />
+          <div className="flex items-center gap-3 shrink-0">
+            <img
+              src="/favicon.png"
+              alt={t("footer.logoAlt")}
+              className="w-10 h-10 rounded-full object-cover shrink-0"
+            />
+            <a
+              href="/privacy-policy"
+              className="text-[11px] font-semibold text-[#3b5f58] underline underline-offset-2 hover:text-[#7fae9e]"
+            >
+              {t("footer.privacyPolicy")}
+            </a>
+          </div>
 
           {/* Bio */}
           <div className="flex flex-col justify-center max-w-[60%] sm:max-w-md">

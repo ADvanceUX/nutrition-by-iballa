@@ -1,7 +1,7 @@
 {
   "nav": {
     "home": "Home",
-    "appointments": "Consultations",
+    "appointments": "Bookings",
     "contact": "Contact"
   },
   "logoAlt": "Nutrition by Iballa Logo",
@@ -64,7 +64,7 @@
 "paragraph4": "I don’t believe in strict meal plans or quick fixes like “magic shakes.” Instead, my goal is to equip my clients with the knowledge and confidence to become the experts in their own health—helping them take control, feel empowered, and live their best lives."
   },
   "appointments": {
-    "heading": "Book a Consultation",
+    "heading": "Bookings",
     "types": {
       "initial": {
         "title": "Initial Consultation",
@@ -92,6 +92,7 @@
   },
   "footer": {
     "bio": "Nutrition by Iballa",
-    "logoAlt": "ADvanceUX Logo"
+    "logoAlt": "ADvanceUX Logo",
+    "privacyPolicy": "Privacy Policy"
   }
 }
