@@ -1,0 +1,6 @@
+project_id = "znmiqgalznlgxrjdygir"
+
+[functions.sync-mailerlite]
+enabled = true
+verify_jwt = false
+entrypoint = "./functions/sync-mailerlite/index.ts"

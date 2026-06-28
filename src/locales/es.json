@@ -1,8 +1,7 @@
 {
   "nav": {
-    "services": "Servicios",
-    "about": "Sobre mí",
-    "appointments": "Citas",
+    "home": "Inicio",
+    "appointments": "Reservas",
     "contact": "Contacto"
   },
   "logoAlt": "Logotipo de Nutrición por Iballa",
@@ -65,7 +64,15 @@
     "paragraph4": "No creo en dietas estrictas ni en soluciones rápidas. Mi propósito es brindar a cada persona las herramientas y la confianza necesarias para que se conviertan en protagonistas de su propia salud y puedan vivir con más energía y bienestar."
   },
   "appointments": {
-    "heading": "Reservar una Consulta",
+    "heading": "Reservas",
+    "mealPlanNote": "Las consultas no incluyen planes de comidas. En su lugar, recibirás herramientas, conocimientos y apoyo para comer de forma flexible y cuidar tu salud.",
+    "policyHeading": "Política de cancelación y retrasos",
+    "policy": [
+      "Las citas pueden cancelarse o reprogramarse sin coste con al menos 24 horas de antelación.",
+      "Las cancelaciones con menos de 24 horas de aviso, o las citas a las que no se acuda, se cobrarán en su totalidad.",
+      "Si llegas con más de 10 minutos de retraso, es posible que tengamos que considerar la cita como no asistencia. Esto es simplemente para asegurarnos de tener el tiempo necesario para darte la atención y el apoyo que te mereces, y así poder ofrecerte el mejor servicio posible.",
+      "Te agradecemos mucho tu comprensión, ya que nos ayuda a mantener disponibilidad para otros pacientes."
+    ],
     "types": {
       "initial": {
         "title": "Consulta Inicial",
@@ -87,11 +94,14 @@
       "email": "Correo electrónico",
       "message": "Mensaje",
       "note": "Responderé personalmente en un plazo de 1 a 2 días hábiles.",
-      "submit": "Enviar"
+      "submit": "Enviar",
+      "sending": "Enviando..."
     }
   },
   "footer": {
     "bio": "Nutrition by Iballa",
-    "logoAlt": "Logotipo de ADvanceUX"
+    "logoAlt": "Logotipo de ADvanceUX",
+    "privacyPolicy": "Política de privacidad",
+    "cookiePolicy": "Política de cookies"
   }
 }

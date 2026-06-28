@@ -1,8 +1,7 @@
 {
   "nav": {
-    "services": "Services",
-    "about": "About",
-    "appointments": "Appointments",
+    "home": "Home",
+    "appointments": "Bookings",
     "contact": "Contact"
   },
   "logoAlt": "Nutrition by Iballa Logo",
@@ -65,7 +64,15 @@
 "paragraph4": "I don’t believe in strict meal plans or quick fixes like “magic shakes.” Instead, my goal is to equip my clients with the knowledge and confidence to become the experts in their own health—helping them take control, feel empowered, and live their best lives."
   },
   "appointments": {
-    "heading": "Book a Consultation",
+    "heading": "Bookings",
+    "mealPlanNote": "Meal plans are not included in consultations. Instead, you will receive the tools, knowledge and support to eat flexibly in a way that supports your health.",
+    "policyHeading": "Cancellation and late arrival policy",
+    "policy": [
+      "Appointments can be cancelled or rescheduled free of charge with at least 24 hours' notice.",
+      "Cancellations within 24 hours of the appointment time, or missed appointments, will be charged in full.",
+      "If you are running more than 10 minutes late, we may need to mark the appointment as a no-show. This is simply to make sure we have enough time together to give you the full attention and support you deserve, and to provide you with the best possible service.",
+      "We really appreciate your understanding, as it helps us keep availability open for other clients."
+    ],
     "types": {
       "initial": {
         "title": "Initial Consultation",
@@ -87,11 +94,14 @@
       "email": "Email",
       "message": "Message",
       "note": " I will respond personally within 1-2 business days.",
-      "submit": "Send"
+      "submit": "Send",
+      "sending": "Sending..."
     }
   },
   "footer": {
     "bio": "Nutrition by Iballa",
-    "logoAlt": "ADvanceUX Logo"
+    "logoAlt": "ADvanceUX Logo",
+    "privacyPolicy": "Privacy Policy",
+    "cookiePolicy": "Cookie Policy"
   }
 }

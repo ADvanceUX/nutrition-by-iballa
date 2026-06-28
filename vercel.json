@@ -1,0 +1,28 @@
+{
+  "rewrites": [
+    {
+      "source": "/blog",
+      "destination": "/"
+    },
+    {
+      "source": "/blog/:slug",
+      "destination": "/"
+    },
+    {
+      "source": "/nutrition-assessment",
+      "destination": "/"
+    },
+    {
+      "source": "/admin/subscribers",
+      "destination": "/"
+    },
+    {
+      "source": "/privacy-policy",
+      "destination": "/"
+    },
+    {
+      "source": "/cookie-policy",
+      "destination": "/"
+    }
+  ]
+}

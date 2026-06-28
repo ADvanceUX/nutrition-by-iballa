@@ -1,5 +1,10 @@
 node_modules/
+node_modules/.cache/
+build/
 dist/
 .env
+.env.local
+supabase/.temp/
 *.log
 .DS_Store
+~$*
