@@ -4,7 +4,7 @@ export const blogPosts = [
     title: "The Gut Microbiome: Why Your Gut Health Matters More Than You Think",
     excerpt:
       "Your gut microbiome influences immunity, metabolism, digestion and even mood. Learn why diversity matters and the simple habits that support gut health.",
-    image: "/banner2.png",
+    image: "/gut-microbiome-cover.png",
     category: "Gut Health",
     date: "2026-05-31",
     readingTime: "5 min read",
@@ -150,9 +150,9 @@ export const blogPosts = [
     title: "Understanding Chronic Constipation: Causes, Diet & Evidence-Based Solutions",
     excerpt:
       "Chronic constipation is common, but the right support depends on the cause. Learn about fibre, hydration and evidence-based dietary strategies.",
-    image: "/banner3.png",
+    image: "/chronic-constipation-cover.png",
     category: "Constipation",
-    date: "2026-05-31",
+    date: "2026-06-14",
     readingTime: "5 min read",
     author: "Iballa Martinez",
     callout:
@@ -191,6 +191,7 @@ export const blogPosts = [
               "Mechanical causes",
               "Colorectal cancer",
               "Diverticular disease",
+              "Functional gut disorders",
               "Socioeconomic background",
               "Mental health",
               "Anorectal disorders"
@@ -201,7 +202,7 @@ export const blogPosts = [
       {
         heading: "The Role of Fibre in Managing Constipation",
         body: [
-          "It is recommended that adults consume at least 30 grams of fibre per day, yet it is estimated that 90% of people do not meet this target. If you are looking to increase your fibre intake, it is important to do so gradually to avoid discomfort and gut-related symptoms. The recommendation is to increase fibre by 3 grams at a time, monitoring for symptoms and waiting until they settle before increasing further.",
+          "It is recommended that adults consume at least 30 grams of fibre per day, yet it is estimated that 90% of people do not meet this target. If you are looking to increase your fibre intake, it is important to do so gradually to avoid discomfort and gut-related symptoms.",
           [
             "Increasing fibre intake may help relieve constipation among individuals with a normal colonic transit time. However, those with slow transit time may experience a worsening of symptoms, as fibre adds bulk to the stool and is fermented by gut bacteria, releasing gas which can cause discomfort. If you want to know more about gut bacteria, ",
             {
@@ -211,9 +212,10 @@ export const blogPosts = [
             "."
           ],
           "Fibre can be broadly classified into two types: soluble and insoluble, and they work in slightly different ways.",
-          "Soluble fibre dissolves in water and forms a gel-like substance in the gut, which helps to soften stools. It is found in oats, legumes, flax and chia seeds, and fruit.",
+          "Soluble fibre dissolves in water and forms a gel-like substance in the gut, which helps to soften stools. It is found in oats, legumes and flax seeds.",
           "Insoluble fibre, sometimes referred to as the roughage of food, does not dissolve in water. Instead, it adds bulk to the stool, helping it to move through the gut more quickly. Foods rich in insoluble fibre include wholegrain bread and cereals, bran, the skins of fruits and vegetables, and nuts.",
-          "It is worth noting that most foods contain a combination of both soluble and insoluble fibre rather than just one type, and both play an important role in digestive health. When it comes to fibre, variety is key."
+          "It is worth noting that most foods contain a combination of both soluble and insoluble fibre rather than just one type, and both play an important role in digestive health. When it comes to fibre, variety is key.",
+          "Here is a table summarizing the content of fibre per serving of some high fibre foods:"
         ],
         table: {
           headers: ["Food", "Serving", "Fibre in grams"],
@@ -237,7 +239,7 @@ export const blogPosts = [
       {
         heading: "Don't Forget Hydration",
         body: [
-          "Staying well hydrated is a key part of managing constipation, as fluids help to keep stools soft and the bowel lubricated. As a general guide, most adults need between 30-35 ml per kg of body weight per day, which for most people amounts to around 2 litres. Water is the best source of hydration, however hot drinks, milk, juice, smoothies, and high water-content fruits and vegetables also contribute to your daily fluid intake.",
+          "Staying well hydrated is a key part of managing constipation, as fluids help to keep stools soft and the bowel lubricated. As a general guide, most adults need between 30-35 mls per kg of body weight per day, which for most people amounts to around 2 litres. Water is the best source of hydration, however hot drinks, milk, juice, smoothies, and high water-content fruits and vegetables also contribute to your daily fluid intake.",
           "For most people, water is sufficient and electrolyte drinks are not necessary unless you are in a very hot climate or recovering from prolonged intense exercise such as running or cycling."
         ]
       },
@@ -256,7 +258,7 @@ export const blogPosts = [
           {
             heading: "Probiotics",
             body: [
-              "Probiotics may help to ease some symptoms of constipation, however the specific strains that are most beneficial are not yet known and this area requires further research. It may therefore be worth trialling a probiotic for approximately 12 weeks and monitoring symptoms. If no improvement is noted, the probiotic can be discontinued and a different strain trialled using the same approach. More expensive does not mean better."
+              "Probiotics may help to ease some symptoms of constipation, however the specific strains that are most beneficial are not yet known and this area requires further research. It may therefore be worth trialling a probiotic for approximately 12 weeks and monitoring symptoms. If no improvement is noted, the probiotic can be discontinued. When it comes to probiotics, it is important to note that a higher price does not mean it is better."
             ]
           },
           {

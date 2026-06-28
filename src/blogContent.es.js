@@ -9,7 +9,7 @@ export const spanishBlogContent = {
       {
         heading: "Por qué la diversidad es clave para un intestino sano",
         body: [
-          "Nuestro intestino grueso alberga aproximadamente 38 billones de bacterias, una cifra tan enorme que puede resultar difícil de imaginar. Puede sonar alarmante porque solemos asociar las bacterias con infecciones y enfermedades. Sin embargo, estos microorganismos, conocidos en conjunto como flora o microbiota intestinal, desempeñan un papel fundamental en la salud e influyen en el sistema inmunitario, el metabolismo, el cerebro y la función digestiva.",
+          "Nuestro intestino grueso alberga aproximadamente 38 trillones de bacterias, una cifra tan enorme que puede resultar difícil de imaginar. Puede sonar alarmante porque solemos asociar las bacterias con infecciones y enfermedades. Sin embargo, estos microorganismos, conocidos en conjunto como flora o microbiota intestinal, desempeñan un papel fundamental en la salud e influyen en el sistema inmunitario, el metabolismo, el cerebro y la función digestiva.",
           "La investigación ha identificado más de 1.000 especies distintas de bacterias en el intestino humano, aunque cada persona suele albergar entre 100 y 150. Al igual que el ADN, esto hace que el microbioma intestinal de cada persona sea único.",
           "La diversidad bacteriana del intestino es un indicador de buena salud. Los estudios relacionan de forma constante una menor diversidad microbiana con distintas afecciones, como la enfermedad inflamatoria intestinal, la obesidad, la diabetes tipo 2 y enfermedades autoinmunes como la celiaquía, la diabetes tipo 1, el eccema y la psoriasis.",
           "Los estudios sobre la microbiota intestinal de personas con obesidad han identificado con frecuencia disbiosis, un desequilibrio en el que las bacterias perjudiciales superan a las beneficiosas. Por el contrario, una mayor diversidad bacteriana se considera un indicador sólido de salud intestinal y de mejores resultados generales de salud."
@@ -32,7 +32,7 @@ export const spanishBlogContent = {
         body: [
           "Además de la digestión y el metabolismo, otro aspecto fascinante y bien establecido de la salud intestinal es el eje intestino-cerebro, la red de comunicación bidireccional entre los centros cognitivos y emocionales del cerebro y el intestino.",
           "Si alguna vez has sentido mariposas en el estómago al estar nervioso o preocupado, has experimentado el eje intestino-cerebro en acción.",
-          "En la práctica, esto significa que el estado de ánimo y la salud mental pueden afectar directamente al funcionamiento intestinal, y viceversa. Un ejemplo claro es el síndrome del intestino irritable. El SII se trata con frecuencia mediante terapias dirigidas al cerebro, como la terapia cognitivo-conductual, la hipnoterapia dirigida al intestino o algunos antidepresivos, que pueden reducir de forma significativa los síntomas digestivos. Del mismo modo, enfoques nutricionales como la dieta baja en FODMAP, dirigida directamente a los síntomas intestinales, también pueden mejorar el bienestar emocional y psicológico."
+          "En la práctica, esto significa que el estado de ánimo y la salud mental pueden afectar directamente al funcionamiento intestinal, y viceversa. Un ejemplo claro es el síndrome del intestino irritable (SII). El SII se trata con frecuencia mediante terapias dirigidas al cerebro, como la terapia cognitivo-conductual, la hipnoterapia dirigida al intestino o algunos antidepresivos, que pueden reducir de forma significativa los síntomas digestivos. Del mismo modo, enfoques nutricionales como la dieta baja en FODMAP, dirigida directamente a los síntomas intestinales, también pueden mejorar el bienestar emocional y psicológico."
         ]
       },
       {
@@ -73,7 +73,7 @@ export const spanishBlogContent = {
           {
             heading: "Gestiona el estrés",
             body: [
-              "Gestionar el estrés es un aspecto de la salud intestinal al que a menudo no se presta suficiente atención. Un nivel elevado de estrés puede afectar directamente al intestino y desencadenar hinchazón, calambres, cambios en el ritmo intestinal y dolor abdominal. La atención plena, los ejercicios de respiración, el yoga, la meditación o reservar tiempo para descansar pueden favorecer un sistema digestivo más sano."
+              "Gestionar el estrés es un aspecto de la salud intestinal al que a menudo no se presta suficiente atención. Un nivel elevado de estrés puede afectar directamente al intestino y desencadenar hinchazón, retortijones, cambios en el ritmo intestinal y dolor abdominal. La atención plena, los ejercicios de respiración, el yoga, la meditación o reservar tiempo para descansar pueden favorecer un sistema digestivo más sano."
             ]
           },
           {
@@ -87,7 +87,7 @@ export const spanishBlogContent = {
       {
         heading: "Cuándo solicitar atención médica",
         body: [
-          "Aunque estos hábitos pueden contribuir a la salud intestinal, es importante escuchar al cuerpo. Si presentas algún síntoma de alarma, ponte en contacto cuanto antes con tu médico o profesional sanitario."
+          "Aunque estos hábitos pueden contribuir a la salud intestinal, es importante escuchar al cuerpo. Ponte en contacto cuanto antes con tu médico si presentas alguno de los siguientes síntomas:"
         ],
         list: [
           "Pérdida de peso inexplicada o involuntaria",
@@ -167,6 +167,7 @@ export const spanishBlogContent = {
               "Causas mecánicas",
               "Cáncer colorrectal",
               "Enfermedad diverticular",
+              "Trastornos digestivos funcionales",
               "Contexto socioeconómico",
               "Salud mental",
               "Trastornos anorrectales"
@@ -177,7 +178,7 @@ export const spanishBlogContent = {
       {
         heading: "El papel de la fibra en el tratamiento del estreñimiento",
         body: [
-          "Se recomienda que los adultos consuman al menos 30 gramos de fibra al día, pero se estima que el 90 % no alcanza este objetivo. Si deseas aumentar la fibra, hazlo de forma gradual para evitar molestias y síntomas digestivos. Se recomienda aumentarla unos 3 gramos cada vez, vigilar los síntomas y esperar a que se estabilicen antes de volver a incrementarla.",
+          "Se recomienda que los adultos consuman al menos 30 gramos de fibra al día, pero se estima que el 90 % no alcanza este objetivo. Si deseas aumentar la fibra, hazlo de forma gradual para evitar molestias y síntomas digestivos.",
           [
             "Aumentar la fibra puede aliviar el estreñimiento en personas con un tiempo de tránsito colónico normal. Sin embargo, quienes presentan tránsito lento pueden notar un empeoramiento, ya que la fibra aumenta el volumen de las heces y es fermentada por las bacterias intestinales, lo que libera gases y puede causar molestias. Si quieres saber más sobre las bacterias intestinales, ",
             {
@@ -187,9 +188,10 @@ export const spanishBlogContent = {
             "."
           ],
           "La fibra puede clasificarse de forma general en soluble e insoluble, y cada tipo actúa de manera ligeramente distinta.",
-          "La fibra soluble se disuelve en agua y forma una sustancia similar a un gel en el intestino, lo que ayuda a ablandar las heces. Se encuentra en la avena, las legumbres, las semillas de lino y chía y la fruta.",
+          "La fibra soluble se disuelve en agua y forma una sustancia similar a un gel en el intestino, lo que ayuda a ablandar las heces. Se encuentra en la avena, las legumbres y las semillas de lino.",
           "La fibra insoluble no se disuelve en agua. Aumenta el volumen de las heces y ayuda a que avancen con mayor rapidez por el intestino. Se encuentra en el pan y los cereales integrales, el salvado, la piel de frutas y verduras y los frutos secos.",
-          "La mayoría de los alimentos contiene una combinación de fibra soluble e insoluble, y ambas desempeñan un papel importante en la salud digestiva. En relación con la fibra, la variedad es fundamental."
+          "La mayoría de los alimentos contiene una combinación de fibra soluble e insoluble, y ambas desempeñan un papel importante en la salud digestiva. En relación con la fibra, la variedad es fundamental.",
+          "Aquí tienes una tabla que resume el contenido de fibra por ración de algunos alimentos ricos en fibra:"
         ],
         table: {
           headers: ["Alimento", "Ración", "Fibra en gramos"],
@@ -213,7 +215,7 @@ export const spanishBlogContent = {
       {
         heading: "No olvides la hidratación",
         body: [
-          "Mantener una buena hidratación es clave para tratar el estreñimiento, ya que los líquidos ayudan a conservar las heces blandas y el intestino lubricado. Como orientación general, la mayoría de los adultos necesita entre 30 y 35 ml por kg de peso corporal al día, lo que suele equivaler a unos 2 litros. El agua es la mejor fuente de hidratación, aunque las bebidas calientes, la leche, los zumos, los batidos y las frutas y verduras con alto contenido de agua también contribuyen.",
+          "Mantener una buena hidratación es clave para tratar el estreñimiento, ya que los líquidos ayudan a conservar las heces blandas y el intestino lubricado. Como orientación general, la mayoría de los adultos necesita entre 30 y 35 mls por kg de peso corporal al día, lo que suele equivaler a unos 2 litros. El agua es la mejor fuente de hidratación, aunque las bebidas calientes, la leche, los zumos, los batidos y las frutas y verduras con alto contenido de agua también contribuyen.",
           "Para la mayoría de las personas, el agua es suficiente y las bebidas con electrolitos no son necesarias, salvo en climas muy calurosos o durante la recuperación tras ejercicio intenso y prolongado, como correr o montar en bicicleta."
         ]
       },
@@ -232,7 +234,7 @@ export const spanishBlogContent = {
           {
             heading: "Probióticos",
             body: [
-              "Los probióticos pueden aliviar algunos síntomas del estreñimiento, aunque todavía no se conocen las cepas más beneficiosas. Puede probarse un probiótico durante unas 12 semanas y observar los síntomas. Si no hay mejoría, puede suspenderse y probar otra cepa del mismo modo. Un precio más alto no implica que sea mejor."
+              "Los probióticos pueden aliviar algunos síntomas del estreñimiento, aunque todavía no se conocen las cepas más beneficiosas. Puede probarse un probiótico durante unas 12 semanas y observar los síntomas. Si no hay mejoría, puede suspenderse. En cuanto a los probióticos, es importante recordar que un precio más alto no significa que sea mejor."
             ]
           },
           {

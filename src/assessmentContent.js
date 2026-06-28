@@ -61,13 +61,12 @@ export const assessmentSpanish = {
       "prefer-not": "Prefiero no decirlo"
     },
     mainGoal: {
-      "improve-health": "Mejorar la salud",
+      "hormone-health": "Apoyar la salud hormonal (SOP, endometriosis, perimenopausia y menopausia)",
+      "improve-overall-health": "Mejorar la salud general",
       "weight-management": "Controlar el peso",
       "sports-performance": "Mejorar el rendimiento deportivo",
-      "improve-energy": "Mejorar los niveles de energía",
-      "general-wellbeing": "Bienestar general",
-      "hormone-health": "Apoyar la salud hormonal",
-      "digestive-gut-health": "Salud digestiva e intestinal"
+      "chronic-condition": "Gestionar una condición crónica (diabetes, colesterol, osteoporosis, etc.)",
+      "digestive-gut-health": "Salud digestiva e intestinal y manejo de síntomas"
     },
     fruitPortions: {
       none: "Ninguna",
@@ -86,7 +85,7 @@ export const assessmentSpanish = {
       weekly: "1-2 veces por semana",
       "most-days": "La mayoría de los días",
       daily: "A diario, pero no en todas las comidas",
-      "daily-most-meals": "A diario, en la mayoría de las comidas"
+      "daily-most-meals": "A diario, en todas mis comidas"
     },
     legumes: {
       rarely: "Casi nunca o nunca",
@@ -101,9 +100,9 @@ export const assessmentSpanish = {
       "most-of-the-time": "La mayoría de las veces"
     },
     carbohydratePlate: {
-      none: "No incluyo hidratos en mis comidas",
+      none: "No incluyo hidratos en la mayoría de mis comidas",
       "quarter-third": "Un cuarto o un tercio del plato",
-      "half-most": "La mitad o la mayor parte del plato"
+      "half-most": "La mitad del plato"
     },
     proteinFrequency: {
       low: "Menos de una vez al día",
@@ -112,10 +111,10 @@ export const assessmentSpanish = {
       "all-meals": "En todas las comidas"
     },
     calciumServings: {
-      zero: "0 raciones",
-      one: "1 ración",
-      two: "2 raciones",
-      three: "3 raciones"
+      zero: "Nunca",
+      one: "Casi nunca",
+      two: "A veces",
+      three: "La mayoría de las veces"
     },
     fluidIntake: {
       "under-one": "Menos de 1 litro",

@@ -15,6 +15,14 @@
     {
       "source": "/admin/subscribers",
       "destination": "/"
+    },
+    {
+      "source": "/privacy-policy",
+      "destination": "/"
+    },
+    {
+      "source": "/cookie-policy",
+      "destination": "/"
     }
   ]
 }

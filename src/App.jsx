@@ -51,10 +51,10 @@ function LanguageDropdown() {
   ];
 
   return (
-    <div className="relative inline-block text-left">
+    <div className="relative inline-block shrink-0 text-left">
       <button
         onClick={() => setOpen(!open)}
-        className="flex items-center gap-2 px-3 py-2 bg-white rounded-md shadow hover:bg-gray-100 transition"
+        className="flex items-center gap-1.5 px-2.5 py-2 bg-white rounded-md shadow hover:bg-gray-100 transition sm:gap-2 sm:px-3"
       >
         <img
           src={`/${i18n.language}.png`}
@@ -230,7 +230,7 @@ function NewsletterSignupForm({ compact = false, requireConsent = true, source =
   return (
     <div className={`rounded-xl shadow-lg ring-1 ring-[#7fae9e] bg-white overflow-hidden ${compact ? "lg:h-full lg:flex lg:flex-col" : ""}`}>
       <div className={`bg-gradient-to-r from-[#a3c9b9] to-[#7fae9e] px-5 text-white ${compact ? "py-5" : "py-6 sm:px-8"}`}>
-        <h2 id="newsletter-signup-heading" className={`${compact ? "whitespace-nowrap text-[1.2rem] xl:text-[1.35rem]" : "text-2xl sm:text-3xl"} font-semibold`}>
+        <h2 id="newsletter-signup-heading" className={`${compact ? "text-xl leading-tight sm:text-2xl lg:text-[1.65rem]" : "text-2xl sm:text-3xl"} font-semibold`}>
           {copy.heading}
         </h2>
         <p className="mt-2 text-sm sm:text-base leading-relaxed text-white/95">
@@ -335,17 +335,17 @@ function FooterNewsletterSignup() {
   };
 
   return (
-    <section className="border-b border-[#e2eee9] bg-white px-4 py-6 sm:px-8" aria-labelledby="footer-newsletter-heading">
-      <div className="mx-auto flex max-w-6xl flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
-        <div className="max-w-xl">
-          <h2 id="footer-newsletter-heading" className="text-xl font-semibold text-[#294b43]">
+    <section className="border-b border-[#e2eee9] bg-white px-4 py-6 sm:px-8 lg:px-12 xl:py-8" aria-labelledby="footer-newsletter-heading">
+      <div className="mx-auto flex max-w-screen-xl flex-col gap-4 lg:flex-row lg:items-center lg:justify-between xl:max-w-screen-2xl">
+        <div className="max-w-2xl">
+          <h2 id="footer-newsletter-heading" className="text-xl font-semibold text-[#294b43] lg:text-2xl">
             {copy.footerHeading}
           </h2>
-          <p className="mt-1 text-sm leading-relaxed text-[#47645d]">
+          <p className="mt-1 text-sm leading-relaxed text-[#47645d] lg:text-base">
             {copy.footerIntro}
           </p>
         </div>
-        <div className="w-full lg:max-w-xl">
+        <div className="w-full lg:max-w-2xl">
           <form className="flex flex-col gap-2 sm:flex-row" onSubmit={handleSubmit} noValidate>
             <label className="sr-only" htmlFor="footer-newsletter-email">{copy.emailAddress}</label>
             <input
@@ -356,13 +356,13 @@ function FooterNewsletterSignup() {
               autoComplete="email"
               placeholder={copy.emailAddress}
               aria-describedby={status.message ? "footer-newsletter-status" : undefined}
-              className="h-11 min-w-0 flex-1 rounded-full border border-[#b7d5c9] bg-white px-4 text-gray-900 placeholder:text-gray-500 focus:border-[#477b6c] focus:outline-none focus:ring-2 focus:ring-[#a3c9b9]"
+              className="h-11 min-w-0 flex-1 rounded-full border border-[#b7d5c9] bg-white px-4 text-gray-900 placeholder:text-gray-500 focus:border-[#477b6c] focus:outline-none focus:ring-2 focus:ring-[#a3c9b9] lg:h-12 lg:px-5 lg:text-base"
               required
             />
             <button
               type="submit"
               disabled={submitting}
-              className="inline-flex h-11 shrink-0 items-center justify-center rounded-full bg-[#477b6c] px-6 text-sm font-semibold text-white transition hover:bg-[#365f54] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#315f55] focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-60"
+              className="inline-flex h-11 shrink-0 items-center justify-center rounded-full bg-[#477b6c] px-6 text-sm font-semibold text-white transition hover:bg-[#365f54] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#315f55] focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-60 lg:h-12 lg:px-8 lg:text-base"
             >
               {submitting ? copy.subscribing : copy.subscribe}
             </button>
@@ -450,7 +450,7 @@ const privacyPolicySections = [
   {
     title: "Contact Us",
     body: [
-      "If you have questions or concerns about this Privacy Policy, please contact us at info@nutritionbyiballa.com."
+      "If you have questions or concerns about this Privacy Policy, please contact us at nutritionbyiballa@gmail.com."
     ]
   }
 ];
@@ -521,7 +521,7 @@ const privacyPolicySectionsEs = [
   {
     title: "Contacto",
     body: [
-      "Si tienes preguntas o inquietudes sobre esta Política de privacidad, contacta con nosotros en info@nutritionbyiballa.com."
+      "Si tienes preguntas o inquietudes sobre esta Política de privacidad, contacta con nosotros en nutritionbyiballa@gmail.com."
     ]
   }
 ];
@@ -578,6 +578,113 @@ function PrivacyPolicyPage() {
   );
 }
 
+const cookiePolicySections = [
+  {
+    title: "1. What Cookies Are",
+    body: [
+      "Cookies are small text files placed on your device when you visit a website. They help websites work properly, remember preferences, understand how visitors use pages, and support third-party tools."
+    ]
+  },
+  {
+    title: "2. Cookies We Use",
+    body: [
+      "Nutrition by Iballa may use essential cookies needed for the website to function, analytics cookies to understand general website use, and third-party cookies from services such as Calendly when you use booking links.",
+      "Calendly manages its own booking cookies and privacy controls. Please review Calendly's own policies when booking an appointment."
+    ]
+  },
+  {
+    title: "3. Managing Cookies",
+    body: [
+      "You can manage, block or delete cookies through your browser settings. Some website features may not work as expected if essential cookies are disabled."
+    ]
+  },
+  {
+    title: "4. Contact",
+    body: [
+      "If you have questions about this Cookie Policy, contact nutritionbyiballa@gmail.com."
+    ]
+  }
+];
+
+const cookiePolicySectionsEs = [
+  {
+    title: "1. Qué son las cookies",
+    body: [
+      "Las cookies son pequeños archivos de texto que se guardan en tu dispositivo cuando visitas un sitio web. Ayudan a que las páginas funcionen correctamente, recuerden preferencias, comprendan cómo se usan y permitan el funcionamiento de herramientas externas."
+    ]
+  },
+  {
+    title: "2. Cookies que utilizamos",
+    body: [
+      "Nutrition by Iballa puede usar cookies esenciales necesarias para el funcionamiento del sitio web, cookies de análisis para comprender el uso general de la web y cookies de terceros de servicios como Calendly cuando utilizas los enlaces de reserva.",
+      "Calendly gestiona sus propias cookies de reserva y controles de privacidad. Revisa las políticas de Calendly al reservar una cita."
+    ]
+  },
+  {
+    title: "3. Gestionar cookies",
+    body: [
+      "Puedes gestionar, bloquear o eliminar cookies desde la configuración de tu navegador. Algunas funciones del sitio web pueden no funcionar correctamente si desactivas cookies esenciales."
+    ]
+  },
+  {
+    title: "4. Contacto",
+    body: [
+      "Si tienes preguntas sobre esta Política de cookies, contacta con nutritionbyiballa@gmail.com."
+    ]
+  }
+];
+
+function CookiePolicyPage() {
+  const { i18n } = useTranslation();
+  const isSpanish = i18n.language.startsWith("es");
+  const sections = isSpanish ? cookiePolicySectionsEs : cookiePolicySections;
+  const title = isSpanish ? "Política de cookies" : "Cookie Policy";
+  const lastUpdated = isSpanish ? "Última actualización: junio de 2026" : "Last updated: June 2026";
+  const intro = isSpanish
+    ? "Esta Política de cookies explica cómo Nutrition by Iballa utiliza cookies y tecnologías similares en este sitio web."
+    : "This Cookie Policy explains how Nutrition by Iballa uses cookies and similar technologies on this website.";
+
+  return (
+    <main className="bg-gray-50 text-gray-900">
+      <section className="pt-10 pb-10 text-center bg-gradient-to-r from-[#a3c9b9] to-[#7fae9e] text-white">
+        <div className="max-w-5xl mx-auto px-6">
+          <p className="text-sm font-semibold uppercase tracking-wide mb-3">Nutrition by Iballa</p>
+          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-5 leading-tight">
+            {title}
+          </h1>
+          <p className="text-base sm:text-lg leading-relaxed max-w-3xl mx-auto">
+            {lastUpdated}
+          </p>
+        </div>
+      </section>
+
+      <section className="py-10 sm:py-14">
+        <div className="mx-auto max-w-4xl px-4 sm:px-6 md:px-12">
+          <article className="rounded-xl bg-white p-5 shadow-lg ring-1 ring-[#7fae9e] sm:p-8">
+            <p className="text-base leading-relaxed text-gray-700">
+              {intro}
+            </p>
+            <div className="mt-8 space-y-8">
+              {sections.map((section) => (
+                <section key={section.title}>
+                  <h2 className="text-xl font-semibold text-[#294b43]">{section.title}</h2>
+                  <div className="mt-3 space-y-3">
+                    {section.body.map((paragraph) => (
+                      <p key={paragraph} className="text-base leading-relaxed text-gray-700">
+                        {paragraph}
+                      </p>
+                    ))}
+                  </div>
+                </section>
+              ))}
+            </div>
+          </article>
+        </div>
+      </section>
+    </main>
+  );
+}
+
 function BlogOverview() {
   const { i18n } = useTranslation();
   const copy = getUiContent(i18n.language).blog;
@@ -608,7 +715,7 @@ function BlogOverview() {
           <div className="grid gap-6 lg:grid-cols-[minmax(0,1.35fr)_minmax(24rem,0.9fr)] lg:items-stretch">
             <div>
               <article className="h-full rounded-xl shadow-lg ring-1 ring-[#7fae9e] overflow-hidden bg-white transition-all duration-200 hover:ring-2">
-                <div className="grid md:grid-cols-2 min-h-[26rem]">
+                <a href={`/blog/${latestPost.slug}`} className="grid md:grid-cols-2 min-h-[26rem] group">
                   <img
                     src={latestPost.image}
                     alt=""
@@ -631,15 +738,14 @@ function BlogOverview() {
                     <p className="text-base sm:text-lg leading-relaxed text-gray-700 mb-6">
                       {latestPost.excerpt}
                     </p>
-                    <a
-                      href={`/blog/${latestPost.slug}`}
-                      className="self-start inline-flex items-center gap-2 bg-gradient-to-r from-[#a3c9b9] to-[#7fae9e] text-white text-sm font-semibold px-6 py-2 rounded-full shadow hover:brightness-105 transition"
+                    <span
+                      className="self-start inline-flex items-center gap-2 bg-gradient-to-r from-[#a3c9b9] to-[#7fae9e] text-white text-sm font-semibold px-6 py-2 rounded-full shadow transition group-hover:brightness-105"
                     >
                       {copy.readMore}
                       <ArrowRight size={18} />
-                    </a>
+                    </span>
                   </div>
-                </div>
+                </a>
               </article>
             </div>
 
@@ -1266,25 +1372,47 @@ function AssessmentResults({ answers, onBack, onRestart }) {
   const { i18n } = useTranslation();
   const copy = getUiContent(i18n.language).assessment;
   const results = calculateAssessmentResults(answers, i18n.language);
+  const positiveItems = results.positiveItems || (results.positive?.category ? [results.positive] : []);
+  const improvementItems = results.improvementItems || (results.improvement?.category ? [results.improvement] : []);
 
   return (
     <div className="space-y-6">
       <section className="grid gap-4 md:grid-cols-2">
         <article className="rounded-xl shadow-lg ring-1 ring-[#7fae9e] bg-white p-5 transition hover:ring-2">
           <p className="text-sm font-semibold uppercase tracking-wide text-[#3b5f58]">
-            Positive focus: {results.positive.category}
+            {copy.positiveFocus}
           </p>
-          <p className="mt-3 text-sm sm:text-base leading-relaxed text-gray-700">
-            {results.positive.message}
-          </p>
+          {positiveItems.length > 0 ? (
+            <div className="mt-3 space-y-4">
+              {positiveItems.map((item) => (
+                <div key={item.category}>
+                  <h4 className="font-semibold text-[#294b43]">{item.category}</h4>
+                  <p className="mt-2 whitespace-pre-line text-sm sm:text-base leading-relaxed text-gray-700">
+                    {item.message}
+                  </p>
+                </div>
+              ))}
+            </div>
+          ) : (
+            <p className="mt-3 text-sm sm:text-base leading-relaxed text-gray-700">
+              {copy.noPositiveFocus}
+            </p>
+          )}
         </article>
         <article className="rounded-xl shadow-lg ring-1 ring-[#e7c978] bg-white p-5 transition hover:ring-2">
           <p className="text-sm font-semibold uppercase tracking-wide text-[#8a6b17]">
-            Improvement focus: {results.improvement.category}
+            {copy.improvementFocus}
           </p>
-          <p className="mt-3 text-sm sm:text-base leading-relaxed text-gray-700">
-            {results.improvement.message}
-          </p>
+          <div className="mt-3 space-y-4">
+            {improvementItems.map((item) => (
+              <div key={item.category}>
+                <h4 className="font-semibold text-[#5f4a12]">{item.category}</h4>
+                <p className="mt-2 whitespace-pre-line text-sm sm:text-base leading-relaxed text-gray-700">
+                  {item.message}
+                </p>
+              </div>
+            ))}
+          </div>
         </article>
       </section>
 
@@ -1614,6 +1742,7 @@ export default function NutritionByIballa() {
   const localizedBlogPosts = localizeBlogPosts(blogPosts, lang);
   const [expanded, setExpanded] = useState(false);
   const [expandedServiceKey, setExpandedServiceKey] = useState(null);
+  const [bookingPolicyOpen, setBookingPolicyOpen] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
   const [path, setPath] = useState(window.location.pathname);
 
@@ -1624,6 +1753,7 @@ export default function NutritionByIballa() {
   const isAssessmentRoute = path === "/nutrition-assessment";
   const isAdminSubscribersRoute = path === "/admin/subscribers";
   const isPrivacyRoute = path === "/privacy-policy";
+  const isCookieRoute = path === "/cookie-policy";
   const serviceCopy = servicesContent[lang] || servicesContent.en;
 
   useEffect(() => {
@@ -1653,7 +1783,7 @@ export default function NutritionByIballa() {
         !href ||
         isModifiedClick ||
         anchor.target === "_blank" ||
-        (!href.startsWith("/blog") && !href.startsWith("/nutrition-assessment") && !href.startsWith("/privacy-policy") && !href.startsWith("/admin/subscribers") && !href.startsWith("/#"))
+        (!href.startsWith("/blog") && !href.startsWith("/nutrition-assessment") && !href.startsWith("/privacy-policy") && !href.startsWith("/cookie-policy") && !href.startsWith("/admin/subscribers") && !href.startsWith("/#"))
       ) {
         return;
       }
@@ -1705,6 +1835,8 @@ export default function NutritionByIballa() {
         ? `${uiCopy.admin.heading} | Nutrition by Iballa`
       : isPrivacyRoute
         ? `${i18n.language.startsWith("es") ? "Política de privacidad" : "Privacy Policy"} | Nutrition by Iballa`
+      : isCookieRoute
+        ? `${i18n.language.startsWith("es") ? "Política de cookies" : "Cookie Policy"} | Nutrition by Iballa`
       : isBlogRoute
         ? "Blog | Nutrition by Iballa"
         : "Nutrition by Iballa";
@@ -1718,6 +1850,10 @@ export default function NutritionByIballa() {
         ? i18n.language.startsWith("es")
           ? "Política de privacidad de Nutrition by Iballa."
           : "Privacy Policy for Nutrition by Iballa."
+      : isCookieRoute
+        ? i18n.language.startsWith("es")
+          ? "Política de cookies de Nutrition by Iballa."
+          : "Cookie Policy for Nutrition by Iballa."
       : isBlogRoute
         ? uiCopy.blog.intro
         : t("hero.subtitle");
@@ -1725,7 +1861,7 @@ export default function NutritionByIballa() {
     document.title = title;
     upsertMeta("description", description);
     upsertMeta("robots", isAdminSubscribersRoute ? "noindex, nofollow" : "index, follow");
-    upsertCanonical(activePost ? `/blog/${activePost.slug}` : isAdminSubscribersRoute ? "/admin/subscribers" : isPrivacyRoute ? "/privacy-policy" : isAssessmentRoute ? "/nutrition-assessment" : isBlogRoute ? "/blog" : "/");
+    upsertCanonical(activePost ? `/blog/${activePost.slug}` : isAdminSubscribersRoute ? "/admin/subscribers" : isCookieRoute ? "/cookie-policy" : isPrivacyRoute ? "/privacy-policy" : isAssessmentRoute ? "/nutrition-assessment" : isBlogRoute ? "/blog" : "/");
     upsertStructuredData(
       activePost
         ? {
@@ -1769,6 +1905,14 @@ export default function NutritionByIballa() {
               description,
               url: `${window.location.origin}/privacy-policy`
             }
+        : isCookieRoute
+          ? {
+              "@context": "https://schema.org",
+              "@type": "WebPage",
+              name: i18n.language.startsWith("es") ? "Política de cookies" : "Cookie Policy",
+              description,
+              url: `${window.location.origin}/cookie-policy`
+            }
         : isBlogRoute
           ? {
             "@context": "https://schema.org",
@@ -1785,7 +1929,7 @@ export default function NutritionByIballa() {
               url: window.location.origin
             }
     );
-  }, [activePost, i18n.language, isAdminSubscribersRoute, isAssessmentRoute, isBlogRoute, isPrivacyRoute, t, uiCopy]);
+  }, [activePost, i18n.language, isAdminSubscribersRoute, isAssessmentRoute, isBlogRoute, isCookieRoute, isPrivacyRoute, t, uiCopy]);
 
  const appointmentTypes = {
   en: [
@@ -1815,15 +1959,15 @@ export default function NutritionByIballa() {
 };
 
   return (
-   <div className="bg-white text-gray-900 font-sans">
+   <div className="overflow-x-hidden bg-white text-gray-900 font-sans">
     {/* Header */}
   <header className="h-24 shadow-md bg-white relative z-[999]">
-  <div className="max-w-7xl mx-auto w-full px-4 flex justify-between items-center relative z-[1000]">
-    <img src="/logo.png" alt={t("logoAlt")} className="h-20 w-[180px] object-contain" />
+  <div className="mx-auto flex h-full w-full max-w-screen-2xl items-center justify-between gap-3 px-3 sm:px-4 lg:px-10 relative z-[1000]">
+    <img src="/logo.png" alt={t("logoAlt")} className="h-16 w-[140px] object-contain sm:h-20 sm:w-[180px] lg:h-24 lg:w-[210px]" />
 
-    <div className="flex items-center gap-6 relative z-[1000]">
+    <div className="flex shrink-0 items-center gap-2 sm:gap-4 md:gap-6 relative z-[1000]">
       <LanguageDropdown />
-      <nav className="hidden md:flex space-x-6">
+      <nav className="hidden md:flex space-x-6 lg:text-base xl:text-lg">
         <a href="/">{t("nav.home")}</a>
         <a href="/#appointments">{t("nav.appointments")}</a>
         <a href="/nutrition-assessment">{uiCopy.nav.assessment}</a>
@@ -1872,6 +2016,8 @@ export default function NutritionByIballa() {
   <AdminSubscribersPage />
 ) : isPrivacyRoute ? (
   <PrivacyPolicyPage />
+) : isCookieRoute ? (
+  <CookiePolicyPage />
 ) : isArticleRoute && activePost ? (
   <BlogArticle post={activePost} />
 ) : isArticleRoute ? (
@@ -1889,28 +2035,28 @@ export default function NutritionByIballa() {
 ) : (
 <>
 {/* Hero Section */}
-<section className="pt-10 pb-10 text-center bg-gradient-to-r from-[#a3c9b9] to-[#7fae9e] text-white">
-  <div className="max-w-[90rem] mx-auto w-full px-6 lg:px-12">
+<section className="pt-10 pb-10 text-center bg-gradient-to-r from-[#a3c9b9] to-[#7fae9e] text-white lg:py-16 xl:py-20">
+  <div className="mx-auto w-full max-w-screen-2xl px-4 sm:px-6 lg:px-12 xl:px-20">
 
     {/* Title */}
-    <div className="max-w-xl w-full mx-auto px-4">
-      <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-6 leading-tight">
+    <div className="mx-auto w-full max-w-4xl">
+      <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold mb-6 leading-tight">
         {t("hero.title") || "Nutrición by Iballa"}
       </h1>
     </div>
 
     {/* Paragraph */}
-    <div className="max-w-5xl w-full mx-auto px-4">
-      <p className="text-base sm:text-lg leading-snug mb-6">
+    <div className="mx-auto w-full max-w-5xl lg:max-w-6xl xl:max-w-7xl">
+      <p className="mb-6 break-words text-justify text-base leading-relaxed sm:text-lg lg:text-xl xl:text-2xl">
         {t("hero.subtitle")}
       </p>
     </div>
 
     {/* Button */}
-    <div className="max-w-xl w-full mx-auto px-4">
+    <div className="mx-auto w-full max-w-xl">
       <a
         href="#appointments"
-        className="inline-block bg-white text-[#3b5f58] font-semibold px-6 py-2 rounded-full shadow hover:bg-gray-100 transition"
+        className="inline-block rounded-full bg-white px-6 py-2 font-semibold text-[#3b5f58] shadow transition hover:bg-gray-100 lg:px-8 lg:py-3 lg:text-lg"
       >
         {t("hero.cta")}
       </a>
@@ -1931,14 +2077,14 @@ export default function NutritionByIballa() {
   <div className="absolute inset-0 bg-white/90 z-10"></div>
 
   {/* Content Layer */}
-  <div className="relative z-20 px-4 py-12 sm:px-8 sm:py-16 md:px-12">
-    <div className="mx-auto mb-9 max-w-3xl text-center">
-    <h2 className="mb-3 text-3xl font-semibold text-[#294b43] sm:text-4xl">
+  <div className="relative z-20 px-4 py-12 sm:px-8 sm:py-16 md:px-12 lg:px-16 xl:px-20 xl:py-20">
+    <div className="mx-auto mb-9 max-w-5xl text-center lg:mb-12">
+    <h2 className="mb-3 text-3xl font-semibold text-[#294b43] sm:text-4xl lg:text-5xl">
       {t("services.heading")}
     </h2>
-      <p className="text-base leading-relaxed text-gray-700 sm:text-lg">{serviceCopy.intro}</p>
+      <p className="text-base leading-relaxed text-gray-700 sm:text-lg lg:text-xl">{serviceCopy.intro}</p>
     </div>
-    <div className="mx-auto grid max-w-6xl grid-cols-2 gap-3 md:gap-5">
+    <div className="mx-auto grid max-w-screen-2xl grid-cols-1 gap-3 min-[430px]:grid-cols-2 md:gap-5 xl:gap-8">
       {serviceCopy.services.map((service) => {
         const Icon = serviceIcons[service.icon];
         const isExpanded = expandedServiceKey === service.key;
@@ -1950,7 +2096,7 @@ export default function NutritionByIballa() {
             transition={{ layout: { duration: 0.25, ease: "easeOut" } }}
             className={`min-h-0 overflow-hidden rounded-2xl border bg-white transition-[box-shadow,border-color] duration-300 ${
               isExpanded
-                ? "col-span-2 border-[#7fae9e] shadow-[0_12px_36px_rgba(59,95,88,0.14)]"
+                ? "min-[430px]:col-span-2 border-[#7fae9e] shadow-[0_12px_36px_rgba(59,95,88,0.14)]"
                 : "border-[#cde4dc] shadow-[0_8px_30px_rgba(59,95,88,0.09)] hover:shadow-[0_12px_36px_rgba(59,95,88,0.14)]"
             }`}
           >
@@ -1961,18 +2107,18 @@ export default function NutritionByIballa() {
                 aria-controls={panelId}
                 aria-label={`${isExpanded ? serviceCopy.readLess : serviceCopy.readMore}: ${service.title}`}
                 onClick={() => setExpandedServiceKey(isExpanded ? null : service.key)}
-                className="group relative block w-full p-3 pr-11 text-left transition-colors hover:bg-[#f7fbf9] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-[#477b6c] sm:p-5 sm:pr-14 md:p-6 md:pr-16"
+                className="group relative block w-full p-3 pr-11 text-left transition-colors hover:bg-[#f7fbf9] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-[#477b6c] sm:p-5 sm:pr-14 md:p-6 md:pr-16 xl:p-8 xl:pr-20"
               >
-                <span className="absolute right-3 top-3 flex h-8 w-8 items-center justify-center rounded-full bg-[#edf6f2] text-[#315f55] transition group-hover:bg-[#dceee7] sm:right-5 sm:top-5">
+                <span className="absolute right-3 top-3 flex h-8 w-8 items-center justify-center rounded-full bg-[#edf6f2] text-[#315f55] transition group-hover:bg-[#dceee7] sm:right-5 sm:top-5 xl:right-8 xl:top-8 xl:h-10 xl:w-10">
                   {isExpanded ? <ChevronUp size={18} aria-hidden="true" /> : <ChevronDown size={18} aria-hidden="true" />}
                 </span>
-                <span className="flex flex-col items-start gap-3 sm:flex-row sm:gap-4">
-                  <span className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-xl sm:h-12 sm:w-12 ${service.iconBackground}`}>
-                    <Icon size={23} className={`${service.iconColor} sm:h-[27px] sm:w-[27px]`} aria-hidden="true" />
+                <span className="flex flex-col items-start gap-3 sm:flex-row sm:gap-4 xl:gap-6">
+                  <span className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-xl sm:h-12 sm:w-12 xl:h-16 xl:w-16 ${service.iconBackground}`}>
+                    <Icon size={23} className={`${service.iconColor} sm:h-[27px] sm:w-[27px] xl:h-9 xl:w-9`} aria-hidden="true" />
                   </span>
                   <span>
-                    <span role="heading" aria-level="3" className="block text-[15px] font-semibold leading-snug text-[#294b43] sm:text-lg md:text-xl">{service.title}</span>
-                    <span className="mt-2 block text-xs leading-relaxed text-gray-700 sm:text-sm md:text-[15px]">{service.summary}</span>
+                    <span role="heading" aria-level="3" className="block text-[15px] font-semibold leading-snug text-[#294b43] sm:text-lg md:text-xl xl:text-2xl">{service.title}</span>
+                    <span className="mt-2 block text-xs leading-relaxed text-gray-700 sm:text-sm md:text-[15px] xl:text-lg">{service.summary}</span>
                   </span>
                 </span>
               </button>
@@ -1987,26 +2133,26 @@ export default function NutritionByIballa() {
                     animate={{ height: "auto", opacity: 1 }}
                     exit={{ height: 0, opacity: 0 }}
                     transition={{ height: { duration: 0.25, ease: "easeOut" }, opacity: { duration: 0.18 } }}
-                    className="overflow-hidden px-3 pb-3 sm:px-5 sm:pb-5 md:px-6 md:pb-6"
+                    className="overflow-hidden px-3 pb-3 sm:px-5 sm:pb-5 md:px-6 md:pb-6 xl:px-8 xl:pb-8"
                   >
                     <div className="border-t border-[#dbeae4] pt-4 sm:pt-5">
-                      <div className="grid gap-4 md:grid-cols-3 md:gap-5">
+                      <div className="grid gap-4 md:grid-cols-3 md:gap-5 xl:gap-8">
                         <div>
-                          <h4 className="font-semibold text-[#315f55]">{serviceCopy.headings.what}</h4>
-                          <p className="mt-2 text-sm leading-relaxed text-gray-700">{service.what}</p>
+                          <h4 className="font-semibold text-[#315f55] xl:text-lg">{serviceCopy.headings.what}</h4>
+                          <p className="mt-2 text-sm leading-relaxed text-gray-700 xl:text-base">{service.what}</p>
                         </div>
                         <div>
-                          <h4 className="font-semibold text-[#315f55]">{serviceCopy.headings.who}</h4>
-                          <p className="mt-2 text-sm leading-relaxed text-gray-700">{service.who}</p>
+                          <h4 className="font-semibold text-[#315f55] xl:text-lg">{serviceCopy.headings.who}</h4>
+                          <p className="mt-2 text-sm leading-relaxed text-gray-700 xl:text-base">{service.who}</p>
                         </div>
                         <div>
-                          <h4 className="font-semibold text-[#315f55]">{serviceCopy.headings.expect}</h4>
-                          <p className="mt-2 text-sm leading-relaxed text-gray-700">{service.expect}</p>
+                          <h4 className="font-semibold text-[#315f55] xl:text-lg">{serviceCopy.headings.expect}</h4>
+                          <p className="mt-2 text-sm leading-relaxed text-gray-700 xl:text-base">{service.expect}</p>
                         </div>
                       </div>
-                      <div className="mt-5 rounded-xl bg-[#edf6f2] p-4 sm:p-5">
-                        <h4 className="font-semibold text-[#294b43]">{serviceCopy.headings.book}</h4>
-                        <p className="mt-1 text-sm leading-relaxed text-gray-700">{serviceCopy.bookingText}</p>
+                      <div className="mt-5 rounded-xl bg-[#edf6f2] p-4 sm:p-5 xl:p-6">
+                        <h4 className="font-semibold text-[#294b43] xl:text-lg">{serviceCopy.headings.book}</h4>
+                        <p className="mt-1 text-sm leading-relaxed text-gray-700 xl:text-base">{serviceCopy.bookingText}</p>
                         <div className="mt-4 flex flex-wrap gap-3">
                           <a
                             href={appointmentTypes[lang]?.[0]?.calendlyUrl || appointmentTypes.en[0].calendlyUrl}
@@ -2039,22 +2185,22 @@ export default function NutritionByIballa() {
 
 
       {/* About */}
- <section id="about" className="p-12 bg-gradient-to-r from-[#a3c9b9] to-[#7fae9e] text-white">
-      <div className="max-w-5xl mx-auto flex flex-col md:flex-row items-center gap-8">
+ <section id="about" className="px-5 py-10 sm:p-12 lg:px-16 lg:py-20 xl:px-20 bg-gradient-to-r from-[#a3c9b9] to-[#7fae9e] text-white">
+      <div className="mx-auto flex max-w-screen-xl flex-col items-center gap-8 md:flex-row lg:gap-14 xl:max-w-screen-2xl xl:gap-20">
         <img
           src="/profile1.png"
           alt="Iballa Martinez"
-          className="rounded-full h-48 md:h-80 lg:h-96 shadow-lg border-4 border-white"
+          className="rounded-full h-48 md:h-80 lg:h-[28rem] xl:h-[32rem] shadow-lg border-4 border-white"
         />
         <div className="text-left">
-          <h2 className="text-3xl font-semibold mb-4">{t("about.heading")}</h2>
+          <h2 className="text-3xl font-semibold mb-4 lg:text-5xl">{t("about.heading")}</h2>
 
           <p
-            className="text-justify text-[15px] md:text-lg leading-relaxed max-w-md md:max-w-2xl mb-4"
+            className="text-justify text-[15px] md:text-lg lg:text-xl leading-relaxed max-w-md md:max-w-3xl xl:max-w-4xl mb-4"
             dangerouslySetInnerHTML={{ __html: t("about.paragraph1") }}
           />
           <p
-            className="text-justify text-[15px] md:text-lg leading-relaxed max-w-md md:max-w-2xl mb-4"
+            className="text-justify text-[15px] md:text-lg lg:text-xl leading-relaxed max-w-md md:max-w-3xl xl:max-w-4xl mb-4"
             dangerouslySetInnerHTML={{ __html: t("about.paragraph2") }}
           />
 
@@ -2064,11 +2210,11 @@ export default function NutritionByIballa() {
               {expanded && (
                 <>
                   <p
-                    className="text-justify text-[15px] md:text-lg leading-relaxed max-w-md md:max-w-2xl mb-4"
+                    className="text-justify text-[15px] md:text-lg lg:text-xl leading-relaxed max-w-md md:max-w-3xl xl:max-w-4xl mb-4"
                     dangerouslySetInnerHTML={{ __html: t("about.paragraph3") }}
                   />
                   <p
-                    className="text-justify text-[15px] md:text-lg leading-relaxed max-w-md md:max-w-2xl mb-4"
+                    className="text-justify text-[15px] md:text-lg lg:text-xl leading-relaxed max-w-md md:max-w-3xl xl:max-w-4xl mb-4"
                     dangerouslySetInnerHTML={{ __html: t("about.paragraph4") }}
                   />
                 </>
@@ -2084,11 +2230,11 @@ export default function NutritionByIballa() {
             <>
               {/* Always show on desktop */}
               <p
-                className="text-justify text-[15px] md:text-lg leading-relaxed max-w-md md:max-w-2xl mb-4"
+                className="text-justify text-[15px] md:text-lg lg:text-xl leading-relaxed max-w-md md:max-w-3xl xl:max-w-4xl mb-4"
                 dangerouslySetInnerHTML={{ __html: t("about.paragraph3") }}
               />
               <p
-                className="text-justify text-[15px] md:text-lg leading-relaxed max-w-md md:max-w-2xl mb-4"
+                className="text-justify text-[15px] md:text-lg lg:text-xl leading-relaxed max-w-md md:max-w-3xl xl:max-w-4xl mb-4"
                 dangerouslySetInnerHTML={{ __html: t("about.paragraph4") }}
               />
             </>
@@ -2100,49 +2246,49 @@ export default function NutritionByIballa() {
 {/* Appointments */}
 <section
   id="appointments"
-  className="relative bg-gray-50 pt-8 pb-12 sm:pt-12 sm:pb-20"
+  className="relative bg-gray-50 pt-8 pb-12 sm:pt-12 sm:pb-20 lg:py-20"
 >
   {/* Overlay for readability */}
   <div className="absolute inset-0 bg-white/70 z-0"></div>
 
   {/* Centered Title */}
   <div className="relative z-10 text-center mb-8 sm:mb-12">
-    <h2 className="text-3xl font-semibold">
+    <h2 className="text-3xl font-semibold lg:text-5xl">
       {t("appointments.heading")}
     </h2>
   </div>
 
   {/* Responsive Layout: Cards first on mobile, image second */}
-  <div className="relative z-10 flex flex-col xl:flex-row-reverse max-w-7xl mx-auto px-4 sm:px-6 md:px-12">
+  <div className="relative z-10 mx-auto grid w-full max-w-screen-xl items-center gap-8 px-4 sm:px-6 md:px-10 lg:grid-cols-[minmax(0,1.05fr)_minmax(0,1fr)] lg:gap-12 xl:max-w-screen-2xl xl:px-20">
     
     {/* Appointment Cards */}
-    <div className="order-1 xl:order-2 w-full xl:w-1/2 flex flex-col items-center justify-center">
-      <div className="flex flex-col gap-4 sm:gap-6 w-full max-w-md items-center">
+    <div className="order-1 flex w-full flex-col items-center justify-center">
+      <div className="flex w-full flex-col items-center gap-4 sm:gap-6">
         {appointmentTypes[lang].map((service, idx) => {
           const Icon = service.icon;
           return (
             <div key={idx} className="rounded-xl shadow-lg ring-1 ring-[#7fae9e] hover:ring-2 transition-all duration-200 overflow-hidden flex flex-col w-full">
               {/* Card Header */}
-              <div className="flex items-center justify-center bg-gradient-to-r from-[#a3c9b9] to-[#7fae9e] text-white p-4">
-                <Icon size={32} className="mr-2" />
-                <h3 className="text-lg font-bold">
+              <div className="flex items-center justify-center bg-gradient-to-r from-[#a3c9b9] to-[#7fae9e] text-white p-4 lg:p-5">
+                <Icon size={32} className="mr-2 lg:h-10 lg:w-10" />
+                <h3 className="text-lg font-bold lg:text-2xl">
                   {t(`appointments.types.${service.key}.title`)}
                 </h3>
               </div>
 
               {/* Card Body */}
-              <div className="flex-grow flex flex-col items-center justify-center bg-white text-gray-800 px-4 py-3 sm:px-6 sm:py-4 text-xs sm:text-sm md:text-base text-justify">
+              <div className="flex-grow flex flex-col items-center justify-center bg-white text-gray-800 px-4 py-3 sm:px-6 sm:py-4 lg:px-8 lg:py-6 text-xs sm:text-sm md:text-base lg:text-lg text-justify">
                 {(() => {
   const desc = t(`appointments.types.${service.key}.description`, { returnObjects: true });
 
   return Array.isArray(desc) ? (
-    <ul className="list-disc list-inside text-left text-sm leading-relaxed space-y-1">
+    <ul className="list-disc list-inside text-left text-sm leading-relaxed space-y-1 lg:text-lg">
       {desc.map((item, idx) => (
         <li key={idx}>{item}</li>
       ))}
     </ul>
   ) : (
-    <p className="text-xs sm:text-sm md:text-base text-center leading-relaxed">
+    <p className="text-xs sm:text-sm md:text-base lg:text-lg text-center leading-relaxed">
       {desc}
     </p>
   );
@@ -2152,7 +2298,7 @@ export default function NutritionByIballa() {
                   href={service.calendlyUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="mt-4 bg-gradient-to-r from-[#a3c9b9] to-[#7fae9e] text-white text-xs font-semibold px-6 py-2 rounded-full hover:brightness-105 transition"
+                  className="mt-4 rounded-full bg-gradient-to-r from-[#a3c9b9] to-[#7fae9e] px-6 py-2 text-xs font-semibold text-white transition hover:brightness-105 lg:px-8 lg:py-3 lg:text-base"
                 >
                   {t("appointments.cta")}
                 </a>
@@ -2160,34 +2306,67 @@ export default function NutritionByIballa() {
             </div>
           );
         })}
+        <div className="w-full rounded-xl bg-white p-4 text-left shadow-lg ring-1 ring-[#7fae9e] sm:p-5 lg:p-6">
+          <p className="text-sm leading-relaxed text-gray-700 lg:text-base">
+            {t("appointments.mealPlanNote")}
+          </p>
+          <button
+            type="button"
+            aria-expanded={bookingPolicyOpen}
+            aria-controls="booking-policy-details"
+            onClick={() => setBookingPolicyOpen((open) => !open)}
+            className="mt-4 inline-flex w-full items-center justify-between gap-3 rounded-full border border-[#b7d5c9] px-4 py-2 text-left text-sm font-semibold text-[#294b43] transition hover:bg-[#f7fbf9] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#315f55]"
+          >
+            <span>{t("appointments.policyHeading")}</span>
+            {bookingPolicyOpen ? <ChevronUp size={18} aria-hidden="true" /> : <ChevronDown size={18} aria-hidden="true" />}
+          </button>
+          <AnimatePresence initial={false}>
+            {bookingPolicyOpen && (
+              <motion.div
+                id="booking-policy-details"
+                initial={{ height: 0, opacity: 0 }}
+                animate={{ height: "auto", opacity: 1 }}
+                exit={{ height: 0, opacity: 0 }}
+                transition={{ height: { duration: 0.22, ease: "easeOut" }, opacity: { duration: 0.16 } }}
+                className="overflow-hidden"
+              >
+                <ul className="mt-3 list-disc space-y-2 pl-5 text-sm leading-relaxed text-gray-700">
+                  {t("appointments.policy", { returnObjects: true }).map((item) => (
+                    <li key={item}>{item}</li>
+                  ))}
+                </ul>
+              </motion.div>
+            )}
+          </AnimatePresence>
+        </div>
       </div>
     </div>
 
     {/* Image */}
-   <div className="order-2 xl:order-1 w-full xl:w-1/2 h-48 sm:h-64 xl:h-auto mt-8 xl:mt-0 bg-no-repeat bg-contain bg-center" style={{ backgroundImage: "url('/banner1.png')" }}></div>
+   <div className="order-2 min-h-52 w-full rounded-xl bg-no-repeat bg-cover bg-center sm:min-h-72 lg:min-h-[32rem] xl:min-h-[38rem]" style={{ backgroundImage: "url('/banner1.png')" }}></div>
   </div>
 </section>
 
      {/* Contact */}
-<section id="contact" className="p-8 sm:p-12 bg-gradient-to-r from-[#a3c9b9] to-[#7fae9e] text-white text-center">
-  <h2 className="text-3xl font-semibold mb-4">{t("contact.heading")}</h2>
+<section id="contact" className="p-8 sm:p-12 lg:px-16 lg:py-20 xl:px-20 bg-gradient-to-r from-[#a3c9b9] to-[#7fae9e] text-white text-center">
+  <h2 className="text-3xl font-semibold mb-4 lg:text-5xl">{t("contact.heading")}</h2>
 
   <p
-    className="text-base sm:text-lg max-w-xl mx-auto mb-6"
+    className="text-base sm:text-lg lg:text-xl max-w-xl lg:max-w-3xl mx-auto mb-6 lg:mb-8"
     dangerouslySetInnerHTML={{ __html: t("contact.intro") }}
   />
 
   {state.succeeded ? (
     <p className="text-white text-lg">{t("contact.success")}</p>
   ) : (
-    <form className="max-w-xl mx-auto w-full space-y-4" onSubmit={handleSubmit}>
+    <form className="max-w-xl lg:max-w-3xl mx-auto w-full space-y-4 lg:space-y-5" onSubmit={handleSubmit}>
       {/* Name */}
       <input
         id="name"
         name="name"
         required
         placeholder={t("contact.fields.name")}
-        className="w-full h-10 rounded-md border border-gray-300 bg-white px-3 text-gray-900 placeholder:text-gray-500 focus:outline-none focus:ring-2 focus:ring-white"
+        className="w-full h-10 lg:h-14 rounded-md border border-gray-300 bg-white px-3 lg:px-5 lg:text-lg text-gray-900 placeholder:text-gray-500 focus:outline-none focus:ring-2 focus:ring-white"
       />
 
       {/* Email */}
@@ -2197,7 +2376,7 @@ export default function NutritionByIballa() {
         type="email"
         required
         placeholder={t("contact.fields.email")}
-        className="w-full h-10 rounded-md border border-gray-300 bg-white px-3 text-gray-900 placeholder:text-gray-500 focus:outline-none focus:ring-2 focus:ring-white"
+        className="w-full h-10 lg:h-14 rounded-md border border-gray-300 bg-white px-3 lg:px-5 lg:text-lg text-gray-900 placeholder:text-gray-500 focus:outline-none focus:ring-2 focus:ring-white"
       />
 
       {/* Message */}
@@ -2210,17 +2389,17 @@ export default function NutritionByIballa() {
         value={messageValue}
         onChange={(e) => setMessageValue(e.target.value)}
         placeholder={t("contact.fields.message")}
-        className="w-full resize-y rounded-md border border-gray-300 bg-white px-3 py-2 text-gray-900 placeholder:text-gray-500 focus:outline-none focus:ring-2 focus:ring-white"
+        className="w-full resize-y rounded-md border border-gray-300 bg-white px-3 py-2 lg:px-5 lg:py-4 lg:text-lg text-gray-900 placeholder:text-gray-500 focus:outline-none focus:ring-2 focus:ring-white"
       />
 
-      <p className="text-sm text-white/80">{t("contact.fields.note")}</p>
+      <p className="text-sm lg:text-base text-white/80">{t("contact.fields.note")}</p>
 
       {/* Submit */}
       <div className="text-center pt-2">
         <button
           type="submit"
           disabled={state.submitting}
-          className="cursor-pointer rounded-md bg-white px-8 py-3 text-sm font-medium text-green-700 hover:bg-gray-100 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-white disabled:cursor-not-allowed disabled:opacity-60"
+          className="cursor-pointer rounded-md bg-white px-8 py-3 text-sm font-medium text-green-700 transition-colors duration-200 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-white disabled:cursor-not-allowed disabled:opacity-60 lg:px-10 lg:py-4 lg:text-base"
         >
           {state.submitting ? t("contact.fields.sending") : t("contact.fields.submit")}
         </button>
@@ -2237,47 +2416,61 @@ export default function NutritionByIballa() {
       )}
 
       {/* Footer */}
-      <footer className="bg-white text-[#1e1e5a] px-4 py-6 rounded-t-lg shadow-inner">
-        <div className="flex flex-row items-center justify-between gap-4 w-full">
-          {/* Logo */}
-          <div className="flex items-center gap-3 shrink-0">
-            <img
-              src="/favicon.png"
-              alt={t("footer.logoAlt")}
-              className="w-10 h-10 rounded-full object-cover shrink-0"
-            />
+      <footer className="bg-white text-[#1e1e5a] px-4 py-6 lg:px-12 lg:py-8 rounded-t-lg shadow-inner">
+        <div className="mx-auto flex w-full max-w-screen-2xl flex-col items-center gap-4 text-center">
+          <div className="flex w-full flex-col items-center justify-between gap-4 sm:flex-row">
+            {/* Brand */}
+            <div className="flex flex-col items-center gap-2 sm:flex-row sm:gap-3">
+              <img
+                src="/favicon.png"
+                alt={t("footer.logoAlt")}
+                className="h-12 w-12 rounded-full object-cover sm:h-10 sm:w-10 lg:h-12 lg:w-12"
+              />
+              <p className="text-sm font-semibold leading-tight text-[#294b43] sm:text-xs lg:text-sm">
+                {t("footer.bio")}
+              </p>
+            </div>
+
+            {/* Social Handles */}
+            <div className="flex flex-col items-center gap-2 text-xs font-semibold text-[#1e1e5a] sm:flex-row sm:gap-4 lg:text-sm">
+              <a
+                href="https://linkedin.com/in/iballamartinezyanes"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="LinkedIn: Iballa Martinez Yanes"
+                title="LinkedIn: Iballa Martinez Yanes"
+                className="inline-flex items-center gap-2 hover:opacity-80 transition duration-200"
+              >
+                <Linkedin size={20} color="#1e1e5a" />
+                <span>iballamartinezyanes</span>
+              </a>
+              <a
+                href="https://www.instagram.com/thespanishdietitian?igsh=NWYzbjF3ZmNsczdp&utm_source=qr"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Instagram: @thespanishdietitian"
+                title="Instagram: @thespanishdietitian"
+                className="inline-flex items-center gap-2 hover:opacity-80 transition duration-200"
+              >
+                <Instagram size={20} color="#1e1e5a" />
+                <span>@thespanishdietitian</span>
+              </a>
+            </div>
+          </div>
+
+          {/* Policies */}
+          <div className="flex w-full flex-wrap items-center justify-center gap-x-4 gap-y-2 border-t border-[#e2eee9] pt-3 text-[11px] font-semibold lg:text-xs">
             <a
               href="/privacy-policy"
-              className="text-[11px] font-semibold text-[#3b5f58] underline underline-offset-2 hover:text-[#7fae9e]"
+              className="text-[#3b5f58] underline underline-offset-2 hover:text-[#7fae9e]"
             >
               {t("footer.privacyPolicy")}
             </a>
-          </div>
-
-          {/* Bio */}
-          <div className="flex flex-col justify-center max-w-[60%] sm:max-w-md">
-            <p className="text-[10px] leading-tight text-left">
-              {t("footer.bio")}
-            </p>
-          </div>
-
-          {/* Social Icons */}
-          <div className="flex items-center gap-3 shrink-0">
             <a
-              href="https://linkedin.com/in/iballamartinezyanes"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="hover:opacity-80 transition duration-200"
+              href="/cookie-policy"
+              className="text-[#3b5f58] underline underline-offset-2 hover:text-[#7fae9e]"
             >
-              <Linkedin size={20} color="#1e1e5a" />
-            </a>
-            <a
-              href="https://www.instagram.com/nutrition.by.iballa?igsh=cWVjbXM3ODl2cWZ5" // Replace with actual handle
-              target="_blank"
-              rel="noopener noreferrer"
-              className="hover:opacity-80 transition duration-200"
-            >
-              <Instagram size={20} color="#1e1e5a" />
+              {t("footer.cookiePolicy")}
             </a>
           </div>
         </div>
