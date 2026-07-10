@@ -13,6 +13,7 @@ import "./index.css";
 import { useTranslation } from "react-i18next";
 import IntestineIcon from "./Icons/IntestineIcon";
 import { Analytics } from "@vercel/analytics/react"
+import { track } from "@vercel/analytics";
 import { blogPosts, getBlogPost } from "./blogPosts";
 import { localizeBlogPosts } from "./blogContent.es";
 import { servicesContent } from "./servicesData";
@@ -141,6 +142,19 @@ function upsertStructuredData(data) {
 function isValidEmail(email) {
   return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.trim());
 }
+
+function trackEvent(name, properties = {}) {
+  try {
+    track(name, properties);
+  } catch {
+    // Analytics should never interrupt booking or enquiry actions.
+  }
+}
+
+const calendlyUrls = {
+  enFreeCall: process.env.REACT_APP_CALENDLY_EN_FREE_CALL_URL || "https://calendly.com/iballa-mtzyanes/free-15-min-call",
+  esFreeCall: process.env.REACT_APP_CALENDLY_ES_FREE_CALL_URL || "https://calendly.com/iballa-mtzyanes/llamada-introductoria-gratuita-de-15-minutos"
+};
 
 function NewsletterConsentChoice({ value, onChange, copy, name }) {
   const choices = [
@@ -1735,9 +1749,11 @@ export default function NutritionByIballa() {
   const [state, handleSubmit] = useForm("xzzvqdlq");
   const [messageValue, setMessageValue] = useState("");
   const messageRef = useRef(null);
+  const bookingSectionRef = useRef(null);
+  const bookingViewedRef = useRef(false);
   const [navOpen, setNavOpen] = useState(false);
   const { t, i18n } = useTranslation();
-  const lang = i18n.language;
+  const lang = i18n.language.startsWith("es") ? "es" : "en";
   const uiCopy = getUiContent(lang);
   const localizedBlogPosts = localizeBlogPosts(blogPosts, lang);
   const [expanded, setExpanded] = useState(false);
@@ -1811,6 +1827,24 @@ export default function NutritionByIballa() {
       messageRef.current.style.height = `${messageRef.current.scrollHeight}px`;
     }
   }, [messageValue]);
+
+  useEffect(() => {
+    const bookingSection = bookingSectionRef.current;
+    if (!bookingSection || typeof IntersectionObserver === "undefined") return undefined;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting && !bookingViewedRef.current) {
+          bookingViewedRef.current = true;
+          trackEvent("booking_section_viewed", { language: lang });
+        }
+      },
+      { threshold: 0.35 }
+    );
+
+    observer.observe(bookingSection);
+    return () => observer.disconnect();
+  }, [lang]);
 
   useEffect(() => {
     const widgetContainer = document.getElementById("calendly-widget");
@@ -1934,6 +1968,12 @@ export default function NutritionByIballa() {
  const appointmentTypes = {
   en: [
     {
+      key: "freeCall",
+      icon: Clock,
+      primary: true,
+      calendlyUrl: calendlyUrls.enFreeCall
+    },
+    {
       key: "initial",
       icon: Calendar,
       calendlyUrl: "https://calendly.com/iballa-mtzyanes/initial-consultation"
@@ -1945,6 +1985,12 @@ export default function NutritionByIballa() {
     }
   ],
   es: [
+    {
+      key: "freeCall",
+      icon: Clock,
+      primary: true,
+      calendlyUrl: calendlyUrls.esFreeCall
+    },
     {
       key: "initial",
       icon: Calendar,
@@ -2056,6 +2102,7 @@ export default function NutritionByIballa() {
     <div className="mx-auto w-full max-w-xl">
       <a
         href="#appointments"
+        onClick={() => trackEvent("booking_cta_clicked", { language: lang, location: "hero" })}
         className="inline-block rounded-full bg-white px-6 py-2 font-semibold text-[#3b5f58] shadow transition hover:bg-gray-100 lg:px-8 lg:py-3 lg:text-lg"
       >
         {t("hero.cta")}
@@ -2155,9 +2202,8 @@ export default function NutritionByIballa() {
                         <p className="mt-1 text-sm leading-relaxed text-gray-700 xl:text-base">{serviceCopy.bookingText}</p>
                         <div className="mt-4 flex flex-wrap gap-3">
                           <a
-                            href={appointmentTypes[lang]?.[0]?.calendlyUrl || appointmentTypes.en[0].calendlyUrl}
-                            target="_blank"
-                            rel="noreferrer"
+                            href="#appointments"
+                            onClick={() => trackEvent("booking_cta_clicked", { language: lang, location: "service_card", service: service.key })}
                             className="inline-flex min-h-11 items-center justify-center rounded-full bg-[#477b6c] px-5 py-2 text-sm font-semibold text-white transition hover:bg-[#365f54] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#315f55] focus-visible:ring-offset-2"
                           >
                             {serviceCopy.bookConsultation}
@@ -2246,6 +2292,7 @@ export default function NutritionByIballa() {
 {/* Appointments */}
 <section
   id="appointments"
+  ref={bookingSectionRef}
   className="relative bg-gray-50 pt-8 pb-12 sm:pt-12 sm:pb-20 lg:py-20"
 >
   {/* Overlay for readability */}
@@ -2259,25 +2306,47 @@ export default function NutritionByIballa() {
   </div>
 
   {/* Responsive Layout: Cards first on mobile, image second */}
-  <div className="relative z-10 mx-auto grid w-full max-w-screen-xl items-center gap-8 px-4 sm:px-6 md:px-10 lg:grid-cols-[minmax(0,1.05fr)_minmax(0,1fr)] lg:gap-12 xl:max-w-screen-2xl xl:px-20">
+  <div className="relative z-10 mx-auto grid w-full max-w-screen-xl items-start gap-8 px-4 sm:px-6 md:px-10 lg:grid-cols-[minmax(0,1.05fr)_minmax(0,1fr)] lg:gap-12 xl:max-w-screen-2xl xl:px-20">
     
     {/* Appointment Cards */}
     <div className="order-1 flex w-full flex-col items-center justify-center">
       <div className="flex w-full flex-col items-center gap-4 sm:gap-6">
-        {appointmentTypes[lang].map((service, idx) => {
+        {appointmentTypes[lang].map((service) => {
           const Icon = service.icon;
+          const bookingUrlMissing = service.calendlyUrl === "#";
           return (
-            <div key={idx} className="rounded-xl shadow-lg ring-1 ring-[#7fae9e] hover:ring-2 transition-all duration-200 overflow-hidden flex flex-col w-full">
+            <div
+              key={service.key}
+              className={`rounded-xl shadow-lg transition-all duration-200 overflow-hidden flex flex-col w-full ${
+                service.primary
+                  ? "ring-2 ring-[#315f55] bg-white"
+                  : "ring-1 ring-[#7fae9e] hover:ring-2"
+              }`}
+            >
               {/* Card Header */}
-              <div className="flex items-center justify-center bg-gradient-to-r from-[#a3c9b9] to-[#7fae9e] text-white p-4 lg:p-5">
-                <Icon size={32} className="mr-2 lg:h-10 lg:w-10" />
-                <h3 className="text-lg font-bold lg:text-2xl">
-                  {t(`appointments.types.${service.key}.title`)}
-                </h3>
+              <div className={`flex flex-col items-center justify-center gap-2 text-white p-4 lg:p-5 ${
+                service.primary ? "bg-[#315f55]" : "bg-gradient-to-r from-[#a3c9b9] to-[#7fae9e]"
+              }`}>
+                {service.primary && (
+                  <span className="rounded-full bg-white/95 px-3 py-1 text-xs font-semibold uppercase tracking-wide text-[#315f55]">
+                    {t("appointments.recommended")}
+                  </span>
+                )}
+                <div className="flex items-center justify-center">
+                  <Icon size={32} className="mr-2 lg:h-10 lg:w-10" />
+                  <h3 className="text-lg font-bold lg:text-2xl">
+                    {t(`appointments.types.${service.key}.title`)}
+                  </h3>
+                </div>
               </div>
 
               {/* Card Body */}
               <div className="flex-grow flex flex-col items-center justify-center bg-white text-gray-800 px-4 py-3 sm:px-6 sm:py-4 lg:px-8 lg:py-6 text-xs sm:text-sm md:text-base lg:text-lg text-justify">
+                {service.primary && (
+                  <p className="mb-3 rounded-full bg-[#edf6f2] px-4 py-2 text-center text-sm font-semibold text-[#315f55] lg:text-base">
+                    {t("appointments.startHere")}
+                  </p>
+                )}
                 {(() => {
   const desc = t(`appointments.types.${service.key}.description`, { returnObjects: true });
 
@@ -2298,10 +2367,28 @@ export default function NutritionByIballa() {
                   href={service.calendlyUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="mt-4 rounded-full bg-gradient-to-r from-[#a3c9b9] to-[#7fae9e] px-6 py-2 text-xs font-semibold text-white transition hover:brightness-105 lg:px-8 lg:py-3 lg:text-base"
+                  aria-disabled={bookingUrlMissing}
+                  onClick={(event) => {
+                    trackEvent("appointment_type_selected", { language: lang, appointmentType: service.key });
+                    if (bookingUrlMissing) {
+                      event.preventDefault();
+                    }
+                  }}
+                  className={`mt-4 rounded-full px-6 py-2 text-xs font-semibold transition lg:px-8 lg:py-3 lg:text-base ${
+                    bookingUrlMissing
+                      ? "cursor-not-allowed bg-gray-300 text-gray-600"
+                      : service.primary
+                        ? "bg-[#315f55] text-white hover:bg-[#25463f]"
+                        : "bg-gradient-to-r from-[#a3c9b9] to-[#7fae9e] text-white hover:brightness-105"
+                  }`}
                 >
-                  {t("appointments.cta")}
+                  {t(`appointments.types.${service.key}.cta`, { defaultValue: t("appointments.cta") })}
                 </a>
+                {bookingUrlMissing && (
+                  <p className="mt-2 text-center text-xs leading-relaxed text-gray-600">
+                    {t("appointments.missingFreeCallUrl")}
+                  </p>
+                )}
               </div>
             </div>
           );
@@ -2342,8 +2429,16 @@ export default function NutritionByIballa() {
       </div>
     </div>
 
-    {/* Image */}
-   <div className="order-2 min-h-52 w-full rounded-xl bg-no-repeat bg-cover bg-center sm:min-h-72 lg:min-h-[32rem] xl:min-h-[38rem]" style={{ backgroundImage: "url('/banner1.png')" }}></div>
+    <div className="order-2 w-full">
+      <div className="min-h-52 w-full rounded-xl bg-no-repeat bg-cover bg-center shadow-lg sm:min-h-72 lg:min-h-[32rem] xl:min-h-[38rem]" style={{ backgroundImage: "url('/banner1.png')" }}></div>
+      <div className="mt-20 hidden justify-center lg:flex xl:mt-24">
+        <img
+          src="/logo.png"
+          alt={t("logoAlt")}
+          className="h-48 w-auto object-contain xl:h-60"
+        />
+      </div>
+    </div>
   </div>
 </section>
 
@@ -2376,6 +2471,16 @@ export default function NutritionByIballa() {
         type="email"
         required
         placeholder={t("contact.fields.email")}
+        className="w-full h-10 lg:h-14 rounded-md border border-gray-300 bg-white px-3 lg:px-5 lg:text-lg text-gray-900 placeholder:text-gray-500 focus:outline-none focus:ring-2 focus:ring-white"
+      />
+
+      <input
+        id="mobile"
+        name="mobile"
+        type="tel"
+        required
+        autoComplete="tel"
+        placeholder={t("contact.fields.mobile")}
         className="w-full h-10 lg:h-14 rounded-md border border-gray-300 bg-white px-3 lg:px-5 lg:text-lg text-gray-900 placeholder:text-gray-500 focus:outline-none focus:ring-2 focus:ring-white"
       />
 

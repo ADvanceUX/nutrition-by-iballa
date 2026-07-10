@@ -8,7 +8,7 @@
   "hero": {
     "title": "Nutrition by Iballa",
     "subtitle": "Brindo asesoría nutricional personalizada y basada en la evidencia, disponible en español e inglés. Como dietista-nutricionista colegiada en CORU, mi misión es acompañarte en el cuidado de tu salud y bienestar con una atención profesional, cercana y comprensible. Te ayudo a gestionar condiciones médicas, a crear hábitos sostenibles y a sentirte mejor en tu día a día, siempre con un enfoque adaptado a tu estilo de vida y orientado a generar cambios positivos y duraderos en tu salud.",
-    "cta": "Reservar"
+    "cta": "Reserva una llamada gratuita de 15 minutos"
   },
   "services": {
     "heading": "Servicios Especializados",
@@ -65,7 +65,10 @@
   },
   "appointments": {
     "heading": "Reservas",
+    "recommended": "Recomendado para nuevos clientes",
+    "startHere": "¿No sabes qué servicio necesitas? Empieza aquí.",
     "mealPlanNote": "Las consultas no incluyen planes de comidas. En su lugar, recibirás herramientas, conocimientos y apoyo para comer de forma flexible y cuidar tu salud.",
+    "missingFreeCallUrl": "Este enlace para reservar la llamada gratuita estará disponible cuando se añada la URL de Calendly.",
     "policyHeading": "Política de cancelación y retrasos",
     "policy": [
       "Las citas pueden cancelarse o reprogramarse sin coste con al menos 24 horas de antelación.",
@@ -74,12 +77,17 @@
       "Te agradecemos mucho tu comprensión, ya que nos ayuda a mantener disponibilidad para otros pacientes."
     ],
     "types": {
+      "freeCall": {
+        "title": "Llamada Introductoria Gratuita de 15 Minutos",
+        "description": "Ten una llamada breve y sin compromiso para hablar sobre tus necesidades, resolver tus dudas y descubrir qué servicio puede ser más adecuado para ti.",
+        "cta": "Reservar llamada gratuita"
+      },
       "initial": {
         "title": "Consulta Inicial",
         "description": "55 minutos — En tu primera cita, revisaremos tu historial de salud, los medicamentos que tomas, resultados de análisis previos y tus hábitos alimenticios. Esto me ayudará a conocer tu situación de manera integral y a crear un plan de nutrición hecho a medida para tus necesidades y objetivos."
       },
       "review": {
-        "title": "Consulta de Seguimiento",
+        "title": "Cita de Revisión",
         "description": "30 minutos — En las citas de seguimiento, evaluaremos tu progreso y buscaremos soluciones a cualquier dificultad que surja en el camino."
       }
     },
@@ -92,6 +100,7 @@
     "fields": {
       "name": "Nombre",
       "email": "Correo electrónico",
+      "mobile": "Móvil",
       "message": "Mensaje",
       "note": "Responderé personalmente en un plazo de 1 a 2 días hábiles.",
       "submit": "Enviar",
