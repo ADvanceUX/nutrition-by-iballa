@@ -2351,11 +2351,11 @@ export default function NutritionByIballa() {
   const desc = t(`appointments.types.${service.key}.description`, { returnObjects: true });
 
   return Array.isArray(desc) ? (
-    <ul className="list-disc list-inside text-left text-sm leading-relaxed space-y-1 lg:text-lg">
+    <div className="space-y-3 text-center text-xs leading-relaxed sm:text-sm md:text-base lg:text-lg">
       {desc.map((item, idx) => (
-        <li key={idx}>{item}</li>
+        <p key={idx}>{item}</p>
       ))}
-    </ul>
+    </div>
   ) : (
     <p className="text-xs sm:text-sm md:text-base lg:text-lg text-center leading-relaxed">
       {desc}

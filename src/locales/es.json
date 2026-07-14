@@ -79,7 +79,7 @@
     "types": {
       "freeCall": {
         "title": "Llamada Introductoria Gratuita de 15 Minutos",
-        "description": "Ten una llamada breve y sin compromiso para hablar sobre tus necesidades, resolver tus dudas y descubrir qué servicio puede ser más adecuado para ti.",
+        "description": "¿Quieres saber si somos el equipo ideal para ti? Agenda una llamada gratuita, sin compromiso, para conversar sobre tus metas de salud, lo que te está costando trabajo y cómo podríamos ayudarte a lograrlo. Esta llamada es solo para conocernos, ¡no hace falta que te prepares para nada!",
         "cta": "Reservar llamada gratuita"
       },
       "initial": {
