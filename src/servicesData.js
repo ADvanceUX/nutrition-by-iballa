@@ -3,7 +3,7 @@ export const servicesContent = {
     intro: "Personalised nutrition support for the health concerns and everyday challenges that matter most to you.",
     readMore: "Read More",
     readLess: "Read Less",
-    bookConsultation: "Book Consultation",
+    bookConsultation: "Find the Right Service",
     contactMe: "Contact Me",
     headings: {
       what: "What is this service?",
@@ -11,7 +11,7 @@ export const servicesContent = {
       expect: "What can you expect?",
       book: "Book a consultation"
     },
-    bookingText: "Ready to talk through your goals? Book an initial consultation or get in touch with a question.",
+    bookingText: "Ready to talk through your goals? Start with a free introductory call, book a consultation, or get in touch with a question.",
     services: [
       {
         key: "weight-management",
@@ -85,7 +85,7 @@ export const servicesContent = {
     intro: "Apoyo nutricional personalizado para los problemas de salud y los retos cotidianos que más te importan.",
     readMore: "Leer más",
     readLess: "Leer menos",
-    bookConsultation: "Reservar consulta",
+    bookConsultation: "Encontrar el servicio adecuado",
     contactMe: "Contactar",
     headings: {
       what: "¿En qué consiste este servicio?",
@@ -93,7 +93,7 @@ export const servicesContent = {
       expect: "¿Qué puedes esperar?",
       book: "Reserva una consulta"
     },
-    bookingText: "¿Quieres hablar sobre tus objetivos? Reserva una consulta inicial o ponte en contacto si tienes alguna pregunta.",
+    bookingText: "¿Quieres hablar sobre tus objetivos? Empieza con una llamada introductoria gratuita, reserva una consulta o ponte en contacto si tienes alguna pregunta.",
     services: [
       {
         key: "weight-management",

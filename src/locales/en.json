@@ -8,7 +8,7 @@
   "hero": {
     "title": "Nutrition by Iballa",
     "subtitle": "I provide personalised, evidence-based nutrition advice and care in both English and Spanish. As a CORU Registered Dietitian, my goal is to help you improve your health and wellbeing with a professional, supportive, and friendly approach. Whether you’re looking to manage a medical condition, build sustainable habits, or simply feel your best, my goal is to empower people to make choices that fit their lifestyle and have a positive effect on their health.",
-    "cta": "Book"
+    "cta": "Book a Free 15-Minute Call"
   },
   "services": {
     "heading": "Specialist Services",
@@ -65,7 +65,10 @@
   },
   "appointments": {
     "heading": "Bookings",
+    "recommended": "Recommended for new clients",
+    "startHere": "Not sure which service you need? Start here.",
     "mealPlanNote": "Meal plans are not included in consultations. Instead, you will receive the tools, knowledge and support to eat flexibly in a way that supports your health.",
+    "missingFreeCallUrl": "This free-call booking link will be available once the Calendly URL has been added.",
     "policyHeading": "Cancellation and late arrival policy",
     "policy": [
       "Appointments can be cancelled or rescheduled free of charge with at least 24 hours' notice.",
@@ -74,12 +77,17 @@
       "We really appreciate your understanding, as it helps us keep availability open for other clients."
     ],
     "types": {
+      "freeCall": {
+        "title": "Free 15-Minute Introductory Call",
+        "description": "Curious if we're a good fit? Book a free, no-pressure discovery call where we'll chat about your health goals, current challenges, and what working together could look like. This call is a conversation, not a consultation, so come as you are!",
+        "cta": "Book Free Call"
+      },
       "initial": {
         "title": "Initial Consultation",
         "description": "55 minutes — In your first appointment, we’ll review your health history, current medications, previous test results, and eating habits. This will help me understand your situation in a comprehensive way and create a nutrition plan tailored to your needs and goals."
       },
       "review": {
-        "title": "Review Consultation",
+        "title": "Review Appointment",
         "description": "30 minutes — In the follow-up appointments, we’ll assess your progress and look for solutions to any challenges that may arise along the way."
       }
     },
@@ -92,6 +100,7 @@
     "fields": {
       "name": "Name",
       "email": "Email",
+      "mobile": "Mobile number",
       "message": "Message",
       "note": " I will respond personally within 1-2 business days.",
       "submit": "Send",
