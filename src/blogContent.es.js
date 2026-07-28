@@ -291,6 +291,136 @@ export const spanishBlogContent = {
         label: "Dimidi, E. et al. (2025) «Guías de la Asociación Británica de Dietética para el tratamiento dietético del estreñimiento crónico en adultos», Revista de Nutrición Humana y Dietética, 38(5), e70133."
       }
     ]
+  },
+  "pcos-new-name-pmos-polyendocrine-metabolic-ovarian-syndrome": {
+    title: "SOP tiene un nuevo nombre: bienvenido el SOMP, el nuevo integrante del grupo",
+    excerpt: "El SOP se ha renombrado oficialmente como SOMP para reflejar mejor los aspectos hormonales, metabólicos y ováricos de esta condición compleja.",
+    category: "SOMP",
+    readingTime: "8 min de lectura",
+    callout: "El SOMP es mucho más que una afección de los ovarios. El nuevo nombre refleja los sistemas hormonales y metabólicos implicados, sin dejar fuera la disfunción ovárica.",
+    sections: [
+      {
+        heading: "Por qué cambió el nombre",
+        body: [
+          "El 12 de mayo de este año se cambió oficialmente el nombre de la afección conocida como SOP, síndrome de ovario poliquístico, por el de SOMP: síndrome ovárico metabólico poliendocrino. Este cambio se hizo para reflejar la complejidad de una condición que afecta a un estimado de 170 millones de mujeres en edad reproductiva en todo el mundo.",
+          "Analicemos el razonamiento detrás del nuevo nombre."
+        ],
+        subsections: [
+          {
+            heading: "Síndrome",
+            body: [
+              "La palabra síndrome no ha cambiado. Por definición, un síndrome es un conjunto variable de signos y síntomas que aparecen juntos en una condición específica, en este caso, el SOMP. Los mecanismos subyacentes exactos y la forma en que se manifiesta la afección pueden variar enormemente de una persona a otra."
+            ]
+          },
+          {
+            heading: "Ovárico",
+            body: [
+              "No todas las mujeres diagnosticadas con SOMP presentarán realmente quistes en los ovarios al examinarlas, y esa es precisamente la razón por la que el nombre anterior, SOP, generó confusión durante tantos años. Aun así, la disfunción ovárica y la presencia de quistes, que en realidad son folículos ováricos inmaduros, siguen formando parte de los criterios diagnósticos, por lo que se mantuvo una referencia a los ovarios en el nombre."
+            ]
+          },
+          {
+            heading: "Metabólico",
+            body: [
+              "Las anomalías metabólicas son fallos en la forma en que el cuerpo procesa elementos como el azúcar en sangre y el colesterol, y son inherentes al SOMP. Estas incluyen resistencia a la insulina, obesidad, diabetes tipo 2, colesterol alto, presión arterial alta y mayor riesgo de enfermedad cardíaca. Por eso se añadió la palabra metabólico al nombre."
+            ]
+          },
+          {
+            heading: "Poliendocrino",
+            body: [
+              "Poli significa muchos, y endocrino se refiere a las hormonas y sus vías de acción. Esto pone de relieve que el SOMP afecta a numerosos sistemas hormonales del cuerpo, provocando alteraciones que incluyen una mayor liberación de andrógenos por parte de los ovarios y las glándulas suprarrenales, resistencia a la insulina que conduce a una mayor liberación de insulina por parte del páncreas, y alteraciones en la vía hormonal entre el hipotálamo y los ovarios."
+            ]
+          }
+        ]
+      },
+      {
+        heading: "¿Cómo se diagnostica el SOMP?",
+        body: [
+          "El proceso diagnóstico no ha cambiado con el cambio de nombre. El SOMP se diagnostica utilizando los criterios de Rotterdam. Para recibir un diagnóstico, la persona debe cumplir al menos 2 de los siguientes 3 criterios, y debe ser adulta, 20 años o más. Pueden aplicarse criterios diferentes para adolescentes."
+        ],
+        list: [
+          "Ciclos menstruales irregulares o ausencia de menstruación.",
+          "Producción excesiva de hormonas masculinas, también conocida como hiperandrogenismo, detectada en el examen clínico o en análisis de sangre. Esto puede manifestarse como exceso de vello facial, en el pecho o en la espalda; acné facial y/o corporal; caída del cabello o pérdida de cabello de patrón masculino; o niveles elevados de testosterona en un análisis de sangre.",
+          "Presencia de folículos ováricos inmaduros, comúnmente llamados quistes, en la ecografía vaginal."
+        ]
+      },
+      {
+        heading: "Alimentación y SOMP",
+        body: [
+          "Las Guías Internacionales de 2023 para el manejo del SOMP recomiendan cambios en el estilo de vida como tratamiento de primera línea para todas las mujeres con esta condición, lo cual incluye cambios en la alimentación.",
+          "Aunque no se ha demostrado que ningún tipo de dieta en particular sea superior a otro, existen muchos cambios en la alimentación que las mujeres que viven con SOMP pueden hacer para respaldar su salud.",
+          "Es importante señalar que la pérdida de peso se recomienda muy a menudo como tratamiento del SOMP. Pero la realidad es que perder peso puede resultar muy difícil para las mujeres con SOMP. Los mecanismos exactos no se comprenden del todo, pero se reconoce que muchas mujeres con SOMP presentan procesos subyacentes que favorecen un mayor aumento de peso y un IMC más elevado, lo que hace que perder peso de forma sostenible sea extremadamente complicado para muchas mujeres.",
+          "Por eso es importante subrayar que los cambios en el estilo de vida favorecen la salud general y tienen un impacto positivo independientemente de que se logre o no perder peso. Los profesionales de la salud deberían comunicar esto con claridad a todas las mujeres que viven con SOMP, con el fin de reducir al mínimo el estigma relacionado con el peso. También vale la pena señalar que la prevalencia de trastornos alimentarios y de la conducta alimentaria es mayor entre las mujeres que viven con SOMP, por lo que los consejos sobre estilo de vida deben abordarse con amabilidad, respeto y siempre trabajando hacia una relación positiva con la comida.",
+          "Aunque ningún tipo de dieta en particular ha demostrado ser superior a otro para el manejo del SOMP, hay muchos cambios que las mujeres pueden hacer para respaldar su salud y controlar los síntomas. Aquí van algunos ejemplos."
+        ]
+      },
+      {
+        heading: "Priorizar los carbohidratos de liberación lenta",
+        body: [
+          "La resistencia a la insulina afecta a aproximadamente el 75% de las personas que viven con SOMP, así que vale la pena entender en qué consiste realmente.",
+          "Piensa en tus células como puertas, y en la insulina, la hormona que libera el páncreas en respuesta al aumento de la glucosa en sangre, como la llave para esa puerta. La glucosa en sangre sube después de comer, especialmente tras consumir carbohidratos. La glucosa es la moneda energética del cuerpo y la fuente de combustible preferida para nuestras células, tejidos y órganos. La insulina actúa como la llave que abre la puerta de la célula para dejar entrar la glucosa; pero con la resistencia a la insulina, la cerradura está algo oxidada. A la insulina le cuesta dejar entrar la glucosa en las células, así que el exceso de glucosa sigue circulando en el torrente sanguíneo, y el páncreas libera cada vez más insulina intentando bajar esos niveles.",
+          "La resistencia a la insulina sostenida y la hiperinsulinemia resultante aumentan el riesgo de desarrollar diabetes tipo 2. En quienes tienen SOMP, esto también impulsa una sobreproducción de andrógenos, lo que provoca menstruaciones irregulares, acné, vello facial y otros síntomas relacionados con niveles elevados de testosterona."
+        ]
+      },
+      {
+        heading: "Incluir omega-3 en la dieta",
+        body: [
+          "El SOMP está asociado a una inflamación crónica de bajo grado en el cuerpo, lo que aumenta el riesgo de mayor resistencia a la insulina, diabetes tipo 2 y enfermedad cardíaca. El omega-3 es un tipo de ácido graso esencial muy conocido por sus propiedades antiinflamatorias. Aunque incluir omega-3 en la dieta no resolverá todos los problemas, es una estrategia dietética sólida para ayudar a reducir esa inflamación de bajo grado, al tiempo que respalda la salud hormonal, cerebral y cardíaca.",
+          "El pescado azul es la mejor fuente de omega-3, ya que contiene EPA y DHA, dos formas de omega-3 que el cuerpo puede aprovechar eficientemente. Buenas fuentes incluyen el salmón, la trucha, la caballa, las sardinas, las anchoas y el atún. Comer pescado azul dos veces por semana aporta suficiente omega-3.",
+          "Otras fuentes dietéticas de omega-3 son las semillas y los frutos secos, que contienen principalmente ALA, una forma de omega-3 que el cuerpo no aprovecha tan eficientemente como el EPA y el DHA. Aun así, vale la pena incluirlos en la dieta, ya que ofrecen muchos otros nutrientes y respaldan la salud general. Si no comes pescado, ya sea por preferencia o porque sigues una dieta vegetariana o vegana, podría valer la pena considerar un suplemento de omega-3."
+        ]
+      },
+      {
+        heading: "Llena tu plato de color",
+        body: [
+          "Intenta que haya la mayor cantidad de color posible en tu plato, en forma de frutas y verduras. Esto aporta fibra y polifenoles, que son compuestos con propiedades antiinflamatorias. Procurar que la mitad de tu plato en cada comida sea fruta y verdura ayudará a asegurar que obtengas suficiente fibra a lo largo del día, lo que además ralentiza aún más la liberación de glucosa en el torrente sanguíneo después de las comidas.",
+          "Esto también favorece el control del peso, ya que incrementa los niveles de saciedad después de las comidas, y alimenta a tu flora intestinal, lo que a su vez respalda la regulación del apetito y el metabolismo mediante la producción de ácidos grasos de cadena corta. Estos, junto con los polifenoles, también ayudan a reducir la inflamación."
+        ]
+      },
+      {
+        heading: "Entrenamiento de fuerza",
+        body: [
+          "Aunque no está directamente relacionado con la alimentación, el entrenamiento de fuerza favorece la salud de quienes tienen SOMP al modificar la composición corporal y aumentar la masa muscular, que es metabólicamente más activa que el tejido graso, y al mejorar la resistencia a la insulina. Dos sesiones de entrenamiento de fuerza a la semana pueden ser suficientes para notar beneficios en la salud."
+        ]
+      },
+      {
+        heading: "Suplementación con inositol",
+        body: [
+          "Estudios científicos han demostrado que el inositol es tan eficaz como la metformina para reducir la resistencia a la insulina. También se ha demostrado que mejora el perfil lipídico y las tasas de diabetes gestacional, reduce los niveles de andrógenos, disminuye los antojos y ayuda a regular los ciclos menstruales. Si estás considerando empezar a tomar inositol, consulta siempre primero con un profesional médico o de nutrición sobre la dosis, los efectos secundarios y las contraindicaciones, por ejemplo comenzar a tomarlo al mismo tiempo que la metformina."
+        ]
+      },
+      {
+        heading: "En resumen",
+        body: [
+          "El SOMP es una condición compleja que involucra muchos factores, y cambios en el estilo de vida pueden tener un efecto positivo en mujeres con SOMP. Las recomendaciones anteriores no son, ni mucho menos, los únicos cambios que puedes hacer: hay más apoyo disponible.",
+          "También vale la pena señalar que los consejos anteriores son genéricos. Para un apoyo nutricional adaptado a tu propio cuerpo, tus síntomas y tu estilo de vida, siempre es mejor trabajar con un dietista-nutricionista colegiado.",
+          [
+            "Si tienes SOMP y estás lista para sentir un mayor control sobre tu estilo de vida, tu alimentación y tus síntomas, me encantaría ayudarte. ",
+            {
+              label: "Reserva una cita aquí",
+              href: "https://calendly.com/iballa-mtzyanes/consulta-inicial?month=2026-07"
+            },
+            " y construyamos juntas un plan que realmente funcione para tu cuerpo."
+          ]
+        ]
+      }
+    ],
+    references: [
+      {
+        label: "Teede, H. et al. Guía internacional basada en la evidencia para la evaluación y el manejo del síndrome de ovario poliquístico (SOMP) 2023, Monash University, actualizada el 12 de junio de 2026."
+      },
+      {
+        label: "Cree, M.G. et al. (2026) «Polyendocrine Metabolic Ovarian Syndrome, the New Name for Polycystic Ovary Syndrome: A Multistep Global Consensus Process», The Lancet, 407."
+      },
+      {
+        label: "Szkodziak, P. et al. (2025) «Insulin Resistance in Polycystic Ovary Syndrome Phenotypes and the Vicious Cycle Model in Its Etiology», Scientific Reports, 15, 42649."
+      },
+      {
+        label: "Armanini, D., Boscaro, M., Bordin, L. y Sabbadin, C. (2022) «Controversies in the Pathogenesis, Diagnosis and Treatment of PCOS: Focus on Insulin Resistance, Inflammation, and Hyperandrogenism», International Journal of Molecular Sciences, 23(8), 4110."
+      },
+      {
+        label: "Duan, M. et al. (2026) «Effects of Inositol in Women with Polycystic Ovary Syndrome: An Umbrella Review of Meta-Analyses from Randomized Controlled Trials», Frontiers in Endocrinology, 17, 1741509."
+      }
+    ]
   }
 };
 

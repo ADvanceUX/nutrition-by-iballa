@@ -6,7 +6,7 @@ import {
   Venus, Soup, HeartPulse, Stethoscope, Linkedin, Instagram, ChevronDown,
   ArrowLeft, ArrowRight, Clock, User, Tag, Check, CheckCircle2, ClipboardList,
   GlassWater, Wheat, Dumbbell, Apple, Utensils, ShieldCheck, LogOut,
-  Scale, Syringe, ChevronUp
+  Scale, Syringe, ChevronUp, Music2
 } from "lucide-react";
 import "./App.css";
 import "./index.css";
@@ -2558,6 +2558,17 @@ export default function NutritionByIballa() {
                 className="inline-flex items-center gap-2 hover:opacity-80 transition duration-200"
               >
                 <Instagram size={20} color="#1e1e5a" />
+                <span>@thespanishdietitian</span>
+              </a>
+              <a
+                href="https://www.tiktok.com/@thespanishdietitian"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="TikTok: @thespanishdietitian"
+                title="TikTok: @thespanishdietitian"
+                className="inline-flex items-center gap-2 hover:opacity-80 transition duration-200"
+              >
+                <Music2 size={20} color="#1e1e5a" />
                 <span>@thespanishdietitian</span>
               </a>
             </div>
