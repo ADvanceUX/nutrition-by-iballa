@@ -8,7 +8,7 @@
   "hero": {
     "title": "Nutrition by Iballa",
     "subtitle": "Brindo asesoría nutricional personalizada y basada en la evidencia, disponible en español e inglés. Como dietista-nutricionista colegiada en CORU, mi misión es acompañarte en el cuidado de tu salud y bienestar con una atención profesional, cercana y comprensible. Te ayudo a gestionar condiciones médicas, a crear hábitos sostenibles y a sentirte mejor en tu día a día, siempre con un enfoque adaptado a tu estilo de vida y orientado a generar cambios positivos y duraderos en tu salud.",
-    "cta": "Reserva una llamada gratuita de 15 minutos"
+    "cta": "Llamada gratuita de descubrimiento de 15 minutos"
   },
   "services": {
     "heading": "Servicios Especializados",
@@ -78,9 +78,12 @@
     ],
     "types": {
       "freeCall": {
-        "title": "Llamada Introductoria Gratuita de 15 Minutos",
-        "description": "¿Quieres saber si somos el equipo ideal para ti? Agenda una llamada gratuita, sin compromiso, para conversar sobre tus metas de salud, lo que te está costando trabajo y cómo podríamos ayudarte a lograrlo. Esta llamada es solo para conocernos, ¡no hace falta que te prepares para nada!",
-        "cta": "Reservar llamada gratuita"
+        "title": "Llamada gratuita de descubrimiento de 15 minutos",
+        "description": [
+          "¿Quieres saber si somos el equipo ideal para ti? Agenda una llamada gratuita, sin compromiso, para conversar sobre tus metas de salud, lo que te está costando trabajo y cómo podríamos ayudarte a lograrlo.",
+          "Esta llamada es solo para conocernos, ¡no hace falta que te prepares para nada!"
+        ],
+        "cta": "Llamada gratuita de descubrimiento de 15 minutos"
       },
       "initial": {
         "title": "Consulta Inicial",
