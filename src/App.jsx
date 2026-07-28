@@ -727,13 +727,16 @@ function BlogOverview() {
           </h2>
 
           <div className="grid gap-6 lg:grid-cols-[minmax(0,1.35fr)_minmax(24rem,0.9fr)] lg:items-stretch">
-            <div>
+            <div className="h-full">
               <article className="h-full rounded-xl shadow-lg ring-1 ring-[#7fae9e] overflow-hidden bg-white transition-all duration-200 hover:ring-2">
-                <a href={`/blog/${latestPost.slug}`} className="grid md:grid-cols-2 min-h-[26rem] group">
+                <a
+                  href={`/blog/${latestPost.slug}`}
+                  className="grid h-full min-h-[26rem] group md:grid-cols-[minmax(18rem,0.95fr)_minmax(0,1.05fr)]"
+                >
                   <img
                     src={latestPost.image}
                     alt=""
-                    className="h-64 md:h-full w-full object-cover object-center"
+                    className="h-64 min-h-full w-full object-cover object-center md:h-full"
                   />
                   <div className="flex flex-col justify-center p-6 sm:p-8">
                     <div className="flex flex-wrap items-center gap-3 text-sm text-gray-600 mb-4">
