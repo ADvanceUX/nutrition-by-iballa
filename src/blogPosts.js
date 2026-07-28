@@ -319,6 +319,153 @@ export const blogPosts = [
         url: "https://doi.org/10.1111/jhn.70133"
       }
     ]
+  },
+  {
+    slug: "pcos-new-name-pmos-polyendocrine-metabolic-ovarian-syndrome",
+    title: "PCOS Got a New Name: Meet PMOS, the New Kid on the Block",
+    excerpt:
+      "PCOS has officially been renamed PMOS to better reflect the hormonal, metabolic and ovarian features of this complex condition.",
+    image: "/pmos-pcos-cover.png",
+    category: "PMOS",
+    date: "2026-07-28",
+    readingTime: "8 min read",
+    author: "Iballa Martinez",
+    callout:
+      "PMOS is about much more than the ovaries. The new name reflects the hormonal and metabolic systems involved, while keeping ovarian dysfunction in the picture.",
+    sections: [
+      {
+        heading: "Why the Name Changed",
+        body: [
+          "On May 12th of this year, the name of the condition PCOS, or polycystic ovary syndrome, was officially changed to PMOS: polyendocrine metabolic ovarian syndrome. This change was made to reflect the complexity of a condition that an estimated 170 million women of reproductive age live with worldwide.",
+          "Let's break down the reasoning behind the new name."
+        ],
+        subsections: [
+          {
+            heading: "Polyendocrine",
+            body: [
+              "Poly means many, and endocrine refers to hormones and their pathways. This highlights that PMOS affects many hormonal systems in the body, causing disturbances that include increased release of androgens by the ovaries and adrenal glands, insulin resistance leading to increased insulin release by the pancreas, and disruptions in the hormonal pathway between the hypothalamus in the brain and the ovaries."
+            ]
+          },
+          {
+            heading: "Metabolic",
+            body: [
+              "Metabolic abnormalities are glitches in how the body processes things like blood sugar and cholesterol, and they are inherent to PMOS. These include insulin resistance, obesity, type 2 diabetes, high cholesterol, high blood pressure, and increased risk of heart disease. That is why metabolic was added to the name."
+            ]
+          },
+          {
+            heading: "Ovarian",
+            body: [
+              "Not all women diagnosed with PMOS will actually have cysts on their ovaries on examination, which is exactly why the old name, PCOS, caused confusion for so many years. Still, ovarian dysfunction and the presence of cysts, which are actually immature ovarian follicles, remain part of the diagnostic criteria, so a reference to the ovaries was kept in the name."
+            ]
+          },
+          {
+            heading: "Syndrome",
+            body: [
+              "The word syndrome is unchanged. By definition, a syndrome is a variable collection of signs and symptoms that occur together in a specific condition. In this case, PMOS. The exact underlying mechanisms and how the condition presents can vary greatly from person to person."
+            ]
+          }
+        ]
+      },
+      {
+        heading: "How Is PMOS Diagnosed?",
+        body: [
+          "The diagnostic process has not changed with the name change. What has changed is awareness that the new name highlights that this condition is about much more than just the ovaries.",
+          "PMOS is diagnosed using the Rotterdam criteria. To receive a diagnosis, an individual must meet at least 2 of the following 3 criteria, and must be an adult, 20 years of age or older. Different criteria may apply for teens."
+        ],
+        list: [
+          "Irregular or absent periods",
+          "Excess production of male hormones, also known as hyperandrogenism, on clinical examination or blood results. This may present as excess hair growth on the face, chest, or back; facial and/or body acne; hair thinning or male-pattern hair loss; or elevated testosterone levels on a blood test.",
+          "Presence of immature ovarian follicles, commonly referred to as cysts, on ultrasound."
+        ]
+      },
+      {
+        heading: "Diet and PMOS",
+        body: [
+          "The 2023 International Guidelines for the management of PMOS recommend lifestyle management as first-line treatment for all women with the condition, and that includes dietary changes.",
+          "While no single diet composition has been proven superior to another, there are many dietary changes women living with PMOS can make to support their overall health.",
+          "It is important to note that many women are told weight loss will help manage PMOS. But the reality is that weight loss may be very difficult for women with PMOS. The exact mechanisms are not fully understood, but it is recognised that many women with PMOS have underlying processes that drive greater weight gain and higher BMI, making sustainable weight loss extremely challenging for some.",
+          "That is why it is important to emphasise that lifestyle changes support overall health and have a positive impact regardless of whether weight loss occurs. Healthcare professionals should communicate this clearly to all women living with PMOS, in order to minimise weight stigma. It is also worth noting that the prevalence of disordered eating and eating disorders is higher among women living with PMOS, so lifestyle advice should be approached with kindness, respect, and always with the goal of supporting a positive relationship with food.",
+          "Even though no single diet composition is proven to outperform others for managing PMOS, there are many changes women can make to support their health and manage symptoms. Here are some examples."
+        ]
+      },
+      {
+        heading: "Prioritise Slow-Release Carbohydrates",
+        body: [
+          "Insulin resistance affects approximately 75% of those living with PMOS, so it is worth understanding what insulin resistance actually is.",
+          "Think of your cells as doors, and insulin, the hormone your pancreas releases in response to raised blood glucose, as the key. Blood glucose rises after eating, especially after eating carbohydrates. Glucose is the body's energy currency and the preferred fuel source for our cells, tissues and organs. Insulin acts as the key that opens the cell door to let glucose in. But with insulin resistance, the lock is a bit rusty. Insulin struggles to let glucose into the cells, so extra glucose keeps circulating in the bloodstream, and the pancreas releases more and more insulin trying to bring levels down.",
+          "Ongoing insulin resistance and the resulting hyperinsulinaemia increase the risk of developing type 2 diabetes. In those with PMOS, it also drives androgen overproduction, which leads to irregular periods, acne, facial hair and other symptoms linked to raised testosterone levels."
+        ]
+      },
+      {
+        heading: "Include Omega-3 in the Diet",
+        body: [
+          "PMOS is associated with chronic, low-grade inflammation in the body, which increases the risk of further insulin resistance, type 2 diabetes and heart disease. Omega-3 is a type of essential fatty acid well known for its anti-inflammatory properties. While including omega-3 in the diet will not solve every issue, it is a solid dietary strategy to help reduce that low-grade inflammation while supporting hormonal, brain and heart health.",
+          "Oily fish is the best source of omega-3, as it contains EPA and DHA, two forms of omega-3 that the body can use efficiently. Good sources include salmon, trout, mackerel, sardines and tuna. Eating oily fish twice a week should provide enough omega-3.",
+          "Other dietary sources of omega-3 include seeds and nuts, which contain mostly ALA, a form of omega-3 the body does not utilise as efficiently as EPA and DHA. Still, they are worth including in the diet, as they offer many other nutrients and support overall health. If you do not eat fish, whether due to preference or because you follow a plant-based diet, an omega-3 supplement may be worth considering."
+        ]
+      },
+      {
+        heading: "Fill Your Plate with Colour",
+        body: [
+          "Aim for as much colour as possible on your plate in the form of fruit and vegetables. This adds fibre and polyphenols, which are compounds with anti-inflammatory properties. Aiming for half your plate at mealtimes to be fruit and veg will help ensure you get enough fibre throughout the day, which further slows the release of glucose into the bloodstream after meals.",
+          "It also supports weight management by keeping you full for longer, and feeds your gut bacteria, which further supports appetite regulation and metabolism through the production of short-chain fatty acids. These, along with polyphenols, also help reduce inflammation."
+        ]
+      },
+      {
+        heading: "Strength Training",
+        body: [
+          "Although not directly linked to diet, strength training supports health in those with PMOS by altering body composition and increasing muscle mass, which is more metabolically active than fat tissue, and by improving insulin resistance. Two strength-training sessions a week may be enough to see health benefits."
+        ]
+      },
+      {
+        heading: "Inositol Supplementation",
+        body: [
+          "Inositol has been shown in some studies to be as effective as metformin at reducing insulin resistance. It has also been shown to improve lipid profile and rates of gestational diabetes, reduce androgen levels, reduce cravings and help regulate menstrual cycles. If you are considering starting inositol, always check with a medical provider first about dosage, side effects and contraindications, for example starting it at the same time as metformin."
+        ]
+      },
+      {
+        heading: "In Summary",
+        body: [
+          "PMOS is a complex condition involving many moving parts, and the same is true when it comes to managing it through nutrition. The recommendations above are by no means the only changes you can make. There is further support out there.",
+          "It is also worth noting that the advice above is necessarily generic. For nutrition support tailored to your own body, symptoms and lifestyle, it is always best to work with a registered dietitian.",
+          [
+            "If you have PMOS and you are ready to feel more in control of your lifestyle, nutrition, and symptoms, I would love to help. ",
+            {
+              label: "Book an appointment here",
+              href: "https://calendly.com/iballa-mtzyanes/initial-consultation"
+            },
+            " and let's build a plan that actually works for your body."
+          ]
+        ]
+      }
+    ],
+    references: [
+      {
+        label:
+          "Teede, H. et al. International Evidence-Based Guideline for the Assessment and Management of Polycystic Ovary Syndrome (PMOS) 2023, Monash University, updated 12 June 2026.",
+        url: "https://www.monash.edu/__data/assets/pdf_file/0009/4360095/Updated-PMOS-Guideline-12-June26.pdf"
+      },
+      {
+        label:
+          "Cree, M.G. et al. (2026) 'Polyendocrine Metabolic Ovarian Syndrome, the New Name for Polycystic Ovary Syndrome: A Multistep Global Consensus Process', The Lancet, 407.",
+        url: "https://doi.org/10.1016/S0140-6736(26)00717-8"
+      },
+      {
+        label:
+          "Szkodziak, P. et al. (2025) 'Insulin Resistance in Polycystic Ovary Syndrome Phenotypes and the Vicious Cycle Model in Its Etiology', Scientific Reports, 15, 42649.",
+        url: "https://doi.org/10.1038/s41598-025-26718-2"
+      },
+      {
+        label:
+          "Armanini, D., Boscaro, M., Bordin, L. and Sabbadin, C. (2022) 'Controversies in the Pathogenesis, Diagnosis and Treatment of PCOS: Focus on Insulin Resistance, Inflammation, and Hyperandrogenism', International Journal of Molecular Sciences, 23(8), 4110.",
+        url: "https://doi.org/10.3390/ijms23084110"
+      },
+      {
+        label:
+          "Duan, M. et al. (2026) 'Effects of Inositol in Women with Polycystic Ovary Syndrome: An Umbrella Review of Meta-Analyses from Randomized Controlled Trials', Frontiers in Endocrinology, 17, 1741509.",
+        url: "https://doi.org/10.3389/fendo.2026.1741509"
+      }
+    ]
   }
 ];
 
