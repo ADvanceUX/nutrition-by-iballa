@@ -94,6 +94,21 @@
         "description": "30 minutos — En las citas de seguimiento, evaluaremos tu progreso y buscaremos soluciones a cualquier dificultad que surja en el camino."
       }
     },
+    "packages": {
+      "eyebrow": "Opciones secundarias de reserva",
+      "heading": "Bonos de consultas",
+      "cta": "Reservar bono",
+      "items": {
+        "bundle4": {
+          "title": "Bono de 4 consultas",
+          "description": "Una forma con descuento de reservar varias consultas y mantener apoyo constante."
+        },
+        "bundle6": {
+          "title": "Bono de 6 consultas",
+          "description": "Una opción con descuento para recibir apoyo nutricional continuado en varias citas."
+        }
+      }
+    },
     "cta": "Reservar"
   },
   "contact": {

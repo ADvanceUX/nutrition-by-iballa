@@ -94,6 +94,21 @@
         "description": "30 minutes — In the follow-up appointments, we’ll assess your progress and look for solutions to any challenges that may arise along the way."
       }
     },
+    "packages": {
+      "eyebrow": "Secondary booking options",
+      "heading": "Consultation Packages",
+      "cta": "Book Package",
+      "items": {
+        "bundle4": {
+          "title": "Bundle of 4 Consultations",
+          "description": "A discounted way to book multiple consultations and keep consistent support in place."
+        },
+        "bundle6": {
+          "title": "Bundle of 6 Consultations",
+          "description": "A discounted option for ongoing nutrition support across several appointments."
+        }
+      }
+    },
     "cta": "Book Now"
   },
   "contact": {

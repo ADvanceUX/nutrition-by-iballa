@@ -819,11 +819,13 @@ function BeyondInjectionPromo() {
             </a>
           </div>
         </div>
-        <img
-          src={beyondInjectionImage}
-          alt="Beyond the Injection 12-week programme by Iballa, registered dietitian"
-          className="h-full max-h-[28rem] w-full rounded-xl object-cover object-center shadow-md"
-        />
+        <div className="flex min-h-64 items-center justify-center rounded-xl bg-[#d9f2ce] p-3 shadow-md">
+          <img
+            src={beyondInjectionImage}
+            alt="Beyond the Injection 12-week programme by Iballa, registered dietitian"
+            className="max-h-[28rem] w-full rounded-lg object-contain"
+          />
+        </div>
       </div>
     </section>
   );
@@ -872,10 +874,10 @@ function BeyondTheInjectionPage() {
           </div>
           <div className="space-y-4 text-base leading-relaxed text-gray-700 lg:text-lg">
             <p>
-              GLP-1 medication can be one part of a person's health journey. Beyond the Injection is designed to add the nutrition education, practical strategies and ongoing dietetic support that help participants feel more informed and supported day to day.
+              GLP-1 medication, including Wegovy, Mounjaro and Ozempic, can be one part of a person's health journey. Beyond the Injection is designed to add the nutrition education, practical strategies and ongoing dietetic support that help participants feel more informed and supported day to day.
             </p>
             <p>
-              The programme is for people using GLP-1 medications who want a structured, evidence-led way to understand nutrition, protect consistency and receive individual guidance from Iballa, a registered dietitian.
+              The programme is for people using GLP-1 medications who want a structured, evidence-led way to understand nutrition alongside treatment, protect consistency and receive individual guidance from Iballa, a registered dietitian.
             </p>
           </div>
         </div>
@@ -2289,6 +2291,29 @@ export default function NutritionByIballa() {
   ]
 };
 
+ const appointmentPackages = {
+  en: [
+    {
+      key: "bundle4",
+      calendlyUrl: "https://calendly.com/iballa-mtzyanes/bundle-of-4-consultations"
+    },
+    {
+      key: "bundle6",
+      calendlyUrl: "https://calendly.com/iballa-mtzyanes/bundle-of-6-consultations"
+    }
+  ],
+  es: [
+    {
+      key: "bundle4",
+      calendlyUrl: "https://calendly.com/iballa-mtzyanes/bono-de-4-consultas"
+    },
+    {
+      key: "bundle6",
+      calendlyUrl: "https://calendly.com/iballa-mtzyanes/bono-de-6-consultas"
+    }
+  ]
+};
+
   return (
    <div className="overflow-x-hidden bg-white text-gray-900 font-sans">
     {/* Header */}
@@ -2301,7 +2326,7 @@ export default function NutritionByIballa() {
       <nav className="hidden md:flex space-x-6 lg:text-base xl:text-lg">
         <a href="/">{t("nav.home")}</a>
         <a href="/#appointments">{t("nav.appointments")}</a>
-        <a href="/beyond-the-injection">Beyond the Injection</a>
+        <a href="/beyond-the-injection">GLP-1 Support</a>
         <a href="/nutrition-assessment">{uiCopy.nav.assessment}</a>
         <a href="/blog">{uiCopy.nav.blog}</a>
         <a href="/#contact">{t("nav.contact")}</a>
@@ -2327,7 +2352,7 @@ export default function NutritionByIballa() {
         {t("nav.appointments")}
       </a>
       <a href="/beyond-the-injection" onClick={() => setNavOpen(false)}>
-        Beyond the Injection
+        GLP-1 Support
       </a>
       <a href="/nutrition-assessment" onClick={() => setNavOpen(false)}>
         {uiCopy.nav.assessment}
@@ -2685,6 +2710,45 @@ export default function NutritionByIballa() {
             </div>
           );
         })}
+        <div className="w-full rounded-xl bg-white p-4 text-center shadow-lg ring-1 ring-[#cde4dc] sm:p-5 lg:p-6">
+          <div className="mb-4">
+            <div>
+              <p className="text-xs font-semibold uppercase tracking-wide text-[#477b6c]">
+                {t("appointments.packages.eyebrow")}
+              </p>
+              <h3 className="text-xl font-semibold text-[#294b43] lg:text-2xl">
+                {t("appointments.packages.heading")}
+              </h3>
+            </div>
+          </div>
+          <div className="grid items-stretch gap-3 sm:grid-cols-2">
+            {appointmentPackages[lang].map((pack) => {
+              const packageCopy = t(`appointments.packages.items.${pack.key}`, { returnObjects: true });
+              return (
+                <article key={pack.key} className="flex h-full flex-col gap-4 rounded-xl border border-[#dbeae4] bg-[#f7fbf9] p-4 text-left transition hover:border-[#7fae9e] hover:bg-white">
+                  <div className="flex flex-1 items-start gap-3">
+                    <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-[#edf6f2] text-[#315f55]">
+                      <CreditCard size={20} aria-hidden="true" />
+                    </span>
+                    <div className="flex min-h-0 flex-1 flex-col">
+                      <h4 className="text-base font-semibold text-[#294b43] lg:text-lg">{packageCopy.title}</h4>
+                      <p className="mt-1 text-sm leading-relaxed text-gray-700">{packageCopy.description}</p>
+                    </div>
+                  </div>
+                  <a
+                    href={pack.calendlyUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    onClick={() => trackEvent("appointment_package_selected", { language: lang, packageType: pack.key })}
+                    className="mt-auto inline-flex min-h-10 items-center justify-center rounded-full border border-[#7fae9e] bg-white px-5 py-2 text-sm font-semibold text-[#315f55] transition hover:bg-[#edf6f2] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#315f55] focus-visible:ring-offset-2"
+                  >
+                    {t("appointments.packages.cta")}
+                  </a>
+                </article>
+              );
+            })}
+          </div>
+        </div>
         <div className="w-full rounded-xl bg-white p-4 text-left shadow-lg ring-1 ring-[#7fae9e] sm:p-5 lg:p-6">
           <p className="text-sm leading-relaxed text-gray-700 lg:text-base">
             {t("appointments.mealPlanNote")}
