@@ -13,6 +13,10 @@
       "destination": "/"
     },
     {
+      "source": "/beyond-the-injection",
+      "destination": "/"
+    },
+    {
       "source": "/admin/subscribers",
       "destination": "/"
     },

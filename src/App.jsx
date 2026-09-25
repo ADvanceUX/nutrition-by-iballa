@@ -118,6 +118,16 @@ function upsertMeta(name, content) {
   tag.setAttribute("content", content);
 }
 
+function upsertPropertyMeta(property, content) {
+  let tag = document.querySelector(`meta[property="${property}"]`);
+  if (!tag) {
+    tag = document.createElement("meta");
+    tag.setAttribute("property", property);
+    document.head.appendChild(tag);
+  }
+  tag.setAttribute("content", content);
+}
+
 function upsertCanonical(pathname) {
   let tag = document.querySelector('link[rel="canonical"]');
   if (!tag) {
@@ -693,6 +703,248 @@ function CookiePolicyPage() {
               ))}
             </div>
           </article>
+        </div>
+      </section>
+    </main>
+  );
+}
+
+const beyondInjectionUrl = "https://iballa-s-site.thinkific.com/products/courses/Beyondtheinjection";
+const beyondInjectionImage = "/BTIImage.png";
+
+const beyondInclusions = [
+  {
+    title: "12 Recorded Nutrition Webinars",
+    text: "Structured nutrition education that participants can work through during the programme.",
+    icon: ClipboardList
+  },
+  {
+    title: "4 Private Consultations",
+    text: "Individual one-to-one dietetic support with Iballa at key points in the 12 weeks.",
+    icon: User
+  },
+  {
+    title: "3 Live Q&A Sessions",
+    text: "Opportunities to ask questions and receive additional guidance as you put the learning into practice.",
+    icon: Mail
+  },
+  {
+    title: "Bonus Webinars",
+    text: "Additional educational content to deepen your understanding of nutrition alongside GLP-1 treatment.",
+    icon: CheckCircle2
+  },
+  {
+    title: "Community Access",
+    text: "Ongoing support throughout the programme so you are not working through the process alone.",
+    icon: HeartPulse
+  }
+];
+
+const beyondFaqs = [
+  {
+    question: "Who is Beyond the Injection for?",
+    answer: "It is designed for people using GLP-1 medications who want structured nutrition education, practical guidance and personalised dietetic support alongside treatment."
+  },
+  {
+    question: "Is this only an online course?",
+    answer: "No. The programme includes recorded education, four one-to-one consultations, live Q&A sessions, bonus webinars and community access."
+  },
+  {
+    question: "How long does the programme run?",
+    answer: "Beyond the Injection is a 12-week programme."
+  },
+  {
+    question: "How much does it cost?",
+    answer: "The programme price is €399."
+  },
+  {
+    question: "Where do I enrol?",
+    answer: "Enrolment and course delivery currently take place through Thinkific. The join buttons on this page take you to the existing Thinkific enrolment flow."
+  },
+  {
+    question: "Does this replace medical advice?",
+    answer: "No. The programme provides nutrition education and dietetic support. Continue to follow guidance from your prescribing clinician or healthcare team about your medication and medical care."
+  }
+];
+
+function BeyondInjectionCta({ location, children, variant = "primary", className = "" }) {
+  const { i18n } = useTranslation();
+  const lang = i18n.language.startsWith("es") ? "es" : "en";
+  const toneClass = variant === "light"
+    ? "bg-white text-[#315f55] hover:bg-gray-100"
+    : "bg-[#477b6c] text-white hover:bg-[#365f54]";
+
+  return (
+    <a
+      href={beyondInjectionUrl}
+      target="_blank"
+      rel="noopener noreferrer"
+      onClick={() => trackEvent("beyond_injection_cta_clicked", { language: lang, location })}
+      className={`inline-flex min-h-11 items-center justify-center gap-2 rounded-full px-6 py-2 text-sm font-semibold shadow transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#315f55] focus-visible:ring-offset-2 lg:px-8 lg:py-3 lg:text-base ${toneClass} ${className}`}
+    >
+      {children}
+      <ArrowRight size={18} aria-hidden="true" />
+    </a>
+  );
+}
+
+function BeyondInjectionPromo() {
+  return (
+    <section className="bg-white px-4 py-12 sm:px-8 sm:py-16 lg:px-16 lg:py-20 xl:px-20" aria-labelledby="beyond-home-heading">
+      <div className="mx-auto grid max-w-screen-xl items-center gap-8 overflow-hidden rounded-xl bg-[#edf6f2] p-5 shadow-lg ring-1 ring-[#7fae9e] md:grid-cols-[minmax(0,1fr)_minmax(18rem,0.85fr)] sm:p-8 lg:gap-12 lg:p-10 xl:max-w-screen-2xl">
+        <div>
+          <p className="mb-3 text-sm font-semibold uppercase tracking-wide text-[#315f55]">New programme</p>
+          <h2 id="beyond-home-heading" className="text-3xl font-semibold leading-tight text-[#294b43] sm:text-4xl lg:text-5xl">
+            Beyond the Injection
+          </h2>
+          <p className="mt-3 text-lg font-semibold text-[#315f55]">12-week GLP-1 nutrition programme</p>
+          <p className="mt-4 max-w-3xl text-base leading-relaxed text-gray-700 lg:text-lg">
+            A structured programme with nutrition education, personalised dietetic support and practical guidance for people using GLP-1 medication.
+          </p>
+          <div className="mt-5 flex flex-wrap gap-2">
+            {["12 webinars", "4 consultations", "3 live Q&As", "Community access"].map((item) => (
+              <span key={item} className="rounded-full bg-white px-4 py-2 text-sm font-semibold text-[#315f55] ring-1 ring-[#cde4dc]">
+                {item}
+              </span>
+            ))}
+          </div>
+          <div className="mt-6 flex flex-col gap-4 sm:flex-row sm:items-center">
+            <p className="text-2xl font-bold text-[#294b43]">€399</p>
+            <a
+              href="/beyond-the-injection"
+              className="inline-flex min-h-11 items-center justify-center gap-2 rounded-full bg-[#477b6c] px-6 py-2 text-sm font-semibold text-white shadow transition hover:bg-[#365f54] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#315f55] focus-visible:ring-offset-2 lg:px-8 lg:py-3 lg:text-base"
+            >
+              Discover the Programme
+              <ArrowRight size={18} aria-hidden="true" />
+            </a>
+          </div>
+        </div>
+        <img
+          src={beyondInjectionImage}
+          alt="Beyond the Injection 12-week programme by Iballa, registered dietitian"
+          className="h-full max-h-[28rem] w-full rounded-xl object-cover object-center shadow-md"
+        />
+      </div>
+    </section>
+  );
+}
+
+function BeyondTheInjectionPage() {
+  return (
+    <main className="bg-white text-gray-900">
+      <section className="bg-gradient-to-r from-[#a3c9b9] to-[#7fae9e] px-4 py-10 text-white sm:px-8 sm:py-14 lg:px-16 lg:py-20 xl:px-20">
+        <div className="mx-auto grid max-w-screen-xl items-center gap-8 lg:grid-cols-[minmax(0,1.05fr)_minmax(20rem,0.95fr)] lg:gap-12 xl:max-w-screen-2xl">
+          <div>
+            <p className="mb-4 text-sm font-semibold uppercase tracking-wide text-white/90">Nutrition by Iballa</p>
+            <h1 className="text-4xl font-bold leading-tight sm:text-5xl lg:text-6xl">
+              Beyond the Injection
+            </h1>
+            <p className="mt-5 max-w-3xl text-lg leading-relaxed text-white/95 lg:text-xl">
+              A 12-week nutrition programme providing education, practical guidance and personalised dietetic support alongside GLP-1 treatment.
+            </p>
+            <div className="mt-6 flex flex-wrap gap-3">
+              <span className="rounded-full bg-white px-4 py-2 text-sm font-semibold text-[#315f55] shadow">12-week programme</span>
+              <span className="rounded-full bg-white px-4 py-2 text-sm font-semibold text-[#315f55] shadow">€399</span>
+            </div>
+            <div className="mt-8">
+              <BeyondInjectionCta location="hero" variant="light">
+                Join Beyond the Injection
+              </BeyondInjectionCta>
+            </div>
+          </div>
+          <div className="rounded-xl bg-white/20 p-3 shadow-lg ring-1 ring-white/40">
+            <img
+              src={beyondInjectionImage}
+              alt="Beyond the Injection programme for GLP-1 nutrition support by registered dietitian Iballa"
+              className="w-full rounded-lg object-cover shadow-md"
+            />
+          </div>
+        </div>
+      </section>
+
+      <section className="bg-white px-4 py-12 sm:px-8 sm:py-16 lg:px-16 lg:py-20 xl:px-20">
+        <div className="mx-auto grid max-w-screen-xl gap-8 lg:grid-cols-[0.85fr_1.15fr] lg:gap-12 xl:max-w-screen-2xl">
+          <div>
+            <p className="mb-3 text-sm font-semibold uppercase tracking-wide text-[#315f55]">Who it's for</p>
+            <h2 className="text-3xl font-semibold leading-tight text-[#294b43] sm:text-4xl">
+              Nutrition support that works alongside medication
+            </h2>
+          </div>
+          <div className="space-y-4 text-base leading-relaxed text-gray-700 lg:text-lg">
+            <p>
+              GLP-1 medication can be one part of a person's health journey. Beyond the Injection is designed to add the nutrition education, practical strategies and ongoing dietetic support that help participants feel more informed and supported day to day.
+            </p>
+            <p>
+              The programme is for people using GLP-1 medications who want a structured, evidence-led way to understand nutrition, protect consistency and receive individual guidance from Iballa, a registered dietitian.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <section className="bg-[#f7faf8] px-4 pt-12 pb-16 sm:px-8 sm:pt-16 sm:pb-20 lg:px-16 lg:pt-20 lg:pb-28 xl:px-20" aria-labelledby="beyond-included-heading">
+        <div className="mx-auto max-w-screen-xl xl:max-w-screen-2xl">
+          <div className="mx-auto mb-9 max-w-4xl text-center">
+            <h2 id="beyond-included-heading" className="text-3xl font-semibold text-[#294b43] sm:text-4xl lg:text-5xl">
+              What's included
+            </h2>
+            <p className="mt-3 text-base leading-relaxed text-gray-700 sm:text-lg">
+              A blend of education, one-to-one guidance, live support and community access across 12 weeks.
+            </p>
+          </div>
+          <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-5">
+            {beyondInclusions.map((item) => {
+              const Icon = item.icon;
+              return (
+                <article key={item.title} className="rounded-xl bg-white p-5 shadow-lg ring-1 ring-[#cde4dc]">
+                  <span className="mb-4 flex h-12 w-12 items-center justify-center rounded-xl bg-[#edf6f2] text-[#315f55]">
+                    <Icon size={24} aria-hidden="true" />
+                  </span>
+                  <h3 className="text-lg font-semibold leading-snug text-[#294b43]">{item.title}</h3>
+                  <p className="mt-3 text-sm leading-relaxed text-gray-700">{item.text}</p>
+                </article>
+              );
+            })}
+          </div>
+        </div>
+      </section>
+
+      <section className="border-t border-[#dbeae4] bg-white px-4 py-16 sm:px-8 sm:py-20 lg:px-16 lg:py-28 xl:px-20" aria-labelledby="beyond-pricing-heading">
+        <div className="mx-auto grid max-w-5xl items-center gap-8 rounded-xl bg-[#edf6f2] p-5 shadow-lg ring-1 ring-[#7fae9e] md:grid-cols-[minmax(0,1.1fr)_minmax(18rem,0.9fr)] sm:p-8 lg:gap-10 lg:p-10">
+          <img
+            src={beyondInjectionImage}
+            alt="Beyond the Injection 12-week programme by Iballa, registered dietitian"
+            className="w-full rounded-xl object-cover shadow-md ring-1 ring-white/70"
+          />
+          <div className="text-center md:text-left">
+            <p className="mb-3 text-sm font-semibold uppercase tracking-wide text-[#315f55]">Ready to join?</p>
+            <h2 id="beyond-pricing-heading" className="text-3xl font-semibold text-[#294b43] sm:text-4xl">
+              Beyond the Injection
+            </h2>
+            <p className="mt-3 text-lg font-semibold text-[#315f55]">12-week programme</p>
+            <p className="mt-4 text-5xl font-bold text-[#294b43]">€399</p>
+            <p className="mt-4 text-base leading-relaxed text-gray-700">
+              Join the programme through the secure Thinkific enrolment page.
+            </p>
+            <div className="mt-7">
+              <BeyondInjectionCta location="pricing">Join Beyond the Injection</BeyondInjectionCta>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section className="border-t border-[#dbeae4] bg-[#f7faf8] px-4 py-12 sm:px-8 sm:py-16 lg:px-16 lg:py-20 xl:px-20" aria-labelledby="beyond-faq-heading">
+        <div className="mx-auto max-w-4xl">
+          <h2 id="beyond-faq-heading" className="text-3xl font-semibold text-[#294b43] sm:text-4xl">
+            Frequently asked questions
+          </h2>
+          <div className="mt-8 space-y-4">
+            {beyondFaqs.map((item) => (
+              <details key={item.question} className="rounded-xl border border-[#cde4dc] bg-white p-5 shadow-sm">
+                <summary className="cursor-pointer text-lg font-semibold text-[#294b43]">{item.question}</summary>
+                <p className="mt-3 text-base leading-relaxed text-gray-700">{item.answer}</p>
+              </details>
+            ))}
+          </div>
         </div>
       </section>
     </main>
@@ -1773,6 +2025,7 @@ export default function NutritionByIballa() {
   const isAdminSubscribersRoute = path === "/admin/subscribers";
   const isPrivacyRoute = path === "/privacy-policy";
   const isCookieRoute = path === "/cookie-policy";
+  const isBeyondInjectionRoute = path === "/beyond-the-injection";
   const serviceCopy = servicesContent[lang] || servicesContent.en;
 
   useEffect(() => {
@@ -1802,7 +2055,7 @@ export default function NutritionByIballa() {
         !href ||
         isModifiedClick ||
         anchor.target === "_blank" ||
-        (!href.startsWith("/blog") && !href.startsWith("/nutrition-assessment") && !href.startsWith("/privacy-policy") && !href.startsWith("/cookie-policy") && !href.startsWith("/admin/subscribers") && !href.startsWith("/#"))
+        (!href.startsWith("/blog") && !href.startsWith("/nutrition-assessment") && !href.startsWith("/beyond-the-injection") && !href.startsWith("/privacy-policy") && !href.startsWith("/cookie-policy") && !href.startsWith("/admin/subscribers") && !href.startsWith("/#"))
       ) {
         return;
       }
@@ -1866,6 +2119,8 @@ export default function NutritionByIballa() {
   useEffect(() => {
     const title = activePost
       ? `${activePost.title} | Nutrition by Iballa`
+      : isBeyondInjectionRoute
+        ? "Beyond the Injection | GLP-1 Nutrition Programme | Nutrition by Iballa"
       : isAssessmentRoute
         ? `${uiCopy.assessment.title} | Nutrition by Iballa`
       : isAdminSubscribersRoute
@@ -1879,6 +2134,8 @@ export default function NutritionByIballa() {
         : "Nutrition by Iballa";
     const description = activePost
       ? activePost.excerpt
+      : isBeyondInjectionRoute
+        ? "Beyond the Injection is a 12-week GLP-1 nutrition programme from Nutrition by Iballa, providing structured nutrition education, practical guidance and personalised dietetic support."
       : isAssessmentRoute
         ? uiCopy.assessment.intro
       : isAdminSubscribersRoute
@@ -1898,7 +2155,12 @@ export default function NutritionByIballa() {
     document.title = title;
     upsertMeta("description", description);
     upsertMeta("robots", isAdminSubscribersRoute ? "noindex, nofollow" : "index, follow");
-    upsertCanonical(activePost ? `/blog/${activePost.slug}` : isAdminSubscribersRoute ? "/admin/subscribers" : isCookieRoute ? "/cookie-policy" : isPrivacyRoute ? "/privacy-policy" : isAssessmentRoute ? "/nutrition-assessment" : isBlogRoute ? "/blog" : "/");
+    upsertPropertyMeta("og:title", title);
+    upsertPropertyMeta("og:description", description);
+    upsertPropertyMeta("og:type", activePost ? "article" : "website");
+    upsertPropertyMeta("og:image", `${window.location.origin}${isBeyondInjectionRoute ? beyondInjectionImage : activePost?.image || "/logo.png"}`);
+    upsertPropertyMeta("og:url", `${window.location.origin}${activePost ? `/blog/${activePost.slug}` : isBeyondInjectionRoute ? "/beyond-the-injection" : isAdminSubscribersRoute ? "/admin/subscribers" : isCookieRoute ? "/cookie-policy" : isPrivacyRoute ? "/privacy-policy" : isAssessmentRoute ? "/nutrition-assessment" : isBlogRoute ? "/blog" : "/"}`);
+    upsertCanonical(activePost ? `/blog/${activePost.slug}` : isBeyondInjectionRoute ? "/beyond-the-injection" : isAdminSubscribersRoute ? "/admin/subscribers" : isCookieRoute ? "/cookie-policy" : isPrivacyRoute ? "/privacy-policy" : isAssessmentRoute ? "/nutrition-assessment" : isBlogRoute ? "/blog" : "/");
     upsertStructuredData(
       activePost
         ? {
@@ -1918,6 +2180,26 @@ export default function NutritionByIballa() {
             },
             mainEntityOfPage: `${window.location.origin}/blog/${activePost.slug}`
           }
+        : isBeyondInjectionRoute
+          ? {
+              "@context": "https://schema.org",
+              "@type": "Course",
+              name: "Beyond the Injection",
+              description,
+              image: `${window.location.origin}${beyondInjectionImage}`,
+              provider: {
+                "@type": "Organization",
+                name: "Nutrition by Iballa",
+                url: window.location.origin
+              },
+              offers: {
+                "@type": "Offer",
+                price: "399",
+                priceCurrency: "EUR",
+                url: beyondInjectionUrl,
+                availability: "https://schema.org/InStock"
+              }
+            }
         : isAssessmentRoute
           ? {
             "@context": "https://schema.org",
@@ -1966,7 +2248,7 @@ export default function NutritionByIballa() {
               url: window.location.origin
             }
     );
-  }, [activePost, i18n.language, isAdminSubscribersRoute, isAssessmentRoute, isBlogRoute, isCookieRoute, isPrivacyRoute, t, uiCopy]);
+  }, [activePost, i18n.language, isAdminSubscribersRoute, isAssessmentRoute, isBeyondInjectionRoute, isBlogRoute, isCookieRoute, isPrivacyRoute, t, uiCopy]);
 
  const appointmentTypes = {
   en: [
@@ -2019,6 +2301,7 @@ export default function NutritionByIballa() {
       <nav className="hidden md:flex space-x-6 lg:text-base xl:text-lg">
         <a href="/">{t("nav.home")}</a>
         <a href="/#appointments">{t("nav.appointments")}</a>
+        <a href="/beyond-the-injection">Beyond the Injection</a>
         <a href="/nutrition-assessment">{uiCopy.nav.assessment}</a>
         <a href="/blog">{uiCopy.nav.blog}</a>
         <a href="/#contact">{t("nav.contact")}</a>
@@ -2042,6 +2325,9 @@ export default function NutritionByIballa() {
       </a>
       <a href="/#appointments" onClick={() => setNavOpen(false)}>
         {t("nav.appointments")}
+      </a>
+      <a href="/beyond-the-injection" onClick={() => setNavOpen(false)}>
+        Beyond the Injection
       </a>
       <a href="/nutrition-assessment" onClick={() => setNavOpen(false)}>
         {uiCopy.nav.assessment}
@@ -2067,6 +2353,8 @@ export default function NutritionByIballa() {
   <PrivacyPolicyPage />
 ) : isCookieRoute ? (
   <CookiePolicyPage />
+) : isBeyondInjectionRoute ? (
+  <BeyondTheInjectionPage />
 ) : isArticleRoute && activePost ? (
   <BlogArticle post={activePost} />
 ) : isArticleRoute ? (
@@ -2232,6 +2520,7 @@ export default function NutritionByIballa() {
   </div>
 </section>
 
+<BeyondInjectionPromo />
 
       {/* About */}
  <section id="about" className="px-5 py-10 sm:p-12 lg:px-16 lg:py-20 xl:px-20 bg-gradient-to-r from-[#a3c9b9] to-[#7fae9e] text-white">
