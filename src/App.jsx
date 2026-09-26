@@ -740,33 +740,6 @@ const beyondInclusions = [
   }
 ];
 
-const beyondFaqs = [
-  {
-    question: "Who is Beyond the Injection for?",
-    answer: "It is designed for people using GLP-1 medications who want structured nutrition education, practical guidance and personalised dietetic support alongside treatment."
-  },
-  {
-    question: "Is this only an online course?",
-    answer: "No. The programme includes recorded education, four one-to-one consultations, live Q&A sessions, bonus webinars and community access."
-  },
-  {
-    question: "How long does the programme run?",
-    answer: "Beyond the Injection is a 12-week programme."
-  },
-  {
-    question: "How much does it cost?",
-    answer: "The programme price is €399."
-  },
-  {
-    question: "Where do I enrol?",
-    answer: "Enrolment and course delivery currently take place through Thinkific. The join buttons on this page take you to the existing Thinkific enrolment flow."
-  },
-  {
-    question: "Does this replace medical advice?",
-    answer: "No. The programme provides nutrition education and dietetic support. Continue to follow guidance from your prescribing clinician or healthcare team about your medication and medical care."
-  }
-];
-
 function BeyondInjectionCta({ location, children, variant = "primary", className = "" }) {
   const { i18n } = useTranslation();
   const lang = i18n.language.startsWith("es") ? "es" : "en";
@@ -934,21 +907,6 @@ function BeyondTheInjectionPage() {
         </div>
       </section>
 
-      <section className="border-t border-[#dbeae4] bg-[#f7faf8] px-4 py-12 sm:px-8 sm:py-16 lg:px-16 lg:py-20 xl:px-20" aria-labelledby="beyond-faq-heading">
-        <div className="mx-auto max-w-4xl">
-          <h2 id="beyond-faq-heading" className="text-3xl font-semibold text-[#294b43] sm:text-4xl">
-            Frequently asked questions
-          </h2>
-          <div className="mt-8 space-y-4">
-            {beyondFaqs.map((item) => (
-              <details key={item.question} className="rounded-xl border border-[#cde4dc] bg-white p-5 shadow-sm">
-                <summary className="cursor-pointer text-lg font-semibold text-[#294b43]">{item.question}</summary>
-                <p className="mt-3 text-base leading-relaxed text-gray-700">{item.answer}</p>
-              </details>
-            ))}
-          </div>
-        </div>
-      </section>
     </main>
   );
 }
@@ -2545,8 +2503,6 @@ export default function NutritionByIballa() {
   </div>
 </section>
 
-<BeyondInjectionPromo />
-
       {/* About */}
  <section id="about" className="px-5 py-10 sm:p-12 lg:px-16 lg:py-20 xl:px-20 bg-gradient-to-r from-[#a3c9b9] to-[#7fae9e] text-white">
       <div className="mx-auto flex max-w-screen-xl flex-col items-center gap-8 md:flex-row lg:gap-14 xl:max-w-screen-2xl xl:gap-20">
@@ -2797,6 +2753,8 @@ export default function NutritionByIballa() {
     </div>
   </div>
 </section>
+
+<BeyondInjectionPromo />
 
      {/* Contact */}
 <section id="contact" className="p-8 sm:p-12 lg:px-16 lg:py-20 xl:px-20 bg-gradient-to-r from-[#a3c9b9] to-[#7fae9e] text-white text-center">
