@@ -2,6 +2,7 @@
   "nav": {
     "home": "Home",
     "about": "About me",
+    "services": "Services",
     "glp1": "GLP-1 Programme",
     "bookNow": "Book Now",
     "blog": "Blogs",
@@ -108,17 +109,35 @@
       "eyebrow": "Secondary booking options",
       "heading": "Consultation Packages",
       "cta": "Book Package",
+      "individualCost": "Individual cost",
+      "save": "Save",
       "items": {
         "bundle4": {
           "title": "Bundle of 4 Consultations",
-          "description": "A discounted way to book multiple consultations and keep consistent support in place."
+          "description": "A discounted way to book multiple consultations and keep consistent support in place.",
+          "price": "€280",
+          "individualCost": "€330",
+          "saving": "€50",
+          "includes": [
+            "1 initial consultation",
+            "3 review appointments"
+          ]
         },
         "bundle6": {
           "title": "Bundle of 6 Consultations",
-          "description": "A discounted option for ongoing nutrition support across several appointments."
+          "description": "A discounted option for ongoing nutrition support across several appointments.",
+          "price": "€400",
+          "individualCost": "€470",
+          "saving": "€70",
+          "includes": [
+            "1 initial consultation",
+            "5 review appointments"
+          ]
         }
       }
     },
+    "individualHeading": "Individual consultations",
+    "existingClients": "For existing clients",
     "cta": "Book Now"
   },
   "testimonials": {

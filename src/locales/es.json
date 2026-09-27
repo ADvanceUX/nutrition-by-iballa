@@ -2,6 +2,7 @@
   "nav": {
     "home": "Inicio",
     "about": "Sobre mí",
+    "services": "Servicios",
     "glp1": "Programa GLP-1",
     "bookNow": "Reservar",
     "blog": "Blogs",
@@ -108,17 +109,35 @@
       "eyebrow": "Opciones secundarias de reserva",
       "heading": "Bonos de consultas",
       "cta": "Reservar bono",
+      "individualCost": "Coste individual",
+      "save": "Ahorra",
       "items": {
         "bundle4": {
           "title": "Bono de 4 consultas",
-          "description": "Una forma con descuento de reservar varias consultas y mantener apoyo constante."
+          "description": "Una forma con descuento de reservar varias consultas y mantener apoyo constante.",
+          "price": "€280",
+          "individualCost": "€330",
+          "saving": "€50",
+          "includes": [
+            "1 consulta inicial",
+            "3 citas de revisión"
+          ]
         },
         "bundle6": {
           "title": "Bono de 6 consultas",
-          "description": "Una opción con descuento para recibir apoyo nutricional continuado en varias citas."
+          "description": "Una opción con descuento para recibir apoyo nutricional continuado en varias citas.",
+          "price": "€400",
+          "individualCost": "€470",
+          "saving": "€70",
+          "includes": [
+            "1 consulta inicial",
+            "5 citas de revisión"
+          ]
         }
       }
     },
+    "individualHeading": "Consultas individuales",
+    "existingClients": "Para clientes existentes",
     "cta": "Reservar"
   },
   "testimonials": {
