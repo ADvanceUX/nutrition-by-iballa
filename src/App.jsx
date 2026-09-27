@@ -756,7 +756,7 @@ function BeyondInjectionCta({ location, children, variant = "primary", className
       className={`inline-flex min-h-11 items-center justify-center gap-2 rounded-full px-6 py-2 text-sm font-semibold shadow transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#5ca88d] focus-visible:ring-offset-2 lg:px-8 lg:py-3 lg:text-base ${toneClass} ${className}`}
     >
       {children}
-      <ArrowRight size={18} aria-hidden="true" />
+      <ArrowRight size={18} className="text-[#ffb3b3]" aria-hidden="true" />
     </a>
   );
 }
@@ -788,7 +788,7 @@ function BeyondInjectionPromo() {
               className="inline-flex min-h-11 items-center justify-center gap-2 rounded-full bg-[#5ca88d] px-6 py-2 text-sm font-semibold text-white shadow transition hover:opacity-90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#5ca88d] focus-visible:ring-offset-2 lg:px-8 lg:py-3 lg:text-base"
             >
               Discover the Programme
-              <ArrowRight size={18} aria-hidden="true" />
+              <ArrowRight size={18} className="text-[#ffb3b3]" aria-hidden="true" />
             </a>
           </div>
         </div>
@@ -835,8 +835,8 @@ function ServicesPage({ title, serviceCopy, expandedServiceKey, setExpandedServi
                 transition={{ layout: { duration: 0.25, ease: "easeOut" } }}
                 className={`min-h-0 overflow-hidden rounded-2xl border bg-white transition-[box-shadow,border-color] duration-300 ${
                   isExpanded
-                    ? "min-[430px]:col-span-2 border-[#5ca88d] shadow-[0_12px_36px_rgba(59,95,88,0.14)]"
-                    : "border-[#d9f4cd] shadow-[0_8px_30px_rgba(59,95,88,0.09)] hover:shadow-[0_12px_36px_rgba(59,95,88,0.14)]"
+                    ? "min-[430px]:col-span-2 border-[#ffb3b3] shadow-[0_12px_36px_rgba(59,95,88,0.14)]"
+                    : "border-[#ffb3b3] shadow-[0_8px_30px_rgba(59,95,88,0.09)] hover:shadow-[0_12px_36px_rgba(59,95,88,0.14)]"
                 }`}
               >
                 <div>
@@ -846,13 +846,13 @@ function ServicesPage({ title, serviceCopy, expandedServiceKey, setExpandedServi
                     aria-controls={panelId}
                     aria-label={`${isExpanded ? serviceCopy.readLess : serviceCopy.readMore}: ${service.title}`}
                     onClick={() => setExpandedServiceKey(isExpanded ? null : service.key)}
-                    className="group relative block w-full p-3 pr-11 text-left transition-colors hover:bg-[#d9f4cd] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-[#5ca88d] sm:p-5 sm:pr-14 md:p-6 md:pr-16 xl:p-8 xl:pr-20"
+                    className="group relative block w-full p-3 pr-11 text-left transition-colors hover:bg-[#d9f4cd] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-[#ffb3b3] sm:p-5 sm:pr-14 md:p-6 md:pr-16 xl:p-8 xl:pr-20"
                   >
-                    <span className="absolute right-3 top-3 flex h-8 w-8 items-center justify-center rounded-full bg-[#d9f4cd] text-[#5ca88d] transition sm:right-5 sm:top-5 xl:right-8 xl:top-8 xl:h-10 xl:w-10">
+                    <span className="absolute right-3 top-3 flex h-8 w-8 items-center justify-center rounded-full bg-[#d9f4cd] text-[#ffb3b3] transition sm:right-5 sm:top-5 xl:right-8 xl:top-8 xl:h-10 xl:w-10">
                       {isExpanded ? <ChevronUp size={18} aria-hidden="true" /> : <ChevronDown size={18} aria-hidden="true" />}
                     </span>
                     <span className="flex flex-col items-start gap-3 sm:flex-row sm:gap-4 xl:gap-6">
-                      <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-[#d9f4cd] text-[#5ca88d] sm:h-12 sm:w-12 xl:h-16 xl:w-16">
+                      <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-[#d9f4cd] text-[#ffb3b3] sm:h-12 sm:w-12 xl:h-16 xl:w-16">
                         <Icon size={23} className="sm:h-[27px] sm:w-[27px] xl:h-9 xl:w-9" aria-hidden="true" />
                       </span>
                       <span>
@@ -925,7 +925,7 @@ function ServicesPage({ title, serviceCopy, expandedServiceKey, setExpandedServi
 function BeyondTheInjectionPage() {
   return (
     <main className="bg-white text-gray-900">
-      <section className="bg-gradient-to-r from-[#d9f4cd] to-[#5ca88d] px-4 py-10 text-white sm:px-8 sm:py-14 lg:px-16 lg:py-20 xl:px-20">
+      <section className="bg-[#5ca88d] px-4 py-10 text-white sm:px-8 sm:py-14 lg:px-16 lg:py-20 xl:px-20">
         <div className="mx-auto grid max-w-screen-xl items-center gap-8 lg:grid-cols-[minmax(0,1.05fr)_minmax(20rem,0.95fr)] lg:gap-12 xl:max-w-screen-2xl">
           <div>
             <p className="mb-4 text-sm font-semibold uppercase tracking-wide text-white/90">Nutrition by Iballa</p>
@@ -974,13 +974,13 @@ function BeyondTheInjectionPage() {
         </div>
       </section>
 
-      <section className="bg-[#f7faf8] px-4 pt-12 pb-16 sm:px-8 sm:pt-16 sm:pb-20 lg:px-16 lg:pt-20 lg:pb-28 xl:px-20" aria-labelledby="beyond-included-heading">
+      <section className="bg-[#ffb3b3] px-4 pt-12 pb-16 sm:px-8 sm:pt-16 sm:pb-20 lg:px-16 lg:pt-20 lg:pb-28 xl:px-20" aria-labelledby="beyond-included-heading">
         <div className="mx-auto max-w-screen-xl xl:max-w-screen-2xl">
           <div className="mx-auto mb-9 max-w-4xl text-center">
             <h2 id="beyond-included-heading" className="text-3xl font-semibold text-[#294b43] sm:text-4xl lg:text-5xl">
               What's included
             </h2>
-            <p className="mt-3 text-base leading-relaxed text-gray-700 sm:text-lg">
+            <p className="mt-3 text-base leading-relaxed text-[#294b43] sm:text-lg">
               A blend of education, one-to-one guidance, live support and community access across 12 weeks.
             </p>
           </div>
@@ -988,8 +988,8 @@ function BeyondTheInjectionPage() {
             {beyondInclusions.map((item) => {
               const Icon = item.icon;
               return (
-                <article key={item.title} className="rounded-xl bg-white p-5 shadow-lg ring-1 ring-[#d9f4cd]">
-                  <span className="mb-4 flex h-12 w-12 items-center justify-center rounded-xl bg-[#d9f4cd] text-[#5ca88d]">
+                <article key={item.title} className="rounded-xl bg-white p-5 shadow-lg ring-1 ring-[#ffb3b3]">
+                  <span className="mb-4 flex h-12 w-12 items-center justify-center rounded-xl bg-[#d9f4cd] text-[#ffb3b3]">
                     <Icon size={24} aria-hidden="true" />
                   </span>
                   <h3 className="text-lg font-semibold leading-snug text-[#294b43]">{item.title}</h3>
@@ -1000,31 +1000,6 @@ function BeyondTheInjectionPage() {
           </div>
         </div>
       </section>
-
-      <section className="border-t border-[#d9f4cd] bg-white px-4 py-16 sm:px-8 sm:py-20 lg:px-16 lg:py-28 xl:px-20" aria-labelledby="beyond-pricing-heading">
-        <div className="mx-auto grid max-w-5xl items-center gap-8 rounded-xl bg-[#d9f4cd] p-5 shadow-lg ring-1 ring-[#5ca88d] md:grid-cols-[minmax(0,1.1fr)_minmax(18rem,0.9fr)] sm:p-8 lg:gap-10 lg:p-10">
-          <img
-            src={beyondInjectionImage}
-            alt="Beyond the Injection 12-week programme by Iballa, registered dietitian"
-            className="w-full rounded-xl object-cover shadow-md ring-1 ring-white/70"
-          />
-          <div className="text-center md:text-left">
-            <p className="mb-3 text-sm font-semibold uppercase tracking-wide text-[#5ca88d]">Ready to join?</p>
-            <h2 id="beyond-pricing-heading" className="text-3xl font-semibold text-[#294b43] sm:text-4xl">
-              Beyond the Injection
-            </h2>
-            <p className="mt-3 text-lg font-semibold text-[#5ca88d]">12-week programme</p>
-            <p className="mt-4 text-5xl font-bold text-[#294b43]">€399</p>
-            <p className="mt-4 text-base leading-relaxed text-gray-700">
-              Join the programme through the secure Thinkific enrolment page.
-            </p>
-            <div className="mt-7">
-              <BeyondInjectionCta location="pricing">Join Beyond the Injection</BeyondInjectionCta>
-            </div>
-          </div>
-        </div>
-      </section>
-
     </main>
   );
 }
@@ -1038,7 +1013,7 @@ function BlogOverview() {
 
   return (
     <main className="bg-white text-gray-900">
-      <section className="pt-10 pb-10 text-center bg-gradient-to-r from-[#d9f4cd] to-[#5ca88d] text-white">
+      <section className="bg-[#5ca88d] pt-10 pb-10 text-center text-white">
         <div className="max-w-5xl mx-auto px-6">
           <p className="text-sm font-semibold uppercase tracking-wide mb-3">{copy.eyebrow}</p>
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-5 leading-tight">
@@ -1047,6 +1022,7 @@ function BlogOverview() {
           <p className="text-base sm:text-lg leading-relaxed max-w-3xl mx-auto">
             {copy.intro}
           </p>
+          <div className="mx-auto mt-6 h-2 w-28 rounded-full bg-[#ffb3b3]" aria-hidden="true"></div>
         </div>
       </section>
 
@@ -1058,7 +1034,7 @@ function BlogOverview() {
 
           <div className="grid gap-6 lg:grid-cols-[minmax(0,1.35fr)_minmax(24rem,0.9fr)] lg:items-stretch">
             <div className="h-full">
-              <article className="h-full rounded-xl shadow-lg ring-1 ring-[#5ca88d] overflow-hidden bg-white transition-all duration-200 hover:ring-2">
+              <article className="h-full rounded-xl shadow-lg ring-2 ring-[#ffb3b3] overflow-hidden bg-white transition-all duration-200 hover:ring-[#5ca88d]">
                 <a
                   href={`/blog/${latestPost.slug}`}
                   className="grid h-full min-h-[26rem] group md:grid-cols-[minmax(18rem,0.95fr)_minmax(0,1.05fr)]"
@@ -1070,7 +1046,7 @@ function BlogOverview() {
                   />
                   <div className="flex flex-col justify-center p-6 sm:p-8">
                     <div className="flex flex-wrap items-center gap-3 text-sm text-gray-600 mb-4">
-                      <span className="inline-flex items-center rounded-full bg-[#d9f4cd] px-3 py-1 font-semibold text-[#5ca88d]">
+                      <span className="inline-flex items-center rounded-full bg-[#ffb3b3] px-3 py-1 font-semibold text-[#294b43]">
                         {latestPost.category}
                       </span>
                       <span>{formatPostDate(latestPost.date, i18n.language)}</span>
@@ -1086,10 +1062,10 @@ function BlogOverview() {
                       {latestPost.excerpt}
                     </p>
                     <span
-                      className="self-start inline-flex items-center gap-2 bg-gradient-to-r from-[#d9f4cd] to-[#5ca88d] text-white text-sm font-semibold px-6 py-2 rounded-full shadow transition group-hover:brightness-105"
+                      className="self-start inline-flex items-center gap-2 bg-[#5ca88d] text-white text-sm font-semibold px-6 py-2 rounded-full shadow transition group-hover:opacity-90"
                     >
                       {copy.readMore}
-                      <ArrowRight size={18} />
+                      <ArrowRight size={18} className="text-[#ffb3b3]" />
                     </span>
                   </div>
                 </a>
@@ -1110,12 +1086,12 @@ function BlogOverview() {
           </h2>
           <div className="space-y-5">
             {postsNewestFirst.map((post) => (
-              <article key={post.slug} className="rounded-xl shadow-lg ring-1 ring-[#5ca88d] overflow-hidden bg-white transition-all duration-200 hover:ring-2">
+              <article key={post.slug} className="rounded-xl shadow-lg ring-2 ring-[#ffb3b3] overflow-hidden bg-white transition-all duration-200 hover:ring-[#5ca88d]">
                 <a href={`/blog/${post.slug}`} className="grid sm:grid-cols-[12rem_1fr] group">
                   <img src={post.image} alt="" className="h-48 sm:h-full w-full object-cover object-center" />
                   <div className="p-5 sm:p-6">
                     <div className="flex flex-wrap items-center gap-3 text-sm text-gray-600 mb-4">
-                      <span className="inline-flex items-center rounded-full bg-[#d9f4cd] px-3 py-1 font-semibold text-[#5ca88d]">
+                      <span className="inline-flex items-center rounded-full bg-[#ffb3b3] px-3 py-1 font-semibold text-[#294b43]">
                         {post.category}
                       </span>
                       <span>{formatPostDate(post.date, i18n.language)}</span>
@@ -1318,7 +1294,7 @@ function BlogArticle({ post }) {
             className="inline-flex items-center justify-center gap-2 rounded-full bg-gradient-to-r from-[#d9f4cd] to-[#5ca88d] px-5 py-2 text-sm font-semibold text-white shadow hover:brightness-105 transition"
           >
             {copy.next}
-            <ArrowRight size={18} />
+            <ArrowRight size={18} className="text-[#ffb3b3]" />
           </a>
         ) : (
           <a
@@ -1326,7 +1302,7 @@ function BlogArticle({ post }) {
             className="inline-flex items-center justify-center gap-2 rounded-full bg-gradient-to-r from-[#d9f4cd] to-[#5ca88d] px-5 py-2 text-sm font-semibold text-white shadow hover:brightness-105 transition"
           >
             {copy.back}
-            <ArrowRight size={18} />
+            <ArrowRight size={18} className="text-[#ffb3b3]" />
           </a>
         )}
       </nav>
@@ -1336,15 +1312,16 @@ function BlogArticle({ post }) {
 
 function AboutPage() {
   const { t } = useTranslation();
+  const testimonials = t("testimonials.items", { returnObjects: true });
 
   return (
     <main className="bg-white">
-      <section className="bg-gradient-to-r from-[#d9f4cd] to-[#5ca88d] px-5 py-12 text-white sm:px-8 sm:py-16 lg:px-16 lg:py-20 xl:px-20">
+      <section className="bg-[#5ca88d] px-5 py-12 text-white sm:px-8 sm:py-16 lg:px-16 lg:py-20 xl:px-20">
         <div className="mx-auto flex max-w-screen-xl flex-col items-center gap-8 md:flex-row lg:gap-14 xl:max-w-screen-2xl xl:gap-20">
           <img
             src="/profile1.png"
             alt="Iballa Martinez"
-            className="h-56 rounded-full border-4 border-white object-cover shadow-lg md:h-80 lg:h-[28rem] xl:h-[32rem]"
+            className="h-56 rounded-full border-4 border-[#ffb3b3] object-cover shadow-lg md:h-80 lg:h-[28rem] xl:h-[32rem]"
           />
           <div className="text-left">
             <p className="mb-3 text-sm font-semibold uppercase tracking-[0.18em] text-white/90">
@@ -1357,6 +1334,32 @@ function AboutPage() {
               <p dangerouslySetInnerHTML={{ __html: t("about.paragraph3") }} />
               <p dangerouslySetInnerHTML={{ __html: t("about.paragraph4") }} />
             </div>
+          </div>
+        </div>
+      </section>
+
+      <section className="bg-white px-5 py-12 sm:px-8 sm:py-16 lg:px-16 lg:py-20 xl:px-20" aria-labelledby="about-testimonials-heading">
+        <div className="mx-auto max-w-screen-2xl">
+          <div className="mx-auto mb-9 max-w-4xl text-center lg:mb-12">
+            <p className="mb-3 text-sm font-semibold uppercase tracking-[0.18em] text-[#5ca88d]">
+              Nutrition by Iballa
+            </p>
+            <h2 id="about-testimonials-heading" className="text-3xl font-semibold text-[#294b43] sm:text-4xl lg:text-5xl">
+              {t("testimonials.aboutHeading")}
+            </h2>
+            <div className="mx-auto mt-5 h-2 w-24 rounded-full bg-[#ffb3b3]" aria-hidden="true"></div>
+          </div>
+          <div className="grid gap-5 lg:grid-cols-3">
+            {testimonials.map((item) => (
+              <article key={item.title} className="rounded-xl bg-white p-5 shadow-lg ring-2 ring-[#ffb3b3] sm:p-6">
+                <h3 className="text-xl font-semibold leading-snug text-[#294b43]">{item.title}</h3>
+                <div className="mt-4 space-y-4 text-sm leading-relaxed text-gray-700 sm:text-base">
+                  {item.review.split("\n\n").map((paragraph) => (
+                    <p key={paragraph}>&ldquo;{paragraph}&rdquo;</p>
+                  ))}
+                </div>
+              </article>
+            ))}
           </div>
         </div>
       </section>
@@ -1689,7 +1692,7 @@ function AssessmentContactForm({ contact, onContactChange, onSubmit, submitting,
           className="inline-flex items-center justify-center gap-2 rounded-full bg-gradient-to-r from-[#d9f4cd] to-[#5ca88d] px-6 py-2 text-sm font-semibold text-white shadow transition hover:brightness-105 disabled:cursor-not-allowed disabled:opacity-50"
         >
           {submitting ? copy.saving : copy.start}
-          <ArrowRight size={18} />
+          <ArrowRight size={18} className="text-[#ffb3b3]" />
         </button>
       </form>
     </motion.div>
@@ -1965,7 +1968,7 @@ function NutritionAssessmentPage() {
                       className="inline-flex items-center justify-center gap-2 rounded-full bg-gradient-to-r from-[#d9f4cd] to-[#5ca88d] px-6 py-2 text-sm font-semibold text-white shadow transition hover:brightness-105 disabled:cursor-not-allowed disabled:opacity-50"
                     >
                       {savingResults ? copy.saving : isLastStep ? copy.viewResults : copy.next}
-                      <ArrowRight size={18} />
+                      <ArrowRight size={18} className="text-[#ffb3b3]" />
                     </button>
                   </div>
                   {assessmentError && (

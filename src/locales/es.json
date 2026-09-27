@@ -142,6 +142,7 @@
   },
   "testimonials": {
     "heading": "Lo que dicen mis clientes",
+    "aboutHeading": "Lo que mis clientes dicen de mí",
     "items": [
       {
         "title": "Su trabajo va mucho más allá de la nutrición",
