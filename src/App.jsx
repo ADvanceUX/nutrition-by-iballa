@@ -359,7 +359,7 @@ function FooterNewsletterSignup() {
   };
 
   return (
-    <section className="border-b border-[#d9f4cd] bg-white px-4 py-6 sm:px-8 lg:px-12 xl:py-8" aria-labelledby="footer-newsletter-heading">
+    <section className="border-b border-[#5ca88d]/20 bg-[#d9f4cd] px-4 py-6 sm:px-8 lg:px-12 xl:py-8" aria-labelledby="footer-newsletter-heading">
       <div className="mx-auto flex max-w-screen-xl flex-col gap-4 lg:flex-row lg:items-center lg:justify-between xl:max-w-screen-2xl">
         <div className="max-w-2xl">
           <h2 id="footer-newsletter-heading" className="text-xl font-semibold text-[#294b43] lg:text-2xl">
@@ -763,8 +763,8 @@ function BeyondInjectionCta({ location, children, variant = "primary", className
 
 function BeyondInjectionPromo() {
   return (
-    <section className="bg-white px-4 py-12 sm:px-8 sm:py-16 lg:px-16 lg:py-20 xl:px-20" aria-labelledby="beyond-home-heading">
-      <div className="mx-auto grid max-w-screen-xl items-center gap-8 overflow-hidden rounded-xl bg-[#d9f4cd] p-5 shadow-lg ring-1 ring-[#5ca88d] md:grid-cols-[minmax(0,1fr)_minmax(18rem,0.85fr)] sm:p-8 lg:gap-12 lg:p-10 xl:max-w-screen-2xl">
+    <section className="bg-[#d9f4cd] px-4 py-12 sm:px-8 sm:py-16 lg:px-16 lg:py-20 xl:px-20" aria-labelledby="beyond-home-heading">
+      <div className="mx-auto grid max-w-screen-xl items-center gap-8 overflow-hidden rounded-2xl bg-white p-5 shadow-lg ring-1 ring-[#5ca88d] md:grid-cols-[minmax(0,1fr)_minmax(18rem,0.85fr)] sm:p-8 lg:gap-12 lg:p-10 xl:max-w-screen-2xl">
         <div>
           <p className="mb-3 text-sm font-semibold uppercase tracking-wide text-[#5ca88d]">New programme</p>
           <h2 id="beyond-home-heading" className="text-3xl font-semibold leading-tight text-[#294b43] sm:text-4xl lg:text-5xl">
@@ -1249,22 +1249,26 @@ function AboutPage() {
 function BookingPage() {
   const { t, i18n } = useTranslation();
   const lang = i18n.language.startsWith("es") ? "es" : "en";
+  const [bookingPolicyOpen, setBookingPolicyOpen] = useState(false);
   const types = [
     {
       key: "freeCall",
       icon: Clock,
       calendlyUrl: lang === "es" ? calendlyUrls.esFreeCall : calendlyUrls.enFreeCall,
-      featured: true
+      featured: true,
+      duration: lang === "es" ? "15 minutos" : "15 minutes"
     },
     {
       key: "initial",
       icon: Calendar,
-      calendlyUrl: lang === "es" ? "https://calendly.com/iballa-mtzyanes/consulta-inicial" : "https://calendly.com/iballa-mtzyanes/initial-consultation"
+      calendlyUrl: lang === "es" ? "https://calendly.com/iballa-mtzyanes/consulta-inicial" : "https://calendly.com/iballa-mtzyanes/initial-consultation",
+      duration: lang === "es" ? "55 minutos" : "55 minutes"
     },
     {
       key: "review",
       icon: RotateCcw,
-      calendlyUrl: lang === "es" ? "https://calendly.com/iballa-mtzyanes/consulta-seguimiento" : "https://calendly.com/iballa-mtzyanes/review-consultation"
+      calendlyUrl: lang === "es" ? "https://calendly.com/iballa-mtzyanes/consulta-seguimiento" : "https://calendly.com/iballa-mtzyanes/review-consultation",
+      duration: lang === "es" ? "30 minutos" : "30 minutes"
     }
   ];
   const packages = [
@@ -1294,21 +1298,38 @@ function BookingPage() {
         </div>
       </section>
 
-      <section className="px-5 py-12 sm:px-8 sm:py-16 lg:px-16 lg:py-20 xl:px-20">
-        <div className="mx-auto grid max-w-screen-xl gap-5 md:grid-cols-3">
+      <section className="bg-white px-5 py-12 sm:px-8 sm:py-16 lg:px-16 lg:py-20 xl:px-20">
+        <div className="mx-auto grid max-w-screen-xl items-stretch gap-6 md:grid-cols-3 xl:gap-8">
           {types.map((service) => {
             const Icon = service.icon;
             const desc = t(`appointments.types.${service.key}.description`, { returnObjects: true });
             return (
-              <article key={service.key} className={`flex h-full flex-col overflow-hidden rounded-xl bg-white shadow-lg ring-1 ${service.featured ? "ring-[#5ca88d]" : "ring-[#d9f4cd]"}`}>
-                <div className={`${service.featured ? "bg-[#5ca88d]" : "bg-[#ffb3b3]"} px-5 py-5 text-white`}>
-                  <div className="flex items-center gap-3">
-                    <Icon size={28} aria-hidden="true" />
-                    <h2 className="text-xl font-semibold">{t(`appointments.types.${service.key}.title`)}</h2>
+              <article
+                key={service.key}
+                className={`flex h-full min-h-[28rem] flex-col overflow-hidden rounded-2xl bg-white shadow-[0_18px_45px_rgba(41,75,67,0.12)] ring-1 transition hover:-translate-y-1 hover:shadow-[0_24px_54px_rgba(41,75,67,0.16)] ${
+                  service.featured ? "ring-[#5ca88d]" : "ring-[#d9f4cd]"
+                }`}
+              >
+                <div className={`${service.featured ? "bg-[#5ca88d]" : "bg-[#ffb3b3]"} px-6 py-6 text-white`}>
+                  <div className="flex items-start gap-4">
+                    <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-white/20">
+                      <Icon size={25} aria-hidden="true" />
+                    </span>
+                    <div>
+                      {service.featured && (
+                        <p className="mb-2 text-xs font-semibold uppercase tracking-[0.14em] text-white/85">
+                          {t("appointments.recommended")}
+                        </p>
+                      )}
+                      <h2 className="text-2xl font-semibold leading-tight">{t(`appointments.types.${service.key}.title`)}</h2>
+                    </div>
                   </div>
                 </div>
-                <div className="flex flex-1 flex-col p-5">
-                  <div className="space-y-3 text-sm leading-relaxed text-gray-700">
+                <div className="flex flex-1 flex-col p-6 sm:p-7">
+                  <p className="mb-5 inline-flex self-start rounded-full bg-[#d9f4cd] px-4 py-2 text-sm font-semibold text-[#294b43]">
+                    {service.duration}
+                  </p>
+                  <div className="space-y-3 text-base leading-relaxed text-gray-700">
                     {Array.isArray(desc) ? desc.map((item) => <p key={item}>{item}</p>) : <p>{desc}</p>}
                   </div>
                   <a
@@ -1316,7 +1337,7 @@ function BookingPage() {
                     target="_blank"
                     rel="noopener noreferrer"
                     onClick={() => trackEvent("appointment_type_selected", { language: lang, appointmentType: service.key, location: "booking_page" })}
-                    className="mt-auto inline-flex min-h-11 items-center justify-center rounded-full bg-[#5ca88d] px-5 py-2 text-sm font-semibold text-white shadow transition hover:bg-[#4b957b] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#5ca88d] focus-visible:ring-offset-2"
+                    className="mt-auto inline-flex min-h-12 items-center justify-center rounded-full bg-[#5ca88d] px-6 py-3 text-sm font-semibold text-white shadow transition hover:bg-[#4b957b] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#5ca88d] focus-visible:ring-offset-2"
                   >
                     {t(`appointments.types.${service.key}.cta`, { defaultValue: t("appointments.cta") })}
                   </a>
@@ -1325,19 +1346,21 @@ function BookingPage() {
             );
           })}
         </div>
+      </section>
 
-        <div className="mx-auto mt-8 max-w-screen-xl rounded-xl bg-[#d9f4cd] p-5 shadow-lg ring-1 ring-[#5ca88d]/30 sm:p-6">
+      <section className="bg-[#ffb3b3] px-5 py-12 sm:px-8 sm:py-16 lg:px-16 lg:py-20 xl:px-20">
+        <div className="mx-auto max-w-screen-xl rounded-2xl bg-white/90 p-5 shadow-[0_18px_45px_rgba(41,75,67,0.12)] ring-1 ring-white/80 sm:p-7 lg:p-8">
           <p className="text-sm font-semibold uppercase tracking-[0.16em] text-[#5ca88d]">
             {t("appointments.packages.eyebrow")}
           </p>
           <h2 className="mt-1 text-2xl font-semibold text-[#294b43]">
             {t("appointments.packages.heading")}
           </h2>
-          <div className="mt-5 grid gap-4 sm:grid-cols-2">
+          <div className="mt-6 grid items-stretch gap-5 sm:grid-cols-2">
             {packages.map((pack) => {
               const copy = t(`appointments.packages.items.${pack.key}`, { returnObjects: true });
               return (
-                <article key={pack.key} className="flex h-full flex-col rounded-xl border border-[#5ca88d]/30 bg-white p-5">
+                <article key={pack.key} className="flex h-full flex-col rounded-2xl border border-[#d9f4cd] bg-white p-5 shadow-sm transition hover:border-[#5ca88d] sm:p-6">
                   <div className="flex items-start gap-3">
                     <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-[#d9f4cd] text-[#5ca88d]">
                       <CreditCard size={20} aria-hidden="true" />
@@ -1352,7 +1375,7 @@ function BookingPage() {
                     target="_blank"
                     rel="noopener noreferrer"
                     onClick={() => trackEvent("appointment_package_selected", { language: lang, packageType: pack.key, location: "booking_page" })}
-                    className="mt-5 inline-flex min-h-10 items-center justify-center rounded-full border border-[#5ca88d] bg-white px-5 py-2 text-sm font-semibold text-[#294b43] transition hover:bg-[#d9f4cd]"
+                    className="mt-auto inline-flex min-h-11 items-center justify-center rounded-full border border-[#5ca88d] bg-white px-5 py-2 text-sm font-semibold text-[#294b43] transition hover:bg-[#d9f4cd] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#5ca88d] focus-visible:ring-offset-2"
                   >
                     {t("appointments.packages.cta")}
                   </a>
@@ -1360,6 +1383,40 @@ function BookingPage() {
               );
             })}
           </div>
+        </div>
+
+        <div className="mx-auto mt-8 max-w-screen-xl rounded-2xl bg-white p-5 shadow-sm ring-1 ring-[#d9f4cd] sm:p-6">
+          <p className="text-sm leading-relaxed text-gray-700 sm:text-base">
+            {t("appointments.mealPlanNote")}
+          </p>
+          <button
+            type="button"
+            aria-expanded={bookingPolicyOpen}
+            aria-controls="booking-policy-details"
+            onClick={() => setBookingPolicyOpen((open) => !open)}
+            className="mt-4 inline-flex w-full items-center justify-between gap-3 rounded-full border border-[#d9f4cd] px-4 py-2 text-left text-sm font-semibold text-[#294b43] transition hover:bg-[#f7fbf9] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#5ca88d]"
+          >
+            <span>{t("appointments.policyHeading")}</span>
+            {bookingPolicyOpen ? <ChevronUp size={18} aria-hidden="true" /> : <ChevronDown size={18} aria-hidden="true" />}
+          </button>
+          <AnimatePresence initial={false}>
+            {bookingPolicyOpen && (
+              <motion.div
+                id="booking-policy-details"
+                initial={{ height: 0, opacity: 0 }}
+                animate={{ height: "auto", opacity: 1 }}
+                exit={{ height: 0, opacity: 0 }}
+                transition={{ height: { duration: 0.22, ease: "easeOut" }, opacity: { duration: 0.16 } }}
+                className="overflow-hidden"
+              >
+                <ul className="mt-3 list-disc space-y-2 pl-5 text-sm leading-relaxed text-gray-700">
+                  {t("appointments.policy", { returnObjects: true }).map((item) => (
+                    <li key={item}>{item}</li>
+                  ))}
+                </ul>
+              </motion.div>
+            )}
+          </AnimatePresence>
         </div>
       </section>
     </main>
@@ -1804,7 +1861,7 @@ function AssessmentResults({ answers, onBack, onRestart }) {
             </p>
           </div>
           <a
-            href="/#appointments"
+            href="/booking"
             className="inline-flex items-center justify-center gap-2 rounded-full bg-white px-6 py-3 text-sm font-semibold text-[#5ca88d] shadow transition hover:bg-gray-100"
           >
             {copy.book}
@@ -2114,8 +2171,6 @@ export default function NutritionByIballa() {
   const [state, handleSubmit] = useForm("xzzvqdlq");
   const [messageValue, setMessageValue] = useState("");
   const messageRef = useRef(null);
-  const bookingSectionRef = useRef(null);
-  const bookingViewedRef = useRef(false);
   const [navOpen, setNavOpen] = useState(false);
   const { t, i18n } = useTranslation();
   const lang = i18n.language.startsWith("es") ? "es" : "en";
@@ -2184,24 +2239,6 @@ export default function NutritionByIballa() {
       messageRef.current.style.height = `${messageRef.current.scrollHeight}px`;
     }
   }, [messageValue]);
-
-  useEffect(() => {
-    const bookingSection = bookingSectionRef.current;
-    if (!bookingSection || typeof IntersectionObserver === "undefined") return undefined;
-
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting && !bookingViewedRef.current) {
-          bookingViewedRef.current = true;
-          trackEvent("booking_section_viewed", { language: lang });
-        }
-      },
-      { threshold: 0.35 }
-    );
-
-    observer.observe(bookingSection);
-    return () => observer.disconnect();
-  }, [lang]);
 
   useEffect(() => {
     const widgetContainer = document.getElementById("calendly-widget");
@@ -2375,68 +2412,6 @@ export default function NutritionByIballa() {
     );
   }, [activePost, i18n.language, isAboutRoute, isAdminSubscribersRoute, isAssessmentRoute, isBeyondInjectionRoute, isBlogRoute, isBookingRoute, isCookieRoute, isPrivacyRoute, t, uiCopy]);
 
- const appointmentTypes = {
-  en: [
-    {
-      key: "freeCall",
-      icon: Clock,
-      primary: true,
-      calendlyUrl: calendlyUrls.enFreeCall
-    },
-    {
-      key: "initial",
-      icon: Calendar,
-      calendlyUrl: "https://calendly.com/iballa-mtzyanes/initial-consultation"
-    },
-    {
-      key: "review",
-      icon: RotateCcw,
-      calendlyUrl: "https://calendly.com/iballa-mtzyanes/review-consultation"
-    }
-  ],
-  es: [
-    {
-      key: "freeCall",
-      icon: Clock,
-      primary: true,
-      calendlyUrl: calendlyUrls.esFreeCall
-    },
-    {
-      key: "initial",
-      icon: Calendar,
-      calendlyUrl: "https://calendly.com/iballa-mtzyanes/consulta-inicial"
-    },
-    {
-      key: "review",
-      icon: RotateCcw,
-      calendlyUrl: "https://calendly.com/iballa-mtzyanes/consulta-seguimiento"
-    }
-  ]
-};
-
- const appointmentPackages = {
-  en: [
-    {
-      key: "bundle4",
-      calendlyUrl: "https://calendly.com/iballa-mtzyanes/bundle-of-4-consultations"
-    },
-    {
-      key: "bundle6",
-      calendlyUrl: "https://calendly.com/iballa-mtzyanes/bundle-of-6-consultations"
-    }
-  ],
-  es: [
-    {
-      key: "bundle4",
-      calendlyUrl: "https://calendly.com/iballa-mtzyanes/bono-de-4-consultas"
-    },
-    {
-      key: "bundle6",
-      calendlyUrl: "https://calendly.com/iballa-mtzyanes/bono-de-6-consultas"
-    }
-  ]
-};
-
   return (
    <div className="overflow-x-hidden bg-white text-gray-900 font-sans">
     {/* Header */}
@@ -2531,13 +2506,13 @@ export default function NutritionByIballa() {
 ) : (
 <>
 {/* Hero Section */}
-<section className="bg-white text-[#294b43]">
-  <div className="mx-auto grid min-h-[calc(100vh-6rem)] w-full max-w-screen-2xl items-center gap-8 px-5 py-10 sm:px-8 md:grid-cols-[minmax(0,0.9fr)_minmax(18rem,1.1fr)] md:px-12 lg:px-16 xl:px-20">
-    <div className="z-10 text-left">
+<section className="bg-[#d9f4cd] text-[#294b43]">
+  <div className="mx-auto grid min-h-[calc(100vh-6rem)] w-full max-w-screen-2xl items-center gap-8 px-5 py-10 sm:px-8 md:grid-cols-[minmax(0,0.95fr)_minmax(18rem,1.05fr)] md:px-12 lg:min-h-[42rem] lg:px-16 xl:px-20">
+    <div className="z-10 max-w-3xl text-left md:justify-self-center">
       <p className="mb-4 text-sm font-semibold uppercase tracking-[0.18em] text-[#5ca88d]">
         {t("hero.eyebrow")}
       </p>
-      <h1 className="max-w-4xl text-3xl font-semibold leading-[1.08] text-[#294b43] sm:text-4xl lg:text-5xl xl:text-6xl">
+      <h1 className="max-w-4xl text-3xl font-semibold leading-[1.08] text-[#294b43] sm:text-4xl lg:text-5xl xl:text-[3.35rem]">
         {t("hero.subtitle")}
       </h1>
       <p className="mt-6 max-w-2xl text-base leading-relaxed text-[#0f2f2b] sm:text-lg lg:text-xl">
@@ -2553,17 +2528,17 @@ export default function NutritionByIballa() {
       </a>
     </div>
 
-    <div className="flex min-h-[24rem] items-end justify-center md:min-h-[34rem] lg:min-h-[40rem]">
+    <div className="flex min-h-[26rem] items-end justify-center overflow-hidden md:min-h-[34rem] lg:min-h-[39rem] xl:min-h-[43rem]">
       <img
-        src="/hero-iballa-cutout.png"
+        src="/hero-iballa-cutout-transparent.png"
         alt="Iballa Martinez, registered dietitian"
-        className="max-h-[29rem] w-auto max-w-full object-contain object-bottom drop-shadow-[0_24px_34px_rgba(41,75,67,0.16)] md:max-h-[36rem] lg:max-h-[43rem]"
+        className="max-h-[34rem] w-auto max-w-[115%] object-contain object-bottom drop-shadow-[0_24px_34px_rgba(41,75,67,0.16)] md:max-h-[40rem] lg:max-h-[46rem] xl:max-h-[50rem]"
       />
     </div>
   </div>
 </section>
 
-<section className="bg-[#d9f4cd] px-5 py-12 text-[#294b43] sm:px-8 sm:py-16 lg:px-16 lg:py-20 xl:px-20">
+<section className="bg-white px-5 py-12 text-[#294b43] sm:px-8 sm:py-16 lg:px-16 lg:py-20 xl:px-20">
   <div className="mx-auto grid min-h-[calc(100vh-6rem)] max-w-screen-2xl items-center gap-8 md:grid-cols-[minmax(0,0.95fr)_minmax(18rem,1.05fr)]">
     <div>
       <p className="mb-4 text-sm font-semibold uppercase tracking-[0.18em] text-[#5ca88d]">
@@ -2588,7 +2563,7 @@ export default function NutritionByIballa() {
       </a>
     </div>
     <div className="rounded-xl bg-white p-6 shadow-lg ring-1 ring-[#5ca88d]/30 sm:p-8">
-      <p className="text-sm font-semibold uppercase tracking-[0.16em] text-[#5ca88d]">15 minutes</p>
+      <p className="text-sm font-semibold uppercase tracking-[0.16em] text-[#5ca88d]">{lang === "es" ? "15 minutos" : "15 minutes"}</p>
       <h3 className="mt-3 text-3xl font-semibold text-[#294b43] sm:text-4xl">{t("appointments.types.freeCall.title")}</h3>
       <p className="mt-4 text-base leading-relaxed text-gray-700">
         {Array.isArray(t("appointments.types.freeCall.description", { returnObjects: true }))
@@ -2601,19 +2576,8 @@ export default function NutritionByIballa() {
 </section>
 
 
- <section id="services" className="relative overflow-hidden bg-[#f7faf8]">
-  {/* Background Image Layer */}
-  <img
-    src="/banner2.png"
-    alt=""
-    className="absolute inset-0 w-full h-full object-cover object-top sm:object-center z-0"
-  />
-
-  {/* Optional overlay for readability */}
-  <div className="absolute inset-0 bg-white/90 z-10"></div>
-
-  {/* Content Layer */}
-  <div className="relative z-20 px-4 py-12 sm:px-8 sm:py-16 md:px-12 lg:px-16 xl:px-20 xl:py-20">
+ <section id="services" className="bg-[#ffb3b3] px-5 py-12 text-[#294b43] sm:px-8 sm:py-16 lg:px-16 lg:py-20 xl:px-20">
+  <div className="mx-auto max-w-screen-2xl">
     <div className="mx-auto mb-9 max-w-5xl text-center lg:mb-12">
     <h2 className="mb-3 text-3xl font-semibold text-[#294b43] sm:text-4xl lg:text-5xl">
       {t("services.heading")}
@@ -2691,7 +2655,7 @@ export default function NutritionByIballa() {
                         <p className="mt-1 text-sm leading-relaxed text-gray-700 xl:text-base">{serviceCopy.bookingText}</p>
                         <div className="mt-4 flex flex-wrap gap-3">
                           <a
-                            href="#appointments"
+                            href="/booking"
                             onClick={() => trackEvent("booking_cta_clicked", { language: lang, location: "service_card", service: service.key })}
                             className="inline-flex min-h-11 items-center justify-center rounded-full bg-[#5ca88d] px-5 py-2 text-sm font-semibold text-white transition hover:bg-[#4b957b] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#5ca88d] focus-visible:ring-offset-2"
                           >
@@ -2715,198 +2679,6 @@ export default function NutritionByIballa() {
       })}
     </div>
 
-  </div>
-</section>
-
-{/* Appointments */}
-<section
-  id="appointments"
-  ref={bookingSectionRef}
-  className="relative bg-gray-50 pt-8 pb-12 sm:pt-12 sm:pb-20 lg:py-20"
->
-  {/* Overlay for readability */}
-  <div className="absolute inset-0 bg-white/70 z-0"></div>
-
-  {/* Centered Title */}
-  <div className="relative z-10 text-center mb-8 sm:mb-12">
-    <h2 className="text-3xl font-semibold lg:text-5xl">
-      {t("appointments.heading")}
-    </h2>
-  </div>
-
-  {/* Responsive Layout: Cards first on mobile, image second */}
-  <div className="relative z-10 mx-auto grid w-full max-w-screen-xl items-start gap-8 px-4 sm:px-6 md:px-10 lg:grid-cols-[minmax(0,1.05fr)_minmax(0,1fr)] lg:gap-12 xl:max-w-screen-2xl xl:px-20">
-    
-    {/* Appointment Cards */}
-    <div className="order-1 flex w-full flex-col items-center justify-center">
-      <div className="flex w-full flex-col items-center gap-4 sm:gap-6">
-        {appointmentTypes[lang].map((service) => {
-          const Icon = service.icon;
-          const bookingUrlMissing = service.calendlyUrl === "#";
-          return (
-            <div
-              key={service.key}
-              className={`rounded-xl shadow-lg transition-all duration-200 overflow-hidden flex flex-col w-full ${
-                service.primary
-                  ? "ring-2 ring-[#5ca88d] bg-white"
-                  : "ring-1 ring-[#5ca88d] hover:ring-2"
-              }`}
-            >
-              {/* Card Header */}
-              <div className={`flex flex-col items-center justify-center gap-2 text-white p-4 lg:p-5 ${
-                service.primary ? "bg-[#5ca88d]" : "bg-gradient-to-r from-[#d9f4cd] to-[#5ca88d]"
-              }`}>
-                {service.primary && (
-                  <span className="rounded-full bg-white/95 px-3 py-1 text-xs font-semibold uppercase tracking-wide text-[#5ca88d]">
-                    {t("appointments.recommended")}
-                  </span>
-                )}
-                <div className="flex items-center justify-center">
-                  <Icon size={32} className="mr-2 lg:h-10 lg:w-10" />
-                  <h3 className="text-lg font-bold lg:text-2xl">
-                    {t(`appointments.types.${service.key}.title`)}
-                  </h3>
-                </div>
-              </div>
-
-              {/* Card Body */}
-              <div className="flex-grow flex flex-col items-center justify-center bg-white text-gray-800 px-4 py-3 sm:px-6 sm:py-4 lg:px-8 lg:py-6 text-xs sm:text-sm md:text-base lg:text-lg text-justify">
-                {service.primary && (
-                  <p className="mb-3 rounded-full bg-[#d9f4cd] px-4 py-2 text-center text-sm font-semibold text-[#5ca88d] lg:text-base">
-                    {t("appointments.startHere")}
-                  </p>
-                )}
-                {(() => {
-  const desc = t(`appointments.types.${service.key}.description`, { returnObjects: true });
-
-  return Array.isArray(desc) ? (
-    <div className="space-y-3 text-center text-xs leading-relaxed sm:text-sm md:text-base lg:text-lg">
-      {desc.map((item, idx) => (
-        <p key={idx}>{item}</p>
-      ))}
-    </div>
-  ) : (
-    <p className="text-xs sm:text-sm md:text-base lg:text-lg text-center leading-relaxed">
-      {desc}
-    </p>
-  );
-})()}
-
-                <a
-                  href={service.calendlyUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  aria-disabled={bookingUrlMissing}
-                  onClick={(event) => {
-                    trackEvent("appointment_type_selected", { language: lang, appointmentType: service.key });
-                    if (bookingUrlMissing) {
-                      event.preventDefault();
-                    }
-                  }}
-                  className={`mt-4 rounded-full px-6 py-2 text-xs font-semibold transition lg:px-8 lg:py-3 lg:text-base ${
-                    bookingUrlMissing
-                      ? "cursor-not-allowed bg-gray-300 text-gray-600"
-                      : service.primary
-                        ? "bg-[#5ca88d] text-white hover:bg-[#4b957b]"
-                        : "bg-gradient-to-r from-[#d9f4cd] to-[#5ca88d] text-white hover:brightness-105"
-                  }`}
-                >
-                  {t(`appointments.types.${service.key}.cta`, { defaultValue: t("appointments.cta") })}
-                </a>
-                {bookingUrlMissing && (
-                  <p className="mt-2 text-center text-xs leading-relaxed text-gray-600">
-                    {t("appointments.missingFreeCallUrl")}
-                  </p>
-                )}
-              </div>
-            </div>
-          );
-        })}
-        <div className="w-full rounded-xl bg-white p-4 text-center shadow-lg ring-1 ring-[#d9f4cd] sm:p-5 lg:p-6">
-          <div className="mb-4">
-            <div>
-              <p className="text-xs font-semibold uppercase tracking-wide text-[#5ca88d]">
-                {t("appointments.packages.eyebrow")}
-              </p>
-              <h3 className="text-xl font-semibold text-[#294b43] lg:text-2xl">
-                {t("appointments.packages.heading")}
-              </h3>
-            </div>
-          </div>
-          <div className="grid items-stretch gap-3 sm:grid-cols-2">
-            {appointmentPackages[lang].map((pack) => {
-              const packageCopy = t(`appointments.packages.items.${pack.key}`, { returnObjects: true });
-              return (
-                <article key={pack.key} className="flex h-full flex-col gap-4 rounded-xl border border-[#d9f4cd] bg-[#f7fbf9] p-4 text-left transition hover:border-[#5ca88d] hover:bg-white">
-                  <div className="flex flex-1 items-start gap-3">
-                    <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-[#d9f4cd] text-[#5ca88d]">
-                      <CreditCard size={20} aria-hidden="true" />
-                    </span>
-                    <div className="flex min-h-0 flex-1 flex-col">
-                      <h4 className="text-base font-semibold text-[#294b43] lg:text-lg">{packageCopy.title}</h4>
-                      <p className="mt-1 text-sm leading-relaxed text-gray-700">{packageCopy.description}</p>
-                    </div>
-                  </div>
-                  <a
-                    href={pack.calendlyUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    onClick={() => trackEvent("appointment_package_selected", { language: lang, packageType: pack.key })}
-                    className="mt-auto inline-flex min-h-10 items-center justify-center rounded-full border border-[#5ca88d] bg-white px-5 py-2 text-sm font-semibold text-[#5ca88d] transition hover:bg-[#d9f4cd] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#5ca88d] focus-visible:ring-offset-2"
-                  >
-                    {t("appointments.packages.cta")}
-                  </a>
-                </article>
-              );
-            })}
-          </div>
-        </div>
-        <div className="w-full rounded-xl bg-white p-4 text-left shadow-lg ring-1 ring-[#5ca88d] sm:p-5 lg:p-6">
-          <p className="text-sm leading-relaxed text-gray-700 lg:text-base">
-            {t("appointments.mealPlanNote")}
-          </p>
-          <button
-            type="button"
-            aria-expanded={bookingPolicyOpen}
-            aria-controls="booking-policy-details"
-            onClick={() => setBookingPolicyOpen((open) => !open)}
-            className="mt-4 inline-flex w-full items-center justify-between gap-3 rounded-full border border-[#d9f4cd] px-4 py-2 text-left text-sm font-semibold text-[#294b43] transition hover:bg-[#f7fbf9] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#5ca88d]"
-          >
-            <span>{t("appointments.policyHeading")}</span>
-            {bookingPolicyOpen ? <ChevronUp size={18} aria-hidden="true" /> : <ChevronDown size={18} aria-hidden="true" />}
-          </button>
-          <AnimatePresence initial={false}>
-            {bookingPolicyOpen && (
-              <motion.div
-                id="booking-policy-details"
-                initial={{ height: 0, opacity: 0 }}
-                animate={{ height: "auto", opacity: 1 }}
-                exit={{ height: 0, opacity: 0 }}
-                transition={{ height: { duration: 0.22, ease: "easeOut" }, opacity: { duration: 0.16 } }}
-                className="overflow-hidden"
-              >
-                <ul className="mt-3 list-disc space-y-2 pl-5 text-sm leading-relaxed text-gray-700">
-                  {t("appointments.policy", { returnObjects: true }).map((item) => (
-                    <li key={item}>{item}</li>
-                  ))}
-                </ul>
-              </motion.div>
-            )}
-          </AnimatePresence>
-        </div>
-      </div>
-    </div>
-
-    <div className="order-2 w-full">
-      <div className="min-h-52 w-full rounded-xl bg-no-repeat bg-cover bg-center shadow-lg sm:min-h-72 lg:min-h-[32rem] xl:min-h-[38rem]" style={{ backgroundImage: "url('/banner1.png')" }}></div>
-      <div className="mt-20 hidden justify-center lg:flex xl:mt-24">
-        <img
-          src="/logo.png"
-          alt={t("logoAlt")}
-          className="h-48 w-auto object-contain xl:h-60"
-        />
-      </div>
-    </div>
   </div>
 </section>
 
@@ -2942,7 +2714,7 @@ export default function NutritionByIballa() {
 </section>
 
      {/* Contact */}
-<section id="contact" className="p-8 sm:p-12 lg:px-16 lg:py-20 xl:px-20 bg-gradient-to-r from-[#d9f4cd] to-[#5ca88d] text-white text-center">
+<section id="contact" className="bg-[#ffb3b3] p-8 text-center text-[#294b43] sm:p-12 lg:px-16 lg:py-20 xl:px-20">
   <h2 className="text-3xl font-semibold mb-4 lg:text-5xl">{t("contact.heading")}</h2>
 
   <p
@@ -2951,7 +2723,7 @@ export default function NutritionByIballa() {
   />
 
   {state.succeeded ? (
-    <p className="text-white text-lg">{t("contact.success")}</p>
+    <p className="text-lg text-[#294b43]">{t("contact.success")}</p>
   ) : (
     <form className="max-w-xl lg:max-w-3xl mx-auto w-full space-y-4 lg:space-y-5" onSubmit={handleSubmit}>
       {/* Name */}
@@ -2996,7 +2768,7 @@ export default function NutritionByIballa() {
         className="w-full resize-y rounded-md border border-gray-300 bg-white px-3 py-2 lg:px-5 lg:py-4 lg:text-lg text-gray-900 placeholder:text-gray-500 focus:outline-none focus:ring-2 focus:ring-white"
       />
 
-      <p className="text-sm lg:text-base text-white/80">{t("contact.fields.note")}</p>
+      <p className="text-sm text-[#294b43]/75 lg:text-base">{t("contact.fields.note")}</p>
 
       {/* Submit */}
       <div className="text-center pt-2">
@@ -3094,5 +2866,6 @@ export default function NutritionByIballa() {
     </div>
   );
 }
+
 
 
