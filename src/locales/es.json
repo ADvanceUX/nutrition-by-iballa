@@ -1,14 +1,24 @@
 {
   "nav": {
     "home": "Inicio",
-    "appointments": "Reservas",
+    "about": "Sobre mí",
+    "glp1": "Programa GLP-1",
+    "bookNow": "Reservar",
+    "blog": "Blogs",
     "contact": "Contacto"
   },
   "logoAlt": "Logotipo de Nutrición por Iballa",
   "hero": {
+    "eyebrow": "Evaluación nutricional",
     "title": "Nutrition by Iballa",
-    "subtitle": "Brindo asesoría nutricional personalizada y basada en la evidencia, disponible en español e inglés. Como dietista-nutricionista colegiada en CORU, mi misión es acompañarte en el cuidado de tu salud y bienestar con una atención profesional, cercana y comprensible. Te ayudo a gestionar condiciones médicas, a crear hábitos sostenibles y a sentirte mejor en tu día a día, siempre con un enfoque adaptado a tu estilo de vida y orientado a generar cambios positivos y duraderos en tu salud.",
-    "cta": "Llamada gratuita de descubrimiento de 15 minutos"
+    "subtitle": "Asesoramiento nutricional práctico y basado en la evidencia para control de peso, salud de la mujer y salud intestinal en español e inglés.",
+    "supporting": "Descubre qué áreas de tu alimentación necesitan mejorar haciendo el test de abajo.",
+    "assessmentCta": "Hacer el test",
+    "discoveryEyebrow": "Llamada gratuita",
+    "discoveryTitle": "¿No sabes por dónde empezar?",
+    "discoveryText": "Reserva una llamada gratuita de 15 minutos para hablar sobre tus objetivos y ver qué apoyo encaja mejor contigo.",
+    "cta": "Reservar llamada gratuita",
+    "discoverySupporting": "Un primer paso sencillo si quieres entender tus opciones antes de reservar una consulta."
   },
   "services": {
     "heading": "Servicios Especializados",
@@ -110,6 +120,23 @@
       }
     },
     "cta": "Reservar"
+  },
+  "testimonials": {
+    "heading": "Lo que dicen mis clientes",
+    "items": [
+      {
+        "title": "Su trabajo va mucho más allá de la nutrición",
+        "review": "Sinceramente, no podría estar más contenta con mi experiencia. Desde el primer día, me hizo sentir escuchada, comprendida y acompañada. Lo que más valoro es cómo se toma el tiempo para adaptar todo a mis necesidades individuales en lugar de utilizar un enfoque único para todo el mundo.\n\nSu trabajo va mucho más allá de la nutrición. Tiene un enfoque verdaderamente integral del bienestar, teniendo en cuenta no solo la alimentación, sino también el estilo de vida, los hábitos, el equilibrio y la salud en general. Eso ha marcado una gran diferencia para mí. Gracias, Iballa"
+      },
+      {
+        "title": "Una auténtica profesional",
+        "review": "Una auténtica profesional, me enseñó cómo mantener una alimentación equilibrada en el tiempo. Una auténtica profesional. Después de mi diagnóstico digestivo, me está ayudando a establecer pautas para mejorar sin restricciones drásticas, combinándolas con consejos nutricionales básicos. ¡Estoy encantada!"
+      },
+      {
+        "title": "Nutricionista profesional con amplia experiencia",
+        "review": "Me mostró los beneficios de cada alimento y cómo incorporarlos en cada comida para llevar una alimentación saludable.\n\nSin duda, una nutricionista profesional con amplia experiencia."
+      }
+    ]
   },
   "contact": {
     "heading": "Contacto",

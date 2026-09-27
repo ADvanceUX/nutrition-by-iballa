@@ -9,6 +9,14 @@
       "destination": "/"
     },
     {
+      "source": "/about",
+      "destination": "/"
+    },
+    {
+      "source": "/booking",
+      "destination": "/"
+    },
+    {
       "source": "/nutrition-assessment",
       "destination": "/"
     },
