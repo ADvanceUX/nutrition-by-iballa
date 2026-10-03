@@ -899,7 +899,7 @@ function ServicesPage({ title, serviceCopy, expandedServiceKey, setExpandedServi
                                 onClick={() => trackEvent("booking_cta_clicked", { language: lang, location: "service_page", service: service.key })}
                                 className="inline-flex min-h-11 items-center justify-center rounded-full bg-[#5ca88d] px-5 py-2 text-sm font-semibold text-white transition hover:opacity-90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#5ca88d] focus-visible:ring-offset-2"
                               >
-                                {serviceCopy.bookConsultation}
+                                {service.key === "glp1-support" ? "GLP-1 Programme" : serviceCopy.bookConsultation}
                               </a>
                             </div>
                           </div>
