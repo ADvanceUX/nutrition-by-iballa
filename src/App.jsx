@@ -804,6 +804,10 @@ function BeyondInjectionPromo() {
 }
 
 function ServicesPage({ title, serviceCopy, expandedServiceKey, setExpandedServiceKey, lang }) {
+  const getServiceBookingHref = (serviceKey) => (
+    serviceKey === "glp1-support" ? "/beyond-the-injection" : "/booking"
+  );
+
   return (
     <main className="bg-white text-[#294b43]">
       <section className="bg-[#d9f4cd] px-5 py-10 sm:px-8 sm:py-12 lg:px-16 lg:py-14 xl:px-20">
@@ -891,7 +895,7 @@ function ServicesPage({ title, serviceCopy, expandedServiceKey, setExpandedServi
                           <div className="mt-5 rounded-xl bg-[#d9f4cd] p-4 sm:p-5 xl:p-6">
                             <div className="flex flex-wrap gap-3">
                               <a
-                                href="/booking"
+                                href={getServiceBookingHref(service.key)}
                                 onClick={() => trackEvent("booking_cta_clicked", { language: lang, location: "service_page", service: service.key })}
                                 className="inline-flex min-h-11 items-center justify-center rounded-full bg-[#5ca88d] px-5 py-2 text-sm font-semibold text-white transition hover:opacity-90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#5ca88d] focus-visible:ring-offset-2"
                               >
@@ -1391,9 +1395,6 @@ function BookingPage() {
     <main className="bg-white text-[#294b43]">
       <section className="bg-[#d9f4cd] px-5 py-10 sm:px-8 sm:py-12 lg:px-16 lg:py-14 xl:px-20">
         <div className="mx-auto max-w-screen-xl text-center">
-          <p className="mb-3 text-sm font-semibold uppercase tracking-[0.18em] text-[#5ca88d]">
-            {t("nav.bookNow")}
-          </p>
           <h1 className="text-4xl font-semibold leading-tight sm:text-5xl lg:text-6xl">
             {t("appointments.heading")}
           </h1>
@@ -1451,23 +1452,25 @@ function BookingPage() {
                     key={service.key}
                     className="flex h-full flex-col rounded-2xl border border-[#d9f4cd] bg-white p-5 shadow-[0_10px_30px_rgba(41,75,67,0.08)] transition hover:border-[#5ca88d] sm:p-6"
                   >
-                    <div className="flex items-start gap-4">
+                    <div className="grid grid-cols-[3.75rem_1fr] items-start gap-4">
                       <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-[#d9f4cd] text-[#5ca88d]">
                         <Icon size={24} aria-hidden="true" />
                       </span>
-                      <div>
-                        {service.key === "review" && (
-                          <p className="mb-2 inline-flex rounded-full bg-[#ffb3b3] px-3 py-1 text-xs font-semibold text-[#294b43]">
-                            {t("appointments.existingClients")}
-                          </p>
-                        )}
+                      <div className="min-w-0">
                         <h3 className="text-xl font-semibold text-[#294b43]">{t(`appointments.types.${service.key}.title`)}</h3>
-                        <p className="mt-2 inline-flex rounded-full bg-[#d9f4cd] px-4 py-2 text-sm font-semibold text-[#294b43]">
-                          {service.duration}
-                        </p>
+                        <div className="mt-3 flex flex-wrap items-center gap-2">
+                          <p className="inline-flex rounded-full bg-[#d9f4cd] px-4 py-2 text-sm font-semibold text-[#294b43]">
+                            {service.duration}
+                          </p>
+                          {service.key === "review" && (
+                            <p className="inline-flex rounded-full bg-[#ffb3b3] px-3 py-2 text-xs font-semibold text-[#294b43]">
+                              {t("appointments.existingClients")}
+                            </p>
+                          )}
+                        </div>
                       </div>
                     </div>
-                    <div className="mt-5 flex flex-1 flex-col">
+                    <div className="mt-5 flex flex-1 flex-col justify-between">
                       {renderDescription(desc)}
                       <a
                         href={service.calendlyUrl}
