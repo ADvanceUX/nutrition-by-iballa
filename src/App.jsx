@@ -766,7 +766,6 @@ function BeyondInjectionPromo() {
     <section className="bg-[#d9f4cd] px-4 py-12 sm:px-8 sm:py-16 lg:px-16 lg:py-20 xl:px-20" aria-labelledby="beyond-home-heading">
       <div className="mx-auto grid max-w-screen-xl items-center gap-8 overflow-hidden rounded-2xl bg-white p-5 shadow-lg ring-1 ring-[#5ca88d] md:grid-cols-[minmax(0,1fr)_minmax(18rem,0.85fr)] sm:p-8 lg:gap-12 lg:p-10 xl:max-w-screen-2xl">
         <div>
-          <p className="mb-3 text-sm font-semibold uppercase tracking-wide text-[#5ca88d]">New programme</p>
           <h2 id="beyond-home-heading" className="text-3xl font-semibold leading-tight text-[#294b43] sm:text-4xl lg:text-5xl">
             Beyond the Injection
           </h2>
@@ -815,10 +814,11 @@ function ServicesPage({ title, serviceCopy, expandedServiceKey, setExpandedServi
           <h1 className="text-4xl font-semibold leading-tight sm:text-5xl lg:text-6xl">
             {title}
           </h1>
-          <p className="mx-auto mt-4 max-w-3xl text-base leading-relaxed text-[#294b43] sm:text-lg">
-            {serviceCopy.intro}
-          </p>
-          <div className="mx-auto mt-6 h-2 w-28 rounded-full bg-[#ffb3b3]" aria-hidden="true"></div>
+          {serviceCopy.intro && (
+            <p className="mx-auto mt-4 max-w-3xl text-base leading-relaxed text-[#294b43] sm:text-lg">
+              {serviceCopy.intro}
+            </p>
+          )}
         </div>
       </section>
 
@@ -857,7 +857,6 @@ function ServicesPage({ title, serviceCopy, expandedServiceKey, setExpandedServi
                       </span>
                       <span>
                         <span role="heading" aria-level="2" className="block text-[15px] font-semibold leading-snug text-[#294b43] sm:text-lg md:text-xl xl:text-2xl">{service.title}</span>
-                        <span className="mt-2 block text-xs leading-relaxed text-gray-700 sm:text-sm md:text-[15px] xl:text-lg">{service.summary}</span>
                       </span>
                     </span>
                   </button>
@@ -890,21 +889,13 @@ function ServicesPage({ title, serviceCopy, expandedServiceKey, setExpandedServi
                             </div>
                           </div>
                           <div className="mt-5 rounded-xl bg-[#d9f4cd] p-4 sm:p-5 xl:p-6">
-                            <h3 className="font-semibold text-[#294b43] xl:text-lg">{serviceCopy.headings.book}</h3>
-                            <p className="mt-1 text-sm leading-relaxed text-gray-700 xl:text-base">{serviceCopy.bookingText}</p>
-                            <div className="mt-4 flex flex-wrap gap-3">
+                            <div className="flex flex-wrap gap-3">
                               <a
                                 href="/booking"
                                 onClick={() => trackEvent("booking_cta_clicked", { language: lang, location: "service_page", service: service.key })}
                                 className="inline-flex min-h-11 items-center justify-center rounded-full bg-[#5ca88d] px-5 py-2 text-sm font-semibold text-white transition hover:opacity-90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#5ca88d] focus-visible:ring-offset-2"
                               >
                                 {serviceCopy.bookConsultation}
-                              </a>
-                              <a
-                                href="/#contact"
-                                className="inline-flex min-h-11 items-center justify-center rounded-full border-2 border-[#5ca88d] bg-white px-5 py-2 text-sm font-semibold text-[#5ca88d] transition hover:bg-[#d9f4cd] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#5ca88d] focus-visible:ring-offset-2"
-                              >
-                                {serviceCopy.contactMe}
                               </a>
                             </div>
                           </div>
@@ -929,19 +920,16 @@ function BeyondTheInjectionPage() {
         <div className="mx-auto grid max-w-screen-xl items-center gap-8 lg:grid-cols-[minmax(0,1.05fr)_minmax(20rem,0.95fr)] lg:gap-12 xl:max-w-screen-2xl">
           <div>
             <p className="mb-4 text-sm font-semibold uppercase tracking-wide text-white/90">Nutrition by Iballa</p>
-            <h1 className="text-4xl font-bold leading-tight sm:text-5xl lg:text-6xl">
+            <h1 className="text-4xl font-bold leading-tight sm:text-5xl lg:whitespace-nowrap lg:text-6xl">
               Beyond the Injection
             </h1>
-            <p className="mt-5 max-w-3xl text-lg leading-relaxed text-white/95 lg:text-xl">
-              A 12-week nutrition programme providing education, practical guidance and personalised dietetic support alongside GLP-1 treatment.
-            </p>
             <div className="mt-6 flex flex-wrap gap-3">
               <span className="rounded-full bg-white px-4 py-2 text-sm font-semibold text-[#5ca88d] shadow">12-week programme</span>
               <span className="rounded-full bg-white px-4 py-2 text-sm font-semibold text-[#5ca88d] shadow">€399</span>
             </div>
             <div className="mt-8">
               <BeyondInjectionCta location="hero" variant="light">
-                Join Beyond the Injection
+                Learn more about the programme
               </BeyondInjectionCta>
             </div>
           </div>
@@ -951,25 +939,6 @@ function BeyondTheInjectionPage() {
               alt="Beyond the Injection programme for GLP-1 nutrition support by registered dietitian Iballa"
               className="w-full rounded-lg object-cover shadow-md"
             />
-          </div>
-        </div>
-      </section>
-
-      <section className="bg-white px-4 py-12 sm:px-8 sm:py-16 lg:px-16 lg:py-20 xl:px-20">
-        <div className="mx-auto grid max-w-screen-xl gap-8 lg:grid-cols-[0.85fr_1.15fr] lg:gap-12 xl:max-w-screen-2xl">
-          <div>
-            <p className="mb-3 text-sm font-semibold uppercase tracking-wide text-[#5ca88d]">Who it's for</p>
-            <h2 className="text-3xl font-semibold leading-tight text-[#294b43] sm:text-4xl">
-              Nutrition support that works alongside medication
-            </h2>
-          </div>
-          <div className="space-y-4 text-base leading-relaxed text-gray-700 lg:text-lg">
-            <p>
-              GLP-1 medication, including Wegovy, Mounjaro and Ozempic, can be one part of a person's health journey. Beyond the Injection is designed to add the nutrition education, practical strategies and ongoing dietetic support that help participants feel more informed and supported day to day.
-            </p>
-            <p>
-              The programme is for people using GLP-1 medications who want a structured, evidence-led way to understand nutrition alongside treatment, protect consistency and receive individual guidance from Iballa, a registered dietitian.
-            </p>
           </div>
         </div>
       </section>
@@ -1032,9 +1001,9 @@ function BlogOverview() {
             {copy.latest}
           </h2>
 
-          <div className="grid gap-6 lg:grid-cols-[minmax(0,1.35fr)_minmax(24rem,0.9fr)] lg:items-stretch">
+          <div className="grid gap-6 lg:items-stretch">
             <div className="h-full">
-              <article className="h-full rounded-xl shadow-lg ring-2 ring-[#ffb3b3] overflow-hidden bg-white transition-all duration-200 hover:ring-[#5ca88d]">
+              <article className="h-full rounded-xl shadow-lg ring-1 ring-[#5ca88d] overflow-hidden bg-white transition-all duration-200 hover:ring-2">
                 <a
                   href={`/blog/${latestPost.slug}`}
                   className="grid h-full min-h-[26rem] group md:grid-cols-[minmax(18rem,0.95fr)_minmax(0,1.05fr)]"
@@ -1046,7 +1015,7 @@ function BlogOverview() {
                   />
                   <div className="flex flex-col justify-center p-6 sm:p-8">
                     <div className="flex flex-wrap items-center gap-3 text-sm text-gray-600 mb-4">
-                      <span className="inline-flex items-center rounded-full bg-[#ffb3b3] px-3 py-1 font-semibold text-[#294b43]">
+                      <span className="inline-flex items-center rounded-full bg-[#d9f4cd] px-3 py-1 font-semibold text-[#5ca88d]">
                         {latestPost.category}
                       </span>
                       <span>{formatPostDate(latestPost.date, i18n.language)}</span>
@@ -1065,15 +1034,11 @@ function BlogOverview() {
                       className="self-start inline-flex items-center gap-2 bg-[#5ca88d] text-white text-sm font-semibold px-6 py-2 rounded-full shadow transition group-hover:opacity-90"
                     >
                       {copy.readMore}
-                      <ArrowRight size={18} className="text-[#ffb3b3]" />
+                      <ArrowRight size={18} />
                     </span>
                   </div>
                 </a>
               </article>
-            </div>
-
-            <div className="h-full">
-              <NewsletterSignupForm compact />
             </div>
           </div>
         </div>
@@ -1086,12 +1051,12 @@ function BlogOverview() {
           </h2>
           <div className="space-y-5">
             {postsNewestFirst.map((post) => (
-              <article key={post.slug} className="rounded-xl shadow-lg ring-2 ring-[#ffb3b3] overflow-hidden bg-white transition-all duration-200 hover:ring-[#5ca88d]">
+              <article key={post.slug} className="rounded-xl shadow-lg ring-1 ring-[#5ca88d] overflow-hidden bg-white transition-all duration-200 hover:ring-2">
                 <a href={`/blog/${post.slug}`} className="grid sm:grid-cols-[12rem_1fr] group">
                   <img src={post.image} alt="" className="h-48 sm:h-full w-full object-cover object-center" />
                   <div className="p-5 sm:p-6">
                     <div className="flex flex-wrap items-center gap-3 text-sm text-gray-600 mb-4">
-                      <span className="inline-flex items-center rounded-full bg-[#ffb3b3] px-3 py-1 font-semibold text-[#294b43]">
+                      <span className="inline-flex items-center rounded-full bg-[#d9f4cd] px-3 py-1 font-semibold text-[#5ca88d]">
                         {post.category}
                       </span>
                       <span>{formatPostDate(post.date, i18n.language)}</span>
@@ -1311,7 +1276,8 @@ function BlogArticle({ post }) {
 }
 
 function AboutPage() {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
+  const lang = i18n.language.startsWith("es") ? "es" : "en";
   const testimonials = t("testimonials.items", { returnObjects: true });
 
   return (
@@ -1321,7 +1287,7 @@ function AboutPage() {
           <img
             src="/profile1.png"
             alt="Iballa Martinez"
-            className="h-56 rounded-full border-4 border-[#ffb3b3] object-cover shadow-lg md:h-80 lg:h-[28rem] xl:h-[32rem]"
+            className="h-56 rounded-full border-4 border-white object-cover shadow-lg md:h-80 lg:h-[28rem] xl:h-[32rem]"
           />
           <div className="text-left">
             <p className="mb-3 text-sm font-semibold uppercase tracking-[0.18em] text-white/90">
@@ -1333,7 +1299,17 @@ function AboutPage() {
               <p dangerouslySetInnerHTML={{ __html: t("about.paragraph2") }} />
               <p dangerouslySetInnerHTML={{ __html: t("about.paragraph3") }} />
               <p dangerouslySetInnerHTML={{ __html: t("about.paragraph4") }} />
+              <p dangerouslySetInnerHTML={{ __html: t("about.paragraph5") }} />
+              <p dangerouslySetInnerHTML={{ __html: t("about.paragraph6") }} />
             </div>
+            <a
+              href="/booking"
+              onClick={() => trackEvent("booking_cta_clicked", { language: lang, location: "about_page" })}
+              className="mt-7 inline-flex min-h-12 items-center justify-center gap-2 rounded-full bg-white px-7 py-3 text-sm font-semibold text-[#5ca88d] shadow transition hover:opacity-90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-[#5ca88d] sm:text-base"
+            >
+              {t("about.discoveryCta")}
+              <ArrowRight size={18} className="text-[#ffb3b3]" aria-hidden="true" />
+            </a>
           </div>
         </div>
       </section>
@@ -1421,9 +1397,6 @@ function BookingPage() {
           <h1 className="text-4xl font-semibold leading-tight sm:text-5xl lg:text-6xl">
             {t("appointments.heading")}
           </h1>
-          <p className="mx-auto mt-4 max-w-3xl text-base leading-relaxed sm:text-lg">
-            {t("appointments.mealPlanNote")}
-          </p>
           <div className="mx-auto mt-6 h-2 w-28 rounded-full bg-[#ffb3b3]" aria-hidden="true"></div>
         </div>
       </section>
@@ -1527,17 +1500,7 @@ function BookingPage() {
                       </span>
                       <div>
                         <h3 className="text-xl font-semibold text-[#294b43]">{copy.title}</h3>
-                        <p className="mt-2 text-sm leading-relaxed text-gray-700">{copy.description}</p>
                       </div>
-                    </div>
-                    <div className="mt-5 rounded-xl bg-[#d9f4cd] p-4">
-                      <p className="text-3xl font-semibold text-[#294b43]">{copy.price}</p>
-                      <p className="mt-2 text-sm text-gray-700">
-                        {t("appointments.packages.individualCost")}: <span className="font-semibold">{copy.individualCost}</span>
-                      </p>
-                      <p className="mt-2 inline-flex rounded-full bg-[#ffb3b3] px-3 py-1 text-sm font-semibold text-[#294b43]">
-                        {t("appointments.packages.save")} {copy.saving}
-                      </p>
                     </div>
                     {Array.isArray(copy.includes) && (
                       <ul className="mt-5 space-y-2 text-sm leading-relaxed text-gray-700">
@@ -1549,12 +1512,21 @@ function BookingPage() {
                         ))}
                       </ul>
                     )}
+                    <div className="mt-5 rounded-xl bg-[#d9f4cd] p-4">
+                      <p className="text-3xl font-semibold text-[#294b43]">{copy.price}</p>
+                      <p className="mt-2 text-sm text-gray-700">
+                        {t("appointments.packages.individualCost")}: <span className="font-semibold">{copy.individualCost}</span>
+                      </p>
+                      <p className="mt-2 inline-flex rounded-full bg-[#ffb3b3] px-3 py-1 text-sm font-semibold text-[#294b43]">
+                        {t("appointments.packages.save")} {copy.saving}
+                      </p>
+                    </div>
                     <a
                       href={pack.calendlyUrl}
                       target="_blank"
                       rel="noopener noreferrer"
                       onClick={() => trackEvent("appointment_package_selected", { language: lang, packageType: pack.key, location: "booking_page" })}
-                      className="mt-auto inline-flex min-h-11 items-center justify-center rounded-full border border-[#5ca88d] bg-white px-5 py-2 text-sm font-semibold text-[#294b43] transition hover:bg-[#d9f4cd] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#5ca88d] focus-visible:ring-offset-2"
+                      className="mt-auto inline-flex min-h-11 items-center justify-center rounded-full bg-[#5ca88d] px-5 py-2 text-sm font-semibold text-white transition hover:opacity-90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#5ca88d] focus-visible:ring-offset-2"
                     >
                       {t("appointments.packages.cta")}
                     </a>
@@ -1565,15 +1537,12 @@ function BookingPage() {
           </section>
 
           <section className="rounded-2xl bg-[#d9f4cd] p-5 shadow-sm ring-1 ring-[#d9f4cd] sm:p-6">
-            <p className="text-sm leading-relaxed text-gray-700 sm:text-base">
-              {t("appointments.mealPlanNote")}
-            </p>
             <button
               type="button"
               aria-expanded={bookingPolicyOpen}
               aria-controls="booking-policy-details"
               onClick={() => setBookingPolicyOpen((open) => !open)}
-              className="mt-4 inline-flex w-full items-center justify-between gap-3 rounded-full border border-[#5ca88d] bg-white px-4 py-2 text-left text-sm font-semibold text-[#294b43] transition hover:bg-[#d9f4cd] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#5ca88d]"
+              className="inline-flex w-full items-center justify-between gap-3 rounded-full border border-[#5ca88d] bg-white px-4 py-2 text-left text-sm font-semibold text-[#294b43] transition hover:bg-[#d9f4cd] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#5ca88d]"
             >
               <span>{t("appointments.policyHeading")}</span>
               {bookingPolicyOpen ? <ChevronUp size={18} aria-hidden="true" /> : <ChevronDown size={18} aria-hidden="true" />}
@@ -2710,16 +2679,13 @@ export default function NutritionByIballa() {
 ) : (
 <>
 {/* Hero Section */}
-<section className="bg-[#d9f4cd] text-[#294b43]">
+<section className="bg-white text-[#294b43]">
   <div className="mx-auto grid min-h-[calc(100vh-6rem)] w-full max-w-screen-2xl items-center gap-8 px-5 pb-0 pt-8 sm:px-8 md:grid-cols-[minmax(0,0.95fr)_minmax(18rem,1.05fr)] md:px-12 lg:min-h-[42rem] lg:px-16 xl:px-20">
     <div className="z-10 max-w-3xl text-left md:justify-self-center">
-      <p className="mb-4 text-sm font-semibold uppercase tracking-[0.18em] text-[#5ca88d]">
-        {t("hero.eyebrow")}
-      </p>
-      <h1 className="max-w-4xl text-3xl font-semibold leading-[1.08] text-[#294b43] sm:text-4xl lg:text-5xl xl:text-[3.35rem]">
+      <h1 className="max-w-5xl text-4xl font-semibold leading-[1.05] text-[#294b43] sm:text-5xl lg:text-6xl xl:text-[4rem]">
         {t("hero.subtitle")}
       </h1>
-      <p className="mt-6 max-w-2xl text-base leading-relaxed text-[#0f2f2b] sm:text-lg lg:text-xl">
+      <p className="mt-6 max-w-4xl text-base leading-relaxed text-[#0f2f2b] sm:text-lg lg:text-xl xl:whitespace-nowrap">
         {t("hero.supporting")}
       </p>
       <a
@@ -2742,7 +2708,7 @@ export default function NutritionByIballa() {
   </div>
 </section>
 
-<section className="bg-white px-5 py-10 text-[#294b43] sm:px-8 sm:py-12 lg:px-16 lg:py-14 xl:px-20">
+<section className="bg-[#d9f4cd] px-5 py-10 text-[#294b43] sm:px-8 sm:py-12 lg:px-16 lg:py-14 xl:px-20">
   <div className="mx-auto grid max-w-screen-2xl items-center gap-8 md:grid-cols-[minmax(0,0.95fr)_minmax(18rem,1.05fr)]">
     <div>
       <p className="mb-4 text-sm font-semibold uppercase tracking-[0.18em] text-[#5ca88d]">
@@ -2754,17 +2720,11 @@ export default function NutritionByIballa() {
       <p className="mt-6 max-w-2xl text-base leading-relaxed text-[#0f2f2b] sm:text-lg lg:text-xl">
         {t("hero.discoveryText")}
       </p>
-      <p className="mt-3 max-w-2xl text-sm leading-relaxed text-[#0f2f2b] sm:text-base">
-        {t("hero.discoverySupporting")}
-      </p>
-      <a
-        href="/booking"
-        onClick={() => trackEvent("booking_cta_clicked", { language: lang, location: "hero_discovery" })}
-        className="mt-8 inline-flex min-h-12 items-center justify-center gap-2 rounded-full bg-[#5ca88d] px-7 py-3 text-sm font-semibold text-white shadow-lg shadow-[#294b43]/15 transition hover:opacity-90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#5ca88d] focus-visible:ring-offset-2 sm:text-base"
-      >
-        <Calendar size={18} aria-hidden="true" />
-        {t("hero.cta")}
-      </a>
+      {t("hero.discoverySupporting") && (
+        <p className="mt-3 max-w-2xl text-sm leading-relaxed text-[#0f2f2b] sm:text-base">
+          {t("hero.discoverySupporting")}
+        </p>
+      )}
     </div>
     <div className="rounded-xl bg-white p-6 shadow-lg ring-1 ring-[#5ca88d]/30 sm:p-8">
       <p className="text-sm font-semibold uppercase tracking-[0.16em] text-[#5ca88d]">{lang === "es" ? "15 minutos" : "15 minutes"}</p>
@@ -2775,6 +2735,14 @@ export default function NutritionByIballa() {
           : t("appointments.types.freeCall.description")}
       </p>
       <div className="mt-6 h-2 rounded-full bg-[#ffb3b3]" aria-hidden="true"></div>
+      <a
+        href="/booking"
+        onClick={() => trackEvent("booking_cta_clicked", { language: lang, location: "hero_discovery_card" })}
+        className="mt-6 inline-flex min-h-12 items-center justify-center gap-2 rounded-full bg-[#5ca88d] px-6 py-3 text-sm font-semibold text-white shadow transition hover:opacity-90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#5ca88d] focus-visible:ring-offset-2"
+      >
+        <Calendar size={18} aria-hidden="true" />
+        {t("hero.cta")}
+      </a>
     </div>
   </div>
 </section>

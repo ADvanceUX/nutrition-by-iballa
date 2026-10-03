@@ -10,16 +10,15 @@
   },
   "logoAlt": "Nutrition by Iballa Logo",
   "hero": {
-    "eyebrow": "Nutrition Assessment",
     "title": "Nutrition by Iballa",
     "subtitle": "Practical evidence-based nutrition advice for weight management, women’s health and gut health in Spanish and English.",
     "supporting": "Find out what areas of your diet need improvement by taking the test below.",
-    "assessmentCta": "Take the test",
+    "assessmentCta": "Take Nutrition Assessment",
     "discoveryEyebrow": "Free discovery call",
-    "discoveryTitle": "Not sure where to start?",
-    "discoveryText": "Book a free 15-minute discovery call to talk through your goals and see which support is the best fit.",
+    "discoveryTitle": "Curious if we are a good fit?",
+    "discoveryText": "Book a free, no-pressure discovery call where we'll chat about your health goals, current challenges, and what working together could look like.",
     "cta": "Book a free 15-minute call",
-    "discoverySupporting": "A simple first step if you want to understand your options before booking a consultation."
+    "discoverySupporting": ""
   },
   "services": {
     "heading": "Specialist Services",
@@ -69,10 +68,13 @@
   },
   "about": {
     "heading": "About me",
-    "paragraph1": "Hi, I am Iballa, a Registered Dietitian and proud member of the Irish Nutrition and Dietetics Institute and CORU.",
-    "paragraph2": "I hold a BSc in Biomedical Science from the Technological University of Dublin and an MSc in Human Nutrition and Dietetics from the University of Limerick. Over the past several years, I have gained extensive clinical experience in both Ireland and Australia, working across a wide range of specialties with inpatients and outpatients. This diverse background has allowed me to strengthen my skills and broaden my expertise in supporting people with different nutritional needs.",
-"paragraph3": "I am deeply passionate about the role of nutrition in health and wellbeing. My approach focuses on educating and empowering individuals to make informed, sustainable choices that truly benefit their health.",
-"paragraph4": "I don’t believe in strict meal plans or quick fixes like “magic shakes.” Instead, my goal is to equip my clients with the knowledge and confidence to become the experts in their own health—helping them take control, feel empowered, and live their best lives."
+    "paragraph1": "Iballa | Registered Dietitian, BSc (Hons) Biomedical Science, MSc Human Nutrition and Dietetics",
+    "paragraph2": "I am a CORU-registered dietitian with extensive experience in weight management, women's health and gut health. I hold a BSc in Biomedical Science, specialising in Clinical Biochemistry and Medical Microbiology, and an MSc in Human Nutrition and Dietetics, with additional specialist training in IBS management and women's health.",
+    "paragraph3": "I am a proud member of the Irish Nutrition and Dietetic Institute (INDI), where I am part of the Women's Health Interest Group. I worked as a clinical dietitian in the health services in Ireland and Australia before founding Nutrition By Iballa in early 2026.",
+    "paragraph4": "My own experience with PMOS, gut health and weight management has given me a personal understanding of how frustrating and overwhelming these issues can feel. It shapes the empathy and practical insight I bring to my work.",
+    "paragraph5": "My aim is to give you the tools and guidance you need as you begin your health journey, always grounding my advice in scientific evidence and solutions that work long term. I don't believe in quick fixes. Instead, I want to help you build lifelong habits that fit your lifestyle. Every consultation is a safe, judgement-free space where we can work together at your own pace.",
+    "paragraph6": "If you want to chat further, book your discovery call below.",
+    "discoveryCta": "Book a discovery call"
   },
   "appointments": {
     "heading": "Bookings",
@@ -82,10 +84,10 @@
     "missingFreeCallUrl": "This free-call booking link will be available once the Calendly URL has been added.",
     "policyHeading": "Cancellation and late arrival policy",
     "policy": [
-      "Appointments can be cancelled or rescheduled free of charge with at least 24 hours' notice.",
-      "Cancellations within 24 hours of the appointment time, or missed appointments, will be charged in full.",
-      "If you are running more than 10 minutes late, we may need to mark the appointment as a no-show. This is simply to make sure we have enough time together to give you the full attention and support you deserve, and to provide you with the best possible service.",
-      "We really appreciate your understanding, as it helps us keep availability open for other clients."
+      "Cancellations and rescheduling: Appointments can be cancelled or rescheduled free of charge with at least 24 hours' notice. Cancellations made within 24 hours of the appointment time, and missed appointments, may be charged in full or counted as a used appointment. This helps us keep availability open for other clients.",
+      "Late arrivals: If you are running more than 10 minutes late, we may need to mark the appointment as a no-show and reschedule. This ensures we have enough time together to give you the full attention and support you deserve.",
+      "Bundles: Consultations purchased as a bundle must be used within the following timeframes: Bundle of 4 consultations within 6 months of the date of the initial appointment; Bundle of 6 consultations within 12 months of the date of the initial appointment.",
+      "Fees are non-refundable once the first consultation has taken place. After you have attended your first session, no refund will be given for any unused consultations remaining in the bundle."
     ],
     "types": {
       "freeCall": {
@@ -98,17 +100,17 @@
       },
       "initial": {
         "title": "Initial Consultation",
-        "description": "55 minutes — In your first appointment, we’ll review your health history, current medications, previous test results, and eating habits. This will help me understand your situation in a comprehensive way and create a nutrition plan tailored to your needs and goals."
+        "description": "In your first appointment, we’ll review your health history, current medications, previous test results, and eating habits. This will help me understand your situation in a comprehensive way and create a nutrition plan tailored to your needs and goals."
       },
       "review": {
         "title": "Review Appointment",
-        "description": "30 minutes — In the follow-up appointments, we’ll assess your progress and look for solutions to any challenges that may arise along the way."
+        "description": "In the follow-up appointments, we’ll assess your progress and look for solutions to any challenges that may arise along the way."
       }
     },
     "packages": {
       "eyebrow": "Secondary booking options",
       "heading": "Consultation Packages",
-      "cta": "Book Package",
+      "cta": "Book Now",
       "individualCost": "Individual cost",
       "save": "Save",
       "items": {
@@ -145,12 +147,12 @@
     "aboutHeading": "What My Clients Say About Me",
     "items": [
       {
-        "title": "Her work goes far beyond nutrition alone",
+        "title": "She made me feel heard, understood, and supported",
         "review": "I honestly couldn't be happier with my experience. From day one, she made me feel heard, understood, and supported. What I appreciate most is how she takes the time to adapt everything to my individual needs rather than using a one-size-fits-all approach.\n\nHer work goes far beyond nutrition alone. She takes a truly holistic approach to wellbeing, considering not just food, but also lifestyle, habits, balance, and overall health. That has made a huge difference for me. Thanks Iballa"
       },
       {
-        "title": "A true professional",
-        "review": "A true professional, she taught me how to maintain a balanced diet over time. A true professional. After my digestive diagnosis, she's helping me establish guidelines to improve without drastic restrictions, combining them with basic nutritional advice. I'm delighted!"
+        "title": "I’m delighted!",
+        "review": "A true professional, she taught me how to maintain a balanced diet over time. After my digestive diagnosis, she's helping me establish guidelines to improve without drastic restrictions, combining them with basic nutritional advice. I'm delighted!"
       },
       {
         "title": "Professional nutritionist with extensive experience",
