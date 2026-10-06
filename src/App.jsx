@@ -118,6 +118,16 @@ function upsertMeta(name, content) {
   tag.setAttribute("content", content);
 }
 
+function upsertPropertyMeta(property, content) {
+  let tag = document.querySelector(`meta[property="${property}"]`);
+  if (!tag) {
+    tag = document.createElement("meta");
+    tag.setAttribute("property", property);
+    document.head.appendChild(tag);
+  }
+  tag.setAttribute("content", content);
+}
+
 function upsertCanonical(pathname) {
   let tag = document.querySelector('link[rel="canonical"]');
   if (!tag) {
@@ -172,8 +182,8 @@ function NewsletterConsentChoice({ value, onChange, copy, name }) {
             key={String(choice.value)}
             className={`flex cursor-pointer items-start gap-3 rounded-xl border p-4 text-sm leading-relaxed transition ${
               selected
-                ? "border-[#3b5f58] bg-[#cde4dc] text-[#294b43] shadow"
-                : "border-gray-200 bg-gray-50 text-gray-700 hover:border-[#7fae9e]"
+                ? "border-[#5ca88d] bg-[#d9f4cd] text-[#294b43] shadow"
+                : "border-gray-200 bg-gray-50 text-gray-700 hover:border-[#5ca88d]"
             }`}
           >
             <input
@@ -185,7 +195,7 @@ function NewsletterConsentChoice({ value, onChange, copy, name }) {
             />
             <span
               className={`mt-1 flex h-5 w-5 shrink-0 items-center justify-center rounded border ${
-                selected ? "border-[#3b5f58] bg-[#3b5f58] text-white" : "border-[#7fae9e] bg-white"
+                selected ? "border-[#5ca88d] bg-[#5ca88d] text-white" : "border-[#5ca88d] bg-white"
               }`}
               aria-hidden="true"
             >
@@ -242,8 +252,8 @@ function NewsletterSignupForm({ compact = false, requireConsent = true, source =
   };
 
   return (
-    <div className={`rounded-xl shadow-lg ring-1 ring-[#7fae9e] bg-white overflow-hidden ${compact ? "lg:h-full lg:flex lg:flex-col" : ""}`}>
-      <div className={`bg-gradient-to-r from-[#a3c9b9] to-[#7fae9e] px-5 text-white ${compact ? "py-5" : "py-6 sm:px-8"}`}>
+    <div className={`rounded-xl shadow-lg ring-1 ring-[#5ca88d] bg-white overflow-hidden ${compact ? "lg:h-full lg:flex lg:flex-col" : ""}`}>
+      <div className={`bg-gradient-to-r from-[#d9f4cd] to-[#5ca88d] px-5 text-white ${compact ? "py-5" : "py-6 sm:px-8"}`}>
         <h2 id="newsletter-signup-heading" className={`${compact ? "text-xl leading-tight sm:text-2xl lg:text-[1.65rem]" : "text-2xl sm:text-3xl"} font-semibold`}>
           {copy.heading}
         </h2>
@@ -260,7 +270,7 @@ function NewsletterSignupForm({ compact = false, requireConsent = true, source =
               value={form.firstName}
               onChange={(event) => updateField("firstName", event.target.value)}
               autoComplete="given-name"
-              className="w-full h-10 rounded-md border border-gray-300 bg-white px-3 text-gray-900 placeholder:text-gray-500 focus:outline-none focus:ring-2 focus:ring-[#cde4dc]"
+              className="w-full h-10 rounded-md border border-gray-300 bg-white px-3 text-gray-900 placeholder:text-gray-500 focus:outline-none focus:ring-2 focus:ring-[#d9f4cd]"
               required
             />
           </label>
@@ -271,7 +281,7 @@ function NewsletterSignupForm({ compact = false, requireConsent = true, source =
               value={form.lastName}
               onChange={(event) => updateField("lastName", event.target.value)}
               autoComplete="family-name"
-              className="w-full h-10 rounded-md border border-gray-300 bg-white px-3 text-gray-900 placeholder:text-gray-500 focus:outline-none focus:ring-2 focus:ring-[#cde4dc]"
+              className="w-full h-10 rounded-md border border-gray-300 bg-white px-3 text-gray-900 placeholder:text-gray-500 focus:outline-none focus:ring-2 focus:ring-[#d9f4cd]"
               required
             />
           </label>
@@ -284,7 +294,7 @@ function NewsletterSignupForm({ compact = false, requireConsent = true, source =
               value={form.email}
               onChange={(event) => updateField("email", event.target.value)}
               autoComplete="email"
-              className="w-full h-10 rounded-md border border-gray-300 bg-white px-3 text-gray-900 placeholder:text-gray-500 focus:outline-none focus:ring-2 focus:ring-[#cde4dc]"
+              className="w-full h-10 rounded-md border border-gray-300 bg-white px-3 text-gray-900 placeholder:text-gray-500 focus:outline-none focus:ring-2 focus:ring-[#d9f4cd]"
               required
             />
           </label>
@@ -298,14 +308,14 @@ function NewsletterSignupForm({ compact = false, requireConsent = true, source =
           />
         )}
         {status.message && (
-          <p className={`text-sm font-semibold ${status.type === "success" ? "text-[#3b5f58]" : "text-red-600"}`}>
+          <p className={`text-sm font-semibold ${status.type === "success" ? "text-[#5ca88d]" : "text-red-600"}`}>
             {status.message}
           </p>
         )}
         <button
           type="submit"
           disabled={submitting}
-          className="inline-flex items-center justify-center gap-2 rounded-full bg-gradient-to-r from-[#a3c9b9] to-[#7fae9e] px-6 py-2 text-sm font-semibold text-white shadow transition hover:brightness-105 disabled:cursor-not-allowed disabled:opacity-50"
+          className="inline-flex items-center justify-center gap-2 rounded-full bg-gradient-to-r from-[#d9f4cd] to-[#5ca88d] px-6 py-2 text-sm font-semibold text-white shadow transition hover:brightness-105 disabled:cursor-not-allowed disabled:opacity-50"
         >
           {submitting ? copy.saving : copy.subscribe}
           <Mail size={18} />
@@ -349,7 +359,7 @@ function FooterNewsletterSignup() {
   };
 
   return (
-    <section className="border-b border-[#e2eee9] bg-white px-4 py-6 sm:px-8 lg:px-12 xl:py-8" aria-labelledby="footer-newsletter-heading">
+    <section className="border-b border-[#d9f4cd] bg-white px-4 py-6 sm:px-8 lg:px-12 xl:py-8" aria-labelledby="footer-newsletter-heading">
       <div className="mx-auto flex max-w-screen-xl flex-col gap-4 lg:flex-row lg:items-center lg:justify-between xl:max-w-screen-2xl">
         <div className="max-w-2xl">
           <h2 id="footer-newsletter-heading" className="text-xl font-semibold text-[#294b43] lg:text-2xl">
@@ -370,13 +380,13 @@ function FooterNewsletterSignup() {
               autoComplete="email"
               placeholder={copy.emailAddress}
               aria-describedby={status.message ? "footer-newsletter-status" : undefined}
-              className="h-11 min-w-0 flex-1 rounded-full border border-[#b7d5c9] bg-white px-4 text-gray-900 placeholder:text-gray-500 focus:border-[#477b6c] focus:outline-none focus:ring-2 focus:ring-[#a3c9b9] lg:h-12 lg:px-5 lg:text-base"
+              className="h-11 min-w-0 flex-1 rounded-full border border-[#d9f4cd] bg-white px-4 text-gray-900 placeholder:text-gray-500 focus:border-[#5ca88d] focus:outline-none focus:ring-2 focus:ring-[#d9f4cd] lg:h-12 lg:px-5 lg:text-base"
               required
             />
             <button
               type="submit"
               disabled={submitting}
-              className="inline-flex h-11 shrink-0 items-center justify-center rounded-full bg-[#477b6c] px-6 text-sm font-semibold text-white transition hover:bg-[#365f54] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#315f55] focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-60 lg:h-12 lg:px-8 lg:text-base"
+              className="inline-flex h-11 shrink-0 items-center justify-center rounded-full bg-[#5ca88d] px-6 text-sm font-semibold text-white transition hover:opacity-90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#5ca88d] focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-60 lg:h-12 lg:px-8 lg:text-base"
             >
               {submitting ? copy.subscribing : copy.subscribe}
             </button>
@@ -386,7 +396,7 @@ function FooterNewsletterSignup() {
               id="footer-newsletter-status"
               role="status"
               className={`mt-2 text-sm font-semibold ${
-                status.type === "success" ? "text-[#315f55]" : "text-red-700"
+                status.type === "success" ? "text-[#5ca88d]" : "text-red-700"
               }`}
             >
               {status.message}
@@ -552,7 +562,7 @@ function PrivacyPolicyPage() {
 
   return (
     <main className="bg-gray-50 text-gray-900">
-      <section className="pt-10 pb-10 text-center bg-gradient-to-r from-[#a3c9b9] to-[#7fae9e] text-white">
+      <section className="pt-10 pb-10 text-center bg-gradient-to-r from-[#d9f4cd] to-[#5ca88d] text-white">
         <div className="max-w-5xl mx-auto px-6">
           <p className="text-sm font-semibold uppercase tracking-wide mb-3">Nutrition by Iballa</p>
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-5 leading-tight">
@@ -566,7 +576,7 @@ function PrivacyPolicyPage() {
 
       <section className="py-10 sm:py-14">
         <div className="mx-auto max-w-4xl px-4 sm:px-6 md:px-12">
-          <article className="rounded-xl bg-white p-5 shadow-lg ring-1 ring-[#7fae9e] sm:p-8">
+          <article className="rounded-xl bg-white p-5 shadow-lg ring-1 ring-[#5ca88d] sm:p-8">
             <p className="text-base leading-relaxed text-gray-700">
               {intro}
             </p>
@@ -660,7 +670,7 @@ function CookiePolicyPage() {
 
   return (
     <main className="bg-gray-50 text-gray-900">
-      <section className="pt-10 pb-10 text-center bg-gradient-to-r from-[#a3c9b9] to-[#7fae9e] text-white">
+      <section className="pt-10 pb-10 text-center bg-gradient-to-r from-[#d9f4cd] to-[#5ca88d] text-white">
         <div className="max-w-5xl mx-auto px-6">
           <p className="text-sm font-semibold uppercase tracking-wide mb-3">Nutrition by Iballa</p>
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-5 leading-tight">
@@ -674,7 +684,7 @@ function CookiePolicyPage() {
 
       <section className="py-10 sm:py-14">
         <div className="mx-auto max-w-4xl px-4 sm:px-6 md:px-12">
-          <article className="rounded-xl bg-white p-5 shadow-lg ring-1 ring-[#7fae9e] sm:p-8">
+          <article className="rounded-xl bg-white p-5 shadow-lg ring-1 ring-[#5ca88d] sm:p-8">
             <p className="text-base leading-relaxed text-gray-700">
               {intro}
             </p>
@@ -699,6 +709,274 @@ function CookiePolicyPage() {
   );
 }
 
+const beyondInjectionUrl = "https://iballa-s-site.thinkific.com/products/courses/Beyondtheinjection";
+const beyondInjectionImage = "/BTIImage.png";
+
+const beyondInclusions = [
+  {
+    title: "12 Recorded Nutrition Webinars",
+    text: "Structured nutrition education that participants can work through during the programme.",
+    icon: ClipboardList
+  },
+  {
+    title: "4 Private Consultations",
+    text: "Individual one-to-one dietetic support with Iballa at key points in the 12 weeks.",
+    icon: User
+  },
+  {
+    title: "3 Live Q&A Sessions",
+    text: "Opportunities to ask questions and receive additional guidance as you put the learning into practice.",
+    icon: Mail
+  },
+  {
+    title: "Bonus Webinars",
+    text: "Additional educational content to deepen your understanding of nutrition alongside GLP-1 treatment.",
+    icon: CheckCircle2
+  },
+  {
+    title: "Community Access",
+    text: "Ongoing support throughout the programme so you are not working through the process alone.",
+    icon: HeartPulse
+  }
+];
+
+function BeyondInjectionCta({ location, children, variant = "primary", className = "" }) {
+  const { i18n } = useTranslation();
+  const lang = i18n.language.startsWith("es") ? "es" : "en";
+  const toneClass = variant === "light"
+    ? "bg-white text-[#5ca88d] hover:bg-gray-100"
+    : "bg-[#5ca88d] text-white hover:opacity-90";
+
+  return (
+    <a
+      href={beyondInjectionUrl}
+      target="_blank"
+      rel="noopener noreferrer"
+      onClick={() => trackEvent("beyond_injection_cta_clicked", { language: lang, location })}
+      className={`inline-flex min-h-11 items-center justify-center gap-2 rounded-full px-6 py-2 text-sm font-semibold shadow transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#5ca88d] focus-visible:ring-offset-2 lg:px-8 lg:py-3 lg:text-base ${toneClass} ${className}`}
+    >
+      {children}
+      <ArrowRight size={18} className="text-[#ffb3b3]" aria-hidden="true" />
+    </a>
+  );
+}
+
+function BeyondInjectionPromo() {
+  return (
+    <section className="bg-[#d9f4cd] px-4 py-12 sm:px-8 sm:py-16 lg:px-16 lg:py-20 xl:px-20" aria-labelledby="beyond-home-heading">
+      <div className="mx-auto grid max-w-screen-xl items-center gap-8 overflow-hidden rounded-2xl bg-white p-5 shadow-lg ring-1 ring-[#5ca88d] md:grid-cols-[minmax(0,1fr)_minmax(18rem,0.85fr)] sm:p-8 lg:gap-12 lg:p-10 xl:max-w-screen-2xl">
+        <div>
+          <h2 id="beyond-home-heading" className="text-3xl font-semibold leading-tight text-[#294b43] sm:text-4xl lg:text-5xl">
+            Beyond the Injection
+          </h2>
+          <p className="mt-3 text-lg font-semibold text-[#5ca88d]">12-week GLP-1 nutrition programme</p>
+          <p className="mt-4 max-w-3xl text-base leading-relaxed text-gray-700 lg:text-lg">
+            A structured programme with nutrition education, personalised dietetic support and practical guidance for people using GLP-1 medication.
+          </p>
+          <div className="mt-5 flex flex-wrap gap-2">
+            {["12 webinars", "4 consultations", "3 live Q&As", "Community access"].map((item) => (
+              <span key={item} className="rounded-full bg-white px-4 py-2 text-sm font-semibold text-[#5ca88d] ring-1 ring-[#d9f4cd]">
+                {item}
+              </span>
+            ))}
+          </div>
+          <div className="mt-6 flex flex-col gap-4 sm:flex-row sm:items-center">
+            <p className="text-2xl font-bold text-[#294b43]">€399</p>
+            <a
+              href="/beyond-the-injection"
+              className="inline-flex min-h-11 items-center justify-center gap-2 rounded-full bg-[#5ca88d] px-6 py-2 text-sm font-semibold text-white shadow transition hover:opacity-90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#5ca88d] focus-visible:ring-offset-2 lg:px-8 lg:py-3 lg:text-base"
+            >
+              Discover the Programme
+              <ArrowRight size={18} className="text-[#ffb3b3]" aria-hidden="true" />
+            </a>
+          </div>
+        </div>
+        <div className="flex min-h-64 items-center justify-center rounded-xl bg-[#d9f4cd] p-3 shadow-md">
+          <img
+            src={beyondInjectionImage}
+            alt="Beyond the Injection 12-week programme by Iballa, registered dietitian"
+            className="max-h-[28rem] w-full rounded-lg object-contain"
+          />
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function ServicesPage({ title, serviceCopy, expandedServiceKey, setExpandedServiceKey, lang }) {
+  const getServiceBookingHref = (serviceKey) => (
+    serviceKey === "glp1-support" ? "/beyond-the-injection" : "/booking"
+  );
+
+  return (
+    <main className="bg-white text-[#294b43]">
+      <section className="bg-[#d9f4cd] px-5 py-10 sm:px-8 sm:py-12 lg:px-16 lg:py-14 xl:px-20">
+        <div className="mx-auto max-w-screen-xl text-center">
+          <p className="mb-3 text-sm font-semibold uppercase tracking-[0.18em] text-[#5ca88d]">
+            Nutrition by Iballa
+          </p>
+          <h1 className="text-4xl font-semibold leading-tight sm:text-5xl lg:text-6xl">
+            {title}
+          </h1>
+          {serviceCopy.intro && (
+            <p className="mx-auto mt-4 max-w-3xl text-base leading-relaxed text-[#294b43] sm:text-lg">
+              {serviceCopy.intro}
+            </p>
+          )}
+        </div>
+      </section>
+
+      <section id="services" className="bg-white px-5 py-10 text-[#294b43] sm:px-8 sm:py-12 lg:px-16 lg:py-14 xl:px-20">
+        <div className="mx-auto grid max-w-screen-2xl grid-cols-1 gap-3 min-[430px]:grid-cols-2 md:gap-5 xl:gap-8">
+          {serviceCopy.services.map((service) => {
+            const Icon = serviceIcons[service.icon];
+            const isExpanded = expandedServiceKey === service.key;
+            const panelId = `service-panel-${service.key}`;
+            return (
+              <motion.article
+                key={service.key}
+                layout
+                transition={{ layout: { duration: 0.25, ease: "easeOut" } }}
+                className={`min-h-0 overflow-hidden rounded-2xl border bg-white transition-[box-shadow,border-color] duration-300 ${
+                  isExpanded
+                    ? "min-[430px]:col-span-2 border-[#ffb3b3] shadow-[0_12px_36px_rgba(59,95,88,0.14)]"
+                    : "border-[#ffb3b3] shadow-[0_8px_30px_rgba(59,95,88,0.09)] hover:shadow-[0_12px_36px_rgba(59,95,88,0.14)]"
+                }`}
+              >
+                <div>
+                  <button
+                    type="button"
+                    aria-expanded={isExpanded}
+                    aria-controls={panelId}
+                    aria-label={`${isExpanded ? serviceCopy.readLess : serviceCopy.readMore}: ${service.title}`}
+                    onClick={() => setExpandedServiceKey(isExpanded ? null : service.key)}
+                    className="group relative block w-full p-3 pr-11 text-left transition-colors hover:bg-[#d9f4cd] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-[#ffb3b3] sm:p-5 sm:pr-14 md:p-6 md:pr-16 xl:p-8 xl:pr-20"
+                  >
+                    <span className="absolute right-3 top-3 flex h-8 w-8 items-center justify-center rounded-full bg-[#d9f4cd] text-[#ffb3b3] transition sm:right-5 sm:top-5 xl:right-8 xl:top-8 xl:h-10 xl:w-10">
+                      {isExpanded ? <ChevronUp size={18} aria-hidden="true" /> : <ChevronDown size={18} aria-hidden="true" />}
+                    </span>
+                    <span className="flex flex-col items-start gap-3 sm:flex-row sm:gap-4 xl:gap-6">
+                      <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-[#d9f4cd] text-[#ffb3b3] sm:h-12 sm:w-12 xl:h-16 xl:w-16">
+                        <Icon size={23} className="sm:h-[27px] sm:w-[27px] xl:h-9 xl:w-9" aria-hidden="true" />
+                      </span>
+                      <span>
+                        <span role="heading" aria-level="2" className="block text-[15px] font-semibold leading-snug text-[#294b43] sm:text-lg md:text-xl xl:text-2xl">{service.title}</span>
+                      </span>
+                    </span>
+                  </button>
+
+                  <AnimatePresence initial={false}>
+                    {isExpanded && (
+                      <motion.div
+                        id={panelId}
+                        role="region"
+                        aria-label={service.title}
+                        initial={{ height: 0, opacity: 0 }}
+                        animate={{ height: "auto", opacity: 1 }}
+                        exit={{ height: 0, opacity: 0 }}
+                        transition={{ height: { duration: 0.25, ease: "easeOut" }, opacity: { duration: 0.18 } }}
+                        className="overflow-hidden px-3 pb-3 sm:px-5 sm:pb-5 md:px-6 md:pb-6 xl:px-8 xl:pb-8"
+                      >
+                        <div className="border-t border-[#d9f4cd] pt-4 sm:pt-5">
+                          <div className="grid gap-4 md:grid-cols-3 md:gap-5 xl:gap-8">
+                            <div>
+                              <h3 className="font-semibold text-[#5ca88d] xl:text-lg">{serviceCopy.headings.what}</h3>
+                              <p className="mt-2 text-sm leading-relaxed text-gray-700 xl:text-base">{service.what}</p>
+                            </div>
+                            <div>
+                              <h3 className="font-semibold text-[#5ca88d] xl:text-lg">{serviceCopy.headings.who}</h3>
+                              <p className="mt-2 text-sm leading-relaxed text-gray-700 xl:text-base">{service.who}</p>
+                            </div>
+                            <div>
+                              <h3 className="font-semibold text-[#5ca88d] xl:text-lg">{serviceCopy.headings.expect}</h3>
+                              <p className="mt-2 text-sm leading-relaxed text-gray-700 xl:text-base">{service.expect}</p>
+                            </div>
+                          </div>
+                          <div className="mt-5 rounded-xl bg-[#d9f4cd] p-4 sm:p-5 xl:p-6">
+                            <div className="flex flex-wrap gap-3">
+                              <a
+                                href={getServiceBookingHref(service.key)}
+                                onClick={() => trackEvent("booking_cta_clicked", { language: lang, location: "service_page", service: service.key })}
+                                className="inline-flex min-h-11 items-center justify-center rounded-full bg-[#5ca88d] px-5 py-2 text-sm font-semibold text-white transition hover:opacity-90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#5ca88d] focus-visible:ring-offset-2"
+                              >
+                                {service.key === "glp1-support" ? "GLP-1 Programme" : serviceCopy.bookConsultation}
+                              </a>
+                            </div>
+                          </div>
+                        </div>
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
+                </div>
+              </motion.article>
+            );
+          })}
+        </div>
+      </section>
+    </main>
+  );
+}
+
+function BeyondTheInjectionPage() {
+  return (
+    <main className="bg-white text-gray-900">
+      <section className="bg-[#5ca88d] px-4 py-10 text-white sm:px-8 sm:py-14 lg:px-16 lg:py-20 xl:px-20">
+        <div className="mx-auto grid max-w-screen-xl items-center gap-8 lg:grid-cols-[minmax(0,1.05fr)_minmax(20rem,0.95fr)] lg:gap-12 xl:max-w-screen-2xl">
+          <div>
+            <p className="mb-4 text-sm font-semibold uppercase tracking-wide text-white/90">Nutrition by Iballa</p>
+            <h1 className="text-4xl font-bold leading-tight sm:text-5xl lg:whitespace-nowrap lg:text-6xl">
+              Beyond the Injection
+            </h1>
+            <div className="mt-6 flex flex-wrap gap-3">
+              <span className="rounded-full bg-white px-4 py-2 text-sm font-semibold text-[#5ca88d] shadow">12-week programme</span>
+              <span className="rounded-full bg-white px-4 py-2 text-sm font-semibold text-[#5ca88d] shadow">€399</span>
+            </div>
+            <div className="mt-8">
+              <BeyondInjectionCta location="hero" variant="light">
+                Learn more about the programme
+              </BeyondInjectionCta>
+            </div>
+          </div>
+          <div className="rounded-xl bg-white/20 p-3 shadow-lg ring-1 ring-white/40">
+            <img
+              src={beyondInjectionImage}
+              alt="Beyond the Injection programme for GLP-1 nutrition support by registered dietitian Iballa"
+              className="w-full rounded-lg object-cover shadow-md"
+            />
+          </div>
+        </div>
+      </section>
+
+      <section className="bg-[#ffb3b3] px-4 pt-12 pb-16 sm:px-8 sm:pt-16 sm:pb-20 lg:px-16 lg:pt-20 lg:pb-28 xl:px-20" aria-labelledby="beyond-included-heading">
+        <div className="mx-auto max-w-screen-xl xl:max-w-screen-2xl">
+          <div className="mx-auto mb-9 max-w-4xl text-center">
+            <h2 id="beyond-included-heading" className="text-3xl font-semibold text-[#294b43] sm:text-4xl lg:text-5xl">
+              What's included
+            </h2>
+            <p className="mt-3 text-base leading-relaxed text-[#294b43] sm:text-lg">
+              A blend of education, one-to-one guidance, live support and community access across 12 weeks.
+            </p>
+          </div>
+          <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-5">
+            {beyondInclusions.map((item) => {
+              const Icon = item.icon;
+              return (
+                <article key={item.title} className="rounded-xl bg-white p-5 shadow-lg ring-1 ring-[#ffb3b3]">
+                  <span className="mb-4 flex h-12 w-12 items-center justify-center rounded-xl bg-[#d9f4cd] text-[#ffb3b3]">
+                    <Icon size={24} aria-hidden="true" />
+                  </span>
+                  <h3 className="text-lg font-semibold leading-snug text-[#294b43]">{item.title}</h3>
+                  <p className="mt-3 text-sm leading-relaxed text-gray-700">{item.text}</p>
+                </article>
+              );
+            })}
+          </div>
+        </div>
+      </section>
+    </main>
+  );
+}
+
 function BlogOverview() {
   const { i18n } = useTranslation();
   const copy = getUiContent(i18n.language).blog;
@@ -708,7 +986,7 @@ function BlogOverview() {
 
   return (
     <main className="bg-white text-gray-900">
-      <section className="pt-10 pb-10 text-center bg-gradient-to-r from-[#a3c9b9] to-[#7fae9e] text-white">
+      <section className="bg-[#5ca88d] pt-10 pb-10 text-center text-white">
         <div className="max-w-5xl mx-auto px-6">
           <p className="text-sm font-semibold uppercase tracking-wide mb-3">{copy.eyebrow}</p>
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-5 leading-tight">
@@ -717,6 +995,7 @@ function BlogOverview() {
           <p className="text-base sm:text-lg leading-relaxed max-w-3xl mx-auto">
             {copy.intro}
           </p>
+          <div className="mx-auto mt-6 h-2 w-28 rounded-full bg-[#ffb3b3]" aria-hidden="true"></div>
         </div>
       </section>
 
@@ -726,9 +1005,9 @@ function BlogOverview() {
             {copy.latest}
           </h2>
 
-          <div className="grid gap-6 lg:grid-cols-[minmax(0,1.35fr)_minmax(24rem,0.9fr)] lg:items-stretch">
+          <div className="grid gap-6 lg:items-stretch">
             <div className="h-full">
-              <article className="h-full rounded-xl shadow-lg ring-1 ring-[#7fae9e] overflow-hidden bg-white transition-all duration-200 hover:ring-2">
+              <article className="h-full rounded-xl shadow-lg ring-1 ring-[#5ca88d] overflow-hidden bg-white transition-all duration-200 hover:ring-2">
                 <a
                   href={`/blog/${latestPost.slug}`}
                   className="grid h-full min-h-[26rem] group md:grid-cols-[minmax(18rem,0.95fr)_minmax(0,1.05fr)]"
@@ -740,7 +1019,7 @@ function BlogOverview() {
                   />
                   <div className="flex flex-col justify-center p-6 sm:p-8">
                     <div className="flex flex-wrap items-center gap-3 text-sm text-gray-600 mb-4">
-                      <span className="inline-flex items-center rounded-full bg-[#cde4dc] px-3 py-1 font-semibold text-[#3b5f58]">
+                      <span className="inline-flex items-center rounded-full bg-[#d9f4cd] px-3 py-1 font-semibold text-[#5ca88d]">
                         {latestPost.category}
                       </span>
                       <span>{formatPostDate(latestPost.date, i18n.language)}</span>
@@ -756,7 +1035,7 @@ function BlogOverview() {
                       {latestPost.excerpt}
                     </p>
                     <span
-                      className="self-start inline-flex items-center gap-2 bg-gradient-to-r from-[#a3c9b9] to-[#7fae9e] text-white text-sm font-semibold px-6 py-2 rounded-full shadow transition group-hover:brightness-105"
+                      className="self-start inline-flex items-center gap-2 bg-[#5ca88d] text-white text-sm font-semibold px-6 py-2 rounded-full shadow transition group-hover:opacity-90"
                     >
                       {copy.readMore}
                       <ArrowRight size={18} />
@@ -764,10 +1043,6 @@ function BlogOverview() {
                   </div>
                 </a>
               </article>
-            </div>
-
-            <div className="h-full">
-              <NewsletterSignupForm compact />
             </div>
           </div>
         </div>
@@ -780,12 +1055,12 @@ function BlogOverview() {
           </h2>
           <div className="space-y-5">
             {postsNewestFirst.map((post) => (
-              <article key={post.slug} className="rounded-xl shadow-lg ring-1 ring-[#7fae9e] overflow-hidden bg-white transition-all duration-200 hover:ring-2">
+              <article key={post.slug} className="rounded-xl shadow-lg ring-1 ring-[#5ca88d] overflow-hidden bg-white transition-all duration-200 hover:ring-2">
                 <a href={`/blog/${post.slug}`} className="grid sm:grid-cols-[12rem_1fr] group">
                   <img src={post.image} alt="" className="h-48 sm:h-full w-full object-cover object-center" />
                   <div className="p-5 sm:p-6">
                     <div className="flex flex-wrap items-center gap-3 text-sm text-gray-600 mb-4">
-                      <span className="inline-flex items-center rounded-full bg-[#cde4dc] px-3 py-1 font-semibold text-[#3b5f58]">
+                      <span className="inline-flex items-center rounded-full bg-[#d9f4cd] px-3 py-1 font-semibold text-[#5ca88d]">
                         {post.category}
                       </span>
                       <span>{formatPostDate(post.date, i18n.language)}</span>
@@ -794,7 +1069,7 @@ function BlogOverview() {
                         {post.readingTime}
                       </span>
                     </div>
-                    <h3 className="text-xl sm:text-2xl font-bold leading-tight mb-3 group-hover:text-[#3b5f58] transition">
+                    <h3 className="text-xl sm:text-2xl font-bold leading-tight mb-3 group-hover:text-[#5ca88d] transition">
                       {post.title}
                     </h3>
                     <p className="text-base leading-relaxed text-gray-700">
@@ -823,7 +1098,7 @@ function BlogSection({ section }) {
         <a
           key={`${part.href}-${part.label}`}
           href={part.href}
-          className="text-[#3b5f58] underline hover:text-[#7fae9e] transition"
+          className="text-[#5ca88d] underline hover:text-[#5ca88d] transition"
         >
           {part.label}
         </a>
@@ -847,9 +1122,9 @@ function BlogSection({ section }) {
         </ul>
       )}
       {section.table && (
-        <div className="overflow-x-auto rounded-xl shadow ring-1 ring-[#7fae9e] bg-white mb-4">
+        <div className="overflow-x-auto rounded-xl shadow ring-1 ring-[#5ca88d] bg-white mb-4">
           <table className="min-w-full text-left text-sm sm:text-base">
-            <thead className="bg-gradient-to-r from-[#a3c9b9] to-[#7fae9e] text-white">
+            <thead className="bg-gradient-to-r from-[#d9f4cd] to-[#5ca88d] text-white">
               <tr>
                 {section.table.headers.map((header) => (
                   <th key={header} scope="col" className="px-4 py-3 font-semibold">
@@ -858,7 +1133,7 @@ function BlogSection({ section }) {
                 ))}
               </tr>
             </thead>
-            <tbody className="divide-y divide-[#cde4dc]">
+            <tbody className="divide-y divide-[#d9f4cd]">
               {section.table.rows.map((row) => (
                 <tr key={row.join("-")} className="hover:bg-gray-50 transition">
                   {row.map((cell) => (
@@ -879,7 +1154,7 @@ function BlogSection({ section }) {
       ))}
       {section.subsections?.map((subsection) => (
         <div key={subsection.heading} className="mt-6">
-          <h3 className="text-xl font-semibold mb-3 text-[#3b5f58]">{subsection.heading}</h3>
+          <h3 className="text-xl font-semibold mb-3 text-[#5ca88d]">{subsection.heading}</h3>
           {subsection.body?.map((paragraph) => (
             <p key={paragraph} className="text-base sm:text-lg leading-relaxed text-gray-700 mb-4">
               {renderText(paragraph)}
@@ -911,7 +1186,7 @@ function BlogArticle({ post }) {
       <article>
         <div className="relative h-72 sm:h-96 overflow-hidden">
           <img src={post.image} alt="" className="absolute inset-0 h-full w-full object-cover" />
-          <div className="absolute inset-0 bg-[#3b5f58]/50"></div>
+          <div className="absolute inset-0 bg-[#5ca88d]/50"></div>
           <div className="relative z-10 h-full max-w-5xl mx-auto px-6 flex flex-col justify-center text-white">
             <a
               href="/blog"
@@ -921,7 +1196,7 @@ function BlogArticle({ post }) {
               {copy.back}
             </a>
             <div className="flex flex-wrap items-center gap-3 text-sm mb-4">
-              <span className="inline-flex items-center gap-1 rounded-full bg-white/90 px-3 py-1 font-semibold text-[#3b5f58]">
+              <span className="inline-flex items-center gap-1 rounded-full bg-white/90 px-3 py-1 font-semibold text-[#5ca88d]">
                 <Tag size={15} />
                 {post.category}
               </span>
@@ -942,7 +1217,7 @@ function BlogArticle({ post }) {
         </div>
 
         <div className="max-w-4xl mx-auto px-4 sm:px-6 py-10 sm:py-14">
-          <div className="rounded-xl shadow-lg ring-1 ring-[#7fae9e] bg-[#cde4dc] text-[#3b5f58] p-5 sm:p-6 mb-10">
+          <div className="rounded-xl shadow-lg ring-1 ring-[#5ca88d] bg-[#d9f4cd] text-[#5ca88d] p-5 sm:p-6 mb-10">
             <p className="text-base sm:text-lg font-semibold leading-relaxed">{post.callout}</p>
           </div>
 
@@ -950,7 +1225,7 @@ function BlogArticle({ post }) {
             <BlogSection key={section.heading} section={section} />
           ))}
 
-          <section className="border-t border-[#cde4dc] pt-8">
+          <section className="border-t border-[#d9f4cd] pt-8">
             <h2 className="text-2xl sm:text-3xl font-semibold mb-4">{copy.references}</h2>
             <ol className="list-decimal pl-6 space-y-3 text-sm sm:text-base leading-relaxed text-gray-700">
               {post.references.map((reference) => (
@@ -959,7 +1234,7 @@ function BlogArticle({ post }) {
                     href={reference.url}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="text-[#3b5f58] underline hover:text-[#7fae9e] transition"
+                    className="text-[#5ca88d] underline hover:text-[#5ca88d] transition"
                   >
                     {reference.label}
                   </a>
@@ -974,7 +1249,7 @@ function BlogArticle({ post }) {
         {previousPost ? (
           <a
             href={`/blog/${previousPost.slug}`}
-            className="inline-flex items-center justify-center gap-2 rounded-full bg-white px-5 py-2 text-sm font-semibold text-[#3b5f58] shadow ring-1 ring-[#7fae9e] hover:bg-gray-100 transition"
+            className="inline-flex items-center justify-center gap-2 rounded-full bg-white px-5 py-2 text-sm font-semibold text-[#5ca88d] shadow ring-1 ring-[#5ca88d] hover:bg-gray-100 transition"
           >
             <ArrowLeft size={18} />
             {copy.previous}
@@ -985,21 +1260,317 @@ function BlogArticle({ post }) {
         {nextPost ? (
           <a
             href={`/blog/${nextPost.slug}`}
-            className="inline-flex items-center justify-center gap-2 rounded-full bg-gradient-to-r from-[#a3c9b9] to-[#7fae9e] px-5 py-2 text-sm font-semibold text-white shadow hover:brightness-105 transition"
+            className="inline-flex items-center justify-center gap-2 rounded-full bg-gradient-to-r from-[#d9f4cd] to-[#5ca88d] px-5 py-2 text-sm font-semibold text-white shadow hover:brightness-105 transition"
           >
             {copy.next}
-            <ArrowRight size={18} />
+            <ArrowRight size={18} className="text-[#ffb3b3]" />
           </a>
         ) : (
           <a
             href="/blog"
-            className="inline-flex items-center justify-center gap-2 rounded-full bg-gradient-to-r from-[#a3c9b9] to-[#7fae9e] px-5 py-2 text-sm font-semibold text-white shadow hover:brightness-105 transition"
+            className="inline-flex items-center justify-center gap-2 rounded-full bg-gradient-to-r from-[#d9f4cd] to-[#5ca88d] px-5 py-2 text-sm font-semibold text-white shadow hover:brightness-105 transition"
           >
             {copy.back}
-            <ArrowRight size={18} />
+            <ArrowRight size={18} className="text-[#ffb3b3]" />
           </a>
         )}
       </nav>
+    </main>
+  );
+}
+
+function AboutPage() {
+  const { t, i18n } = useTranslation();
+  const lang = i18n.language.startsWith("es") ? "es" : "en";
+  const testimonials = t("testimonials.items", { returnObjects: true });
+
+  return (
+    <main className="bg-white">
+      <section className="bg-[#5ca88d] px-5 py-12 text-white sm:px-8 sm:py-16 lg:px-16 lg:py-20 xl:px-20">
+        <div className="mx-auto flex max-w-screen-xl flex-col items-center gap-8 md:flex-row lg:gap-14 xl:max-w-screen-2xl xl:gap-20">
+          <img
+            src="/profile1.png"
+            alt="Iballa Martinez"
+            className="h-56 rounded-full border-4 border-white object-cover shadow-lg md:h-80 lg:h-[28rem] xl:h-[32rem]"
+          />
+          <div className="text-left">
+            <p className="mb-3 text-sm font-semibold uppercase tracking-[0.18em] text-white/90">
+              Nutrition by Iballa
+            </p>
+            <h1 className="mb-5 text-4xl font-semibold leading-tight lg:text-5xl">{t("about.heading")}</h1>
+            <div className="space-y-4 text-[15px] leading-relaxed md:text-lg lg:text-xl">
+              <p dangerouslySetInnerHTML={{ __html: t("about.paragraph1") }} />
+              <p dangerouslySetInnerHTML={{ __html: t("about.paragraph2") }} />
+              <p dangerouslySetInnerHTML={{ __html: t("about.paragraph3") }} />
+              <p dangerouslySetInnerHTML={{ __html: t("about.paragraph4") }} />
+              <p dangerouslySetInnerHTML={{ __html: t("about.paragraph5") }} />
+              <p dangerouslySetInnerHTML={{ __html: t("about.paragraph6") }} />
+            </div>
+            <a
+              href="/booking"
+              onClick={() => trackEvent("booking_cta_clicked", { language: lang, location: "about_page" })}
+              className="mt-7 inline-flex min-h-12 items-center justify-center gap-2 rounded-full bg-white px-7 py-3 text-sm font-semibold text-[#5ca88d] shadow transition hover:opacity-90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-[#5ca88d] sm:text-base"
+            >
+              {t("about.discoveryCta")}
+              <ArrowRight size={18} className="text-[#ffb3b3]" aria-hidden="true" />
+            </a>
+          </div>
+        </div>
+      </section>
+
+      <section className="bg-white px-5 py-12 sm:px-8 sm:py-16 lg:px-16 lg:py-20 xl:px-20" aria-labelledby="about-testimonials-heading">
+        <div className="mx-auto max-w-screen-2xl">
+          <div className="mx-auto mb-9 max-w-4xl text-center lg:mb-12">
+            <p className="mb-3 text-sm font-semibold uppercase tracking-[0.18em] text-[#5ca88d]">
+              Nutrition by Iballa
+            </p>
+            <h2 id="about-testimonials-heading" className="text-3xl font-semibold text-[#294b43] sm:text-4xl lg:text-5xl">
+              {t("testimonials.aboutHeading")}
+            </h2>
+            <div className="mx-auto mt-5 h-2 w-24 rounded-full bg-[#ffb3b3]" aria-hidden="true"></div>
+          </div>
+          <div className="grid gap-5 lg:grid-cols-3">
+            {testimonials.map((item) => (
+              <article key={item.title} className="rounded-xl bg-white p-5 shadow-lg ring-2 ring-[#ffb3b3] sm:p-6">
+                <h3 className="text-xl font-semibold leading-snug text-[#294b43]">{item.title}</h3>
+                <div className="mt-4 space-y-4 text-sm leading-relaxed text-gray-700 sm:text-base">
+                  {item.review.split("\n\n").map((paragraph) => (
+                    <p key={paragraph}>&ldquo;{paragraph}&rdquo;</p>
+                  ))}
+                </div>
+              </article>
+            ))}
+          </div>
+        </div>
+      </section>
+    </main>
+  );
+}
+
+function BookingPage() {
+  const { t, i18n } = useTranslation();
+  const lang = i18n.language.startsWith("es") ? "es" : "en";
+  const [bookingPolicyOpen, setBookingPolicyOpen] = useState(false);
+  const types = [
+    {
+      key: "freeCall",
+      icon: Clock,
+      calendlyUrl: lang === "es" ? calendlyUrls.esFreeCall : calendlyUrls.enFreeCall,
+      featured: true,
+      duration: lang === "es" ? "15 minutos" : "15 minutes"
+    },
+    {
+      key: "initial",
+      icon: Calendar,
+      calendlyUrl: lang === "es" ? "https://calendly.com/iballa-mtzyanes/consulta-inicial" : "https://calendly.com/iballa-mtzyanes/initial-consultation",
+      duration: lang === "es" ? "55 minutos" : "55 minutes"
+    },
+    {
+      key: "review",
+      icon: RotateCcw,
+      calendlyUrl: lang === "es" ? "https://calendly.com/iballa-mtzyanes/consulta-seguimiento" : "https://calendly.com/iballa-mtzyanes/review-consultation",
+      duration: lang === "es" ? "30 minutos" : "30 minutes"
+    }
+  ];
+  const packages = [
+    {
+      key: "bundle4",
+      calendlyUrl: lang === "es" ? "https://calendly.com/iballa-mtzyanes/bono-de-4-consultas" : "https://calendly.com/iballa-mtzyanes/bundle-of-4-consultations"
+    },
+    {
+      key: "bundle6",
+      calendlyUrl: lang === "es" ? "https://calendly.com/iballa-mtzyanes/bono-de-6-consultas" : "https://calendly.com/iballa-mtzyanes/bundle-of-6-consultations"
+    }
+  ];
+  const freeCall = types[0];
+  const FreeCallIcon = freeCall.icon;
+  const individualTypes = types.slice(1);
+  const renderDescription = (description) => (
+    <div className="space-y-3 text-base leading-relaxed text-gray-700">
+      {Array.isArray(description) ? description.map((item) => <p key={item}>{item}</p>) : <p>{description}</p>}
+    </div>
+  );
+
+  return (
+    <main className="bg-white text-[#294b43]">
+      <section className="bg-[#d9f4cd] px-5 py-10 sm:px-8 sm:py-12 lg:px-16 lg:py-14 xl:px-20">
+        <div className="mx-auto max-w-screen-xl text-center">
+          <h1 className="text-4xl font-semibold leading-tight sm:text-5xl lg:text-6xl">
+            {t("appointments.heading")}
+          </h1>
+          <div className="mx-auto mt-6 h-2 w-28 rounded-full bg-[#ffb3b3]" aria-hidden="true"></div>
+        </div>
+      </section>
+
+      <section className="bg-white px-5 py-10 sm:px-8 sm:py-12 lg:px-16 lg:py-14 xl:px-20">
+        <div className="mx-auto max-w-screen-xl space-y-10">
+          <article className="overflow-hidden rounded-2xl bg-white shadow-[0_18px_45px_rgba(41,75,67,0.12)] ring-1 ring-[#5ca88d]">
+            <div className="grid lg:grid-cols-[minmax(0,0.8fr)_minmax(0,1.2fr)]">
+              <div className="bg-[#5ca88d] p-6 text-white sm:p-8">
+                <div className="flex items-start gap-4">
+                  <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-white/20">
+                    <FreeCallIcon size={25} aria-hidden="true" />
+                  </span>
+                  <div>
+                    <p className="mb-2 text-xs font-semibold uppercase tracking-[0.14em] text-white/85">
+                      {t("appointments.recommended")}
+                    </p>
+                    <h2 className="text-2xl font-semibold leading-tight sm:text-3xl">
+                      {t(`appointments.types.${freeCall.key}.title`)}
+                    </h2>
+                    <p className="mt-4 inline-flex rounded-full bg-white px-4 py-2 text-sm font-semibold text-[#294b43]">
+                      {freeCall.duration}
+                    </p>
+                  </div>
+                </div>
+              </div>
+              <div className="flex flex-col justify-between gap-6 p-6 sm:p-8">
+                {renderDescription(t(`appointments.types.${freeCall.key}.description`, { returnObjects: true }))}
+                <a
+                  href={freeCall.calendlyUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  onClick={() => trackEvent("appointment_type_selected", { language: lang, appointmentType: freeCall.key, location: "booking_page_featured" })}
+                  className="inline-flex min-h-12 w-full items-center justify-center rounded-full bg-[#5ca88d] px-6 py-3 text-sm font-semibold text-white shadow transition hover:opacity-90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#5ca88d] focus-visible:ring-offset-2 sm:w-auto"
+                >
+                  {t(`appointments.types.${freeCall.key}.cta`, { defaultValue: t("appointments.cta") })}
+                </a>
+              </div>
+            </div>
+          </article>
+
+          <section aria-labelledby="individual-consultations-heading">
+            <h2 id="individual-consultations-heading" className="text-center text-2xl font-semibold text-[#294b43] sm:text-3xl">
+              {t("appointments.individualHeading")}
+            </h2>
+            <div className="mt-6 grid items-stretch gap-5 md:grid-cols-2">
+              {individualTypes.map((service) => {
+                const Icon = service.icon;
+                const desc = t(`appointments.types.${service.key}.description`, { returnObjects: true });
+                return (
+                  <article
+                    key={service.key}
+                    className="flex h-full flex-col rounded-2xl border border-[#d9f4cd] bg-white p-5 shadow-[0_10px_30px_rgba(41,75,67,0.08)] transition hover:border-[#5ca88d] sm:p-6"
+                  >
+                    <div className="grid grid-cols-[3.75rem_1fr] items-start gap-4">
+                      <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-[#d9f4cd] text-[#5ca88d]">
+                        <Icon size={24} aria-hidden="true" />
+                      </span>
+                      <div className="min-w-0">
+                        <h3 className="text-xl font-semibold text-[#294b43]">{t(`appointments.types.${service.key}.title`)}</h3>
+                        <div className="mt-3 flex flex-wrap items-center gap-2">
+                          <p className="inline-flex rounded-full bg-[#d9f4cd] px-4 py-2 text-sm font-semibold text-[#294b43]">
+                            {service.duration}
+                          </p>
+                          {service.key === "review" && (
+                            <p className="inline-flex rounded-full bg-[#ffb3b3] px-3 py-2 text-xs font-semibold text-[#294b43]">
+                              {t("appointments.existingClients")}
+                            </p>
+                          )}
+                        </div>
+                      </div>
+                    </div>
+                    <div className="mt-5 flex flex-1 flex-col justify-between">
+                      {renderDescription(desc)}
+                      <a
+                        href={service.calendlyUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        onClick={() => trackEvent("appointment_type_selected", { language: lang, appointmentType: service.key, location: "booking_page" })}
+                        className="mt-6 inline-flex min-h-12 items-center justify-center rounded-full bg-[#5ca88d] px-6 py-3 text-sm font-semibold text-white shadow transition hover:opacity-90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#5ca88d] focus-visible:ring-offset-2"
+                      >
+                        {t(`appointments.types.${service.key}.cta`, { defaultValue: t("appointments.cta") })}
+                      </a>
+                    </div>
+                  </article>
+                );
+              })}
+            </div>
+          </section>
+
+          <section aria-labelledby="consultation-packages-heading">
+            <h2 id="consultation-packages-heading" className="text-center text-2xl font-semibold text-[#294b43] sm:text-3xl">
+              {t("appointments.packages.heading")}
+            </h2>
+            <div className="mt-6 grid items-stretch gap-5 md:grid-cols-2">
+              {packages.map((pack) => {
+                const copy = t(`appointments.packages.items.${pack.key}`, { returnObjects: true });
+                return (
+                  <article key={pack.key} className="flex h-full flex-col rounded-2xl border border-[#d9f4cd] bg-white p-5 shadow-[0_10px_30px_rgba(41,75,67,0.08)] transition hover:border-[#5ca88d] sm:p-6">
+                    <div className="flex items-start gap-4">
+                      <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-[#d9f4cd] text-[#5ca88d]">
+                        <CreditCard size={24} aria-hidden="true" />
+                      </span>
+                      <div>
+                        <h3 className="text-xl font-semibold text-[#294b43]">{copy.title}</h3>
+                      </div>
+                    </div>
+                    {Array.isArray(copy.includes) && (
+                      <ul className="mt-5 space-y-2 text-sm leading-relaxed text-gray-700">
+                        {copy.includes.map((item) => (
+                          <li key={item} className="flex gap-2">
+                            <CheckCircle2 size={17} className="mt-0.5 shrink-0 text-[#5ca88d]" aria-hidden="true" />
+                            <span>{item}</span>
+                          </li>
+                        ))}
+                      </ul>
+                    )}
+                    <div className="mt-5 rounded-xl bg-[#d9f4cd] p-4">
+                      <p className="text-3xl font-semibold text-[#294b43]">{copy.price}</p>
+                      <p className="mt-2 text-sm text-gray-700">
+                        {t("appointments.packages.individualCost")}: <span className="font-semibold">{copy.individualCost}</span>
+                      </p>
+                      <p className="mt-2 inline-flex rounded-full bg-[#ffb3b3] px-3 py-1 text-sm font-semibold text-[#294b43]">
+                        {t("appointments.packages.save")} {copy.saving}
+                      </p>
+                    </div>
+                    <a
+                      href={pack.calendlyUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      onClick={() => trackEvent("appointment_package_selected", { language: lang, packageType: pack.key, location: "booking_page" })}
+                      className="mt-auto inline-flex min-h-11 items-center justify-center rounded-full bg-[#5ca88d] px-5 py-2 text-sm font-semibold text-white transition hover:opacity-90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#5ca88d] focus-visible:ring-offset-2"
+                    >
+                      {t("appointments.packages.cta")}
+                    </a>
+                  </article>
+                );
+              })}
+            </div>
+          </section>
+
+          <section className="rounded-2xl bg-[#d9f4cd] p-5 shadow-sm ring-1 ring-[#d9f4cd] sm:p-6">
+            <button
+              type="button"
+              aria-expanded={bookingPolicyOpen}
+              aria-controls="booking-policy-details"
+              onClick={() => setBookingPolicyOpen((open) => !open)}
+              className="inline-flex w-full items-center justify-between gap-3 rounded-full border border-[#5ca88d] bg-white px-4 py-2 text-left text-sm font-semibold text-[#294b43] transition hover:bg-[#d9f4cd] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#5ca88d]"
+            >
+              <span>{t("appointments.policyHeading")}</span>
+              {bookingPolicyOpen ? <ChevronUp size={18} aria-hidden="true" /> : <ChevronDown size={18} aria-hidden="true" />}
+            </button>
+            <AnimatePresence initial={false}>
+              {bookingPolicyOpen && (
+                <motion.div
+                  id="booking-policy-details"
+                  initial={{ height: 0, opacity: 0 }}
+                  animate={{ height: "auto", opacity: 1 }}
+                  exit={{ height: 0, opacity: 0 }}
+                  transition={{ height: { duration: 0.22, ease: "easeOut" }, opacity: { duration: 0.16 } }}
+                  className="overflow-hidden"
+                >
+                  <ul className="mt-3 list-disc space-y-2 pl-5 text-sm leading-relaxed text-gray-700">
+                    {t("appointments.policy", { returnObjects: true }).map((item) => (
+                      <li key={item}>{item}</li>
+                    ))}
+                  </ul>
+                </motion.div>
+              )}
+            </AnimatePresence>
+          </section>
+        </div>
+      </section>
     </main>
   );
 }
@@ -1024,11 +1595,11 @@ function AssessmentContactForm({ contact, onContactChange, onSubmit, submitting,
       animate={{ opacity: 1, y: 0 }}
       exit={{ opacity: 0, y: -18 }}
       transition={{ duration: 0.25 }}
-      className="rounded-xl shadow-lg ring-1 ring-[#7fae9e] bg-white overflow-hidden"
+      className="rounded-xl shadow-lg ring-1 ring-[#5ca88d] bg-white overflow-hidden"
     >
-      <div className="bg-gradient-to-r from-[#a3c9b9] to-[#7fae9e] px-5 py-6 text-white sm:px-8">
+      <div className="bg-gradient-to-r from-[#d9f4cd] to-[#5ca88d] px-5 py-6 text-white sm:px-8">
         <div className="flex items-start gap-4">
-          <div className="rounded-full bg-white/90 p-3 text-[#3b5f58] shadow">
+          <div className="rounded-full bg-white/90 p-3 text-[#5ca88d] shadow">
             <User size={28} />
           </div>
           <div>
@@ -1047,7 +1618,7 @@ function AssessmentContactForm({ contact, onContactChange, onSubmit, submitting,
               type="text"
               value={contact.firstName}
               onChange={(event) => onContactChange("firstName", event.target.value)}
-              className="w-full h-10 rounded-md border border-gray-300 bg-white px-3 text-gray-900 placeholder:text-gray-500 focus:outline-none focus:ring-2 focus:ring-[#cde4dc]"
+              className="w-full h-10 rounded-md border border-gray-300 bg-white px-3 text-gray-900 placeholder:text-gray-500 focus:outline-none focus:ring-2 focus:ring-[#d9f4cd]"
               required
             />
           </label>
@@ -1057,7 +1628,7 @@ function AssessmentContactForm({ contact, onContactChange, onSubmit, submitting,
               type="text"
               value={contact.lastName}
               onChange={(event) => onContactChange("lastName", event.target.value)}
-              className="w-full h-10 rounded-md border border-gray-300 bg-white px-3 text-gray-900 placeholder:text-gray-500 focus:outline-none focus:ring-2 focus:ring-[#cde4dc]"
+              className="w-full h-10 rounded-md border border-gray-300 bg-white px-3 text-gray-900 placeholder:text-gray-500 focus:outline-none focus:ring-2 focus:ring-[#d9f4cd]"
               required
             />
           </label>
@@ -1068,7 +1639,7 @@ function AssessmentContactForm({ contact, onContactChange, onSubmit, submitting,
             type="email"
             value={contact.email}
             onChange={(event) => onContactChange("email", event.target.value)}
-            className="w-full h-10 rounded-md border border-gray-300 bg-white px-3 text-gray-900 placeholder:text-gray-500 focus:outline-none focus:ring-2 focus:ring-[#cde4dc]"
+            className="w-full h-10 rounded-md border border-gray-300 bg-white px-3 text-gray-900 placeholder:text-gray-500 focus:outline-none focus:ring-2 focus:ring-[#d9f4cd]"
             required
           />
         </label>
@@ -1090,10 +1661,10 @@ function AssessmentContactForm({ contact, onContactChange, onSubmit, submitting,
         <button
           type="submit"
           disabled={submitting}
-          className="inline-flex items-center justify-center gap-2 rounded-full bg-gradient-to-r from-[#a3c9b9] to-[#7fae9e] px-6 py-2 text-sm font-semibold text-white shadow transition hover:brightness-105 disabled:cursor-not-allowed disabled:opacity-50"
+          className="inline-flex items-center justify-center gap-2 rounded-full bg-gradient-to-r from-[#d9f4cd] to-[#5ca88d] px-6 py-2 text-sm font-semibold text-white shadow transition hover:brightness-105 disabled:cursor-not-allowed disabled:opacity-50"
         >
           {submitting ? copy.saving : copy.start}
-          <ArrowRight size={18} />
+          <ArrowRight size={18} className="text-[#ffb3b3]" />
         </button>
       </form>
     </motion.div>
@@ -1234,7 +1805,7 @@ function NutritionAssessmentPage() {
 
   return (
     <main className="bg-white text-gray-900">
-      <section className="pt-10 pb-10 text-center bg-gradient-to-r from-[#a3c9b9] to-[#7fae9e] text-white">
+      <section className="pt-10 pb-10 text-center bg-gradient-to-r from-[#d9f4cd] to-[#5ca88d] text-white">
         <div className="max-w-5xl mx-auto px-6">
           <p className="text-sm font-semibold uppercase tracking-wide mb-3">
             Nutrition by Iballa
@@ -1250,24 +1821,24 @@ function NutritionAssessmentPage() {
 
       <section className="bg-gray-50 py-10 sm:py-14">
         <div className="max-w-5xl mx-auto px-4 sm:px-6 md:px-12">
-          <div className="mb-6 rounded-xl shadow-lg ring-1 ring-[#7fae9e] bg-white p-5 sm:p-6">
+          <div className="mb-6 rounded-xl shadow-lg ring-1 ring-[#5ca88d] bg-white p-5 sm:p-6">
             <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
               <div>
-                <p className="text-sm font-semibold text-[#3b5f58]">
+                <p className="text-sm font-semibold text-[#5ca88d]">
                   {showResults ? copy.complete : contactSubmitted ? copy.step(currentStep + 1, localizedSteps.length) : copy.contactDetails}
                 </p>
                 <p className="text-sm text-gray-600">
                   {copy.disclaimer}
                 </p>
               </div>
-              <span className="inline-flex items-center gap-2 self-start rounded-full bg-[#cde4dc] px-3 py-1 text-sm font-semibold text-[#3b5f58]">
+              <span className="inline-flex items-center gap-2 self-start rounded-full bg-[#d9f4cd] px-3 py-1 text-sm font-semibold text-[#5ca88d]">
                 <CheckCircle2 size={16} />
                 {copy.percentComplete(progress)}
               </span>
             </div>
             <div className="mt-4 h-3 overflow-hidden rounded-full bg-gray-100" aria-hidden="true">
               <div
-                className="h-full rounded-full bg-gradient-to-r from-[#a3c9b9] to-[#7fae9e] transition-all duration-500"
+                className="h-full rounded-full bg-gradient-to-r from-[#d9f4cd] to-[#5ca88d] transition-all duration-500"
                 style={{ width: `${progress}%` }}
               ></div>
             </div>
@@ -1299,11 +1870,11 @@ function NutritionAssessmentPage() {
                 animate={{ opacity: 1, x: 0 }}
                 exit={{ opacity: 0, x: -24 }}
                 transition={{ duration: 0.25 }}
-                className="rounded-xl shadow-lg ring-1 ring-[#7fae9e] bg-white overflow-hidden"
+                className="rounded-xl shadow-lg ring-1 ring-[#5ca88d] bg-white overflow-hidden"
               >
-                <div className="bg-gradient-to-r from-[#a3c9b9] to-[#7fae9e] px-5 py-6 text-white sm:px-8">
+                <div className="bg-gradient-to-r from-[#d9f4cd] to-[#5ca88d] px-5 py-6 text-white sm:px-8">
                   <div className="flex items-start gap-4">
-                    <div className="rounded-full bg-white/90 p-3 text-[#3b5f58] shadow">
+                    <div className="rounded-full bg-white/90 p-3 text-[#5ca88d] shadow">
                       <StepIcon size={28} />
                     </div>
                     <div>
@@ -1331,8 +1902,8 @@ function NutritionAssessmentPage() {
                                 key={option.value}
                                 className={`flex min-h-16 cursor-pointer items-center gap-3 rounded-xl border p-4 text-sm sm:text-base transition ${
                                   selected
-                                    ? "border-[#3b5f58] bg-[#cde4dc] text-[#3b5f58] shadow"
-                                    : "border-gray-200 bg-white text-gray-800 hover:border-[#7fae9e] hover:bg-gray-50"
+                                    ? "border-[#5ca88d] bg-[#d9f4cd] text-[#5ca88d] shadow"
+                                    : "border-gray-200 bg-white text-gray-800 hover:border-[#5ca88d] hover:bg-gray-50"
                                 }`}
                               >
                                 <input
@@ -1341,7 +1912,7 @@ function NutritionAssessmentPage() {
                                   value={option.value}
                                   checked={selected}
                                   onChange={() => updateAnswer(question.id, option.value)}
-                                  className="h-5 w-5 rounded-full border border-[#7fae9e] checked:bg-[#3b5f58] focus:ring-2 focus:ring-[#cde4dc]"
+                                  className="h-5 w-5 rounded-full border border-[#5ca88d] checked:bg-[#5ca88d] focus:ring-2 focus:ring-[#d9f4cd]"
                                 />
                                 <span className="font-medium leading-snug">{option.label}</span>
                               </label>
@@ -1357,7 +1928,7 @@ function NutritionAssessmentPage() {
                       type="button"
                       onClick={goBack}
                       disabled={isFirstStep}
-                      className="inline-flex items-center justify-center gap-2 rounded-full bg-white px-6 py-2 text-sm font-semibold text-[#3b5f58] shadow ring-1 ring-[#7fae9e] transition hover:bg-gray-100 disabled:cursor-not-allowed disabled:opacity-40"
+                      className="inline-flex items-center justify-center gap-2 rounded-full bg-white px-6 py-2 text-sm font-semibold text-[#5ca88d] shadow ring-1 ring-[#5ca88d] transition hover:bg-gray-100 disabled:cursor-not-allowed disabled:opacity-40"
                     >
                       <ArrowLeft size={18} />
                       {copy.back}
@@ -1366,10 +1937,10 @@ function NutritionAssessmentPage() {
                       type="button"
                       onClick={goNext}
                       disabled={!currentStepComplete || savingResults}
-                      className="inline-flex items-center justify-center gap-2 rounded-full bg-gradient-to-r from-[#a3c9b9] to-[#7fae9e] px-6 py-2 text-sm font-semibold text-white shadow transition hover:brightness-105 disabled:cursor-not-allowed disabled:opacity-50"
+                      className="inline-flex items-center justify-center gap-2 rounded-full bg-gradient-to-r from-[#d9f4cd] to-[#5ca88d] px-6 py-2 text-sm font-semibold text-white shadow transition hover:brightness-105 disabled:cursor-not-allowed disabled:opacity-50"
                     >
                       {savingResults ? copy.saving : isLastStep ? copy.viewResults : copy.next}
-                      <ArrowRight size={18} />
+                      <ArrowRight size={18} className="text-[#ffb3b3]" />
                     </button>
                   </div>
                   {assessmentError && (
@@ -1395,8 +1966,8 @@ function AssessmentResults({ answers, onBack, onRestart }) {
   return (
     <div className="space-y-6">
       <section className="grid gap-4 md:grid-cols-2">
-        <article className="rounded-xl shadow-lg ring-1 ring-[#7fae9e] bg-white p-5 transition hover:ring-2">
-          <p className="text-sm font-semibold uppercase tracking-wide text-[#3b5f58]">
+        <article className="rounded-xl shadow-lg ring-1 ring-[#5ca88d] bg-white p-5 transition hover:ring-2">
+          <p className="text-sm font-semibold uppercase tracking-wide text-[#5ca88d]">
             {copy.positiveFocus}
           </p>
           {positiveItems.length > 0 ? (
@@ -1433,7 +2004,7 @@ function AssessmentResults({ answers, onBack, onRestart }) {
         </article>
       </section>
 
-      <section className="rounded-xl shadow-lg bg-gradient-to-r from-[#a3c9b9] to-[#7fae9e] p-6 text-white sm:p-8">
+      <section className="rounded-xl shadow-lg bg-gradient-to-r from-[#d9f4cd] to-[#5ca88d] p-6 text-white sm:p-8">
         <div className="flex flex-col gap-5 lg:flex-row lg:items-center lg:justify-between">
           <div className="max-w-2xl">
             <h3 className="text-2xl sm:text-3xl font-semibold">{copy.tailoredHeading}</h3>
@@ -1442,8 +2013,8 @@ function AssessmentResults({ answers, onBack, onRestart }) {
             </p>
           </div>
           <a
-            href="/#appointments"
-            className="inline-flex items-center justify-center gap-2 rounded-full bg-white px-6 py-3 text-sm font-semibold text-[#3b5f58] shadow transition hover:bg-gray-100"
+            href="/booking"
+            className="inline-flex items-center justify-center gap-2 rounded-full bg-white px-6 py-3 text-sm font-semibold text-[#5ca88d] shadow transition hover:bg-gray-100"
           >
             {copy.book}
             <Calendar size={18} />
@@ -1455,7 +2026,7 @@ function AssessmentResults({ answers, onBack, onRestart }) {
         <button
           type="button"
           onClick={onBack}
-          className="inline-flex items-center justify-center gap-2 rounded-full bg-white px-6 py-2 text-sm font-semibold text-[#3b5f58] shadow ring-1 ring-[#7fae9e] transition hover:bg-gray-100"
+          className="inline-flex items-center justify-center gap-2 rounded-full bg-white px-6 py-2 text-sm font-semibold text-[#5ca88d] shadow ring-1 ring-[#5ca88d] transition hover:bg-gray-100"
         >
           <ArrowLeft size={18} />
           {copy.backAnswers}
@@ -1463,7 +2034,7 @@ function AssessmentResults({ answers, onBack, onRestart }) {
         <button
           type="button"
           onClick={onRestart}
-          className="inline-flex items-center justify-center gap-2 rounded-full bg-gradient-to-r from-[#a3c9b9] to-[#7fae9e] px-6 py-2 text-sm font-semibold text-white shadow transition hover:brightness-105"
+          className="inline-flex items-center justify-center gap-2 rounded-full bg-gradient-to-r from-[#d9f4cd] to-[#5ca88d] px-6 py-2 text-sm font-semibold text-white shadow transition hover:brightness-105"
         >
           <RotateCcw size={18} />
           {copy.restart}
@@ -1573,7 +2144,7 @@ function AdminSubscribersPage() {
 
   return (
     <main className="bg-white text-gray-900">
-      <section className="pt-10 pb-10 text-center bg-gradient-to-r from-[#a3c9b9] to-[#7fae9e] text-white">
+      <section className="pt-10 pb-10 text-center bg-gradient-to-r from-[#d9f4cd] to-[#5ca88d] text-white">
         <div className="max-w-5xl mx-auto px-6">
           <p className="text-sm font-semibold uppercase tracking-wide mb-3">{copy.eyebrow}</p>
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-5 leading-tight">
@@ -1588,20 +2159,20 @@ function AdminSubscribersPage() {
       <section className="bg-gray-50 py-10 sm:py-14">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 md:px-12">
           {!isSupabaseConfigured ? (
-            <div className="rounded-xl shadow-lg ring-1 ring-[#7fae9e] bg-white p-5 sm:p-8">
+            <div className="rounded-xl shadow-lg ring-1 ring-[#5ca88d] bg-white p-5 sm:p-8">
               <h2 className="text-2xl font-semibold text-gray-900">{copy.notConfigured}</h2>
               <p className="mt-3 text-gray-700">
                 {copy.notConfiguredText}
               </p>
             </div>
           ) : checkingSession ? (
-            <div className="rounded-xl shadow-lg ring-1 ring-[#7fae9e] bg-white p-5 sm:p-8">
-              <p className="font-semibold text-[#3b5f58]">{copy.checking}</p>
+            <div className="rounded-xl shadow-lg ring-1 ring-[#5ca88d] bg-white p-5 sm:p-8">
+              <p className="font-semibold text-[#5ca88d]">{copy.checking}</p>
             </div>
           ) : !session ? (
-            <form className="mx-auto max-w-md rounded-xl shadow-lg ring-1 ring-[#7fae9e] bg-white p-5 sm:p-8" onSubmit={handleLogin}>
+            <form className="mx-auto max-w-md rounded-xl shadow-lg ring-1 ring-[#5ca88d] bg-white p-5 sm:p-8" onSubmit={handleLogin}>
               <div className="mb-5 flex items-center gap-3">
-                <div className="rounded-full bg-[#cde4dc] p-3 text-[#3b5f58]">
+                <div className="rounded-full bg-[#d9f4cd] p-3 text-[#5ca88d]">
                   <ShieldCheck size={24} />
                 </div>
                 <div>
@@ -1616,7 +2187,7 @@ function AdminSubscribersPage() {
                     type="email"
                     value={form.email}
                     onChange={(event) => setForm((current) => ({ ...current, email: event.target.value }))}
-                    className="w-full h-10 rounded-md border border-gray-300 bg-white px-3 text-gray-900 placeholder:text-gray-500 focus:outline-none focus:ring-2 focus:ring-[#cde4dc]"
+                    className="w-full h-10 rounded-md border border-gray-300 bg-white px-3 text-gray-900 placeholder:text-gray-500 focus:outline-none focus:ring-2 focus:ring-[#d9f4cd]"
                     required
                   />
                 </label>
@@ -1626,14 +2197,14 @@ function AdminSubscribersPage() {
                     type="password"
                     value={form.password}
                     onChange={(event) => setForm((current) => ({ ...current, password: event.target.value }))}
-                    className="w-full h-10 rounded-md border border-gray-300 bg-white px-3 text-gray-900 placeholder:text-gray-500 focus:outline-none focus:ring-2 focus:ring-[#cde4dc]"
+                    className="w-full h-10 rounded-md border border-gray-300 bg-white px-3 text-gray-900 placeholder:text-gray-500 focus:outline-none focus:ring-2 focus:ring-[#d9f4cd]"
                     required
                   />
                 </label>
                 {status.message && <p className="text-sm font-semibold text-red-600">{status.message}</p>}
                 <button
                   type="submit"
-                  className="inline-flex items-center justify-center gap-2 rounded-full bg-gradient-to-r from-[#a3c9b9] to-[#7fae9e] px-6 py-2 text-sm font-semibold text-white shadow transition hover:brightness-105"
+                  className="inline-flex items-center justify-center gap-2 rounded-full bg-gradient-to-r from-[#d9f4cd] to-[#5ca88d] px-6 py-2 text-sm font-semibold text-white shadow transition hover:brightness-105"
                 >
                   {copy.signInButton}
                   <ShieldCheck size={18} />
@@ -1641,7 +2212,7 @@ function AdminSubscribersPage() {
               </div>
             </form>
           ) : !isAdmin ? (
-            <div className="rounded-xl shadow-lg ring-1 ring-[#7fae9e] bg-white p-5 sm:p-8">
+            <div className="rounded-xl shadow-lg ring-1 ring-[#5ca88d] bg-white p-5 sm:p-8">
               <h2 className="text-2xl font-semibold text-gray-900">{copy.accessRequired}</h2>
               <p className="mt-3 text-gray-700">
                 {copy.accessText}
@@ -1650,7 +2221,7 @@ function AdminSubscribersPage() {
               <button
                 type="button"
                 onClick={handleSignOut}
-                className="mt-5 inline-flex items-center justify-center gap-2 rounded-full bg-white px-6 py-2 text-sm font-semibold text-[#3b5f58] shadow ring-1 ring-[#7fae9e] transition hover:bg-gray-100"
+                className="mt-5 inline-flex items-center justify-center gap-2 rounded-full bg-white px-6 py-2 text-sm font-semibold text-[#5ca88d] shadow ring-1 ring-[#5ca88d] transition hover:bg-gray-100"
               >
                 {copy.signOut}
                 <LogOut size={18} />
@@ -1658,15 +2229,15 @@ function AdminSubscribersPage() {
             </div>
           ) : (
             <div className="space-y-5">
-              <div className="flex flex-col gap-3 rounded-xl shadow-lg ring-1 ring-[#7fae9e] bg-white p-5 sm:flex-row sm:items-center sm:justify-between">
+              <div className="flex flex-col gap-3 rounded-xl shadow-lg ring-1 ring-[#5ca88d] bg-white p-5 sm:flex-row sm:items-center sm:justify-between">
                 <div>
-                  <p className="text-sm font-semibold text-[#3b5f58]">{copy.signedIn}</p>
+                  <p className="text-sm font-semibold text-[#5ca88d]">{copy.signedIn}</p>
                   <p className="text-sm text-gray-600">{session.user.email}</p>
                 </div>
                 <button
                   type="button"
                   onClick={handleSignOut}
-                  className="inline-flex items-center justify-center gap-2 rounded-full bg-white px-6 py-2 text-sm font-semibold text-[#3b5f58] shadow ring-1 ring-[#7fae9e] transition hover:bg-gray-100"
+                  className="inline-flex items-center justify-center gap-2 rounded-full bg-white px-6 py-2 text-sm font-semibold text-[#5ca88d] shadow ring-1 ring-[#5ca88d] transition hover:bg-gray-100"
                 >
                   {copy.signOut}
                   <LogOut size={18} />
@@ -1674,22 +2245,22 @@ function AdminSubscribersPage() {
               </div>
 
               {status.message && (
-                <p className={`text-sm font-semibold ${status.type === "error" ? "text-red-600" : "text-[#3b5f58]"}`}>
+                <p className={`text-sm font-semibold ${status.type === "error" ? "text-red-600" : "text-[#5ca88d]"}`}>
                   {status.message}
                 </p>
               )}
 
-              <div className="overflow-hidden rounded-xl shadow-lg ring-1 ring-[#7fae9e] bg-white">
+              <div className="overflow-hidden rounded-xl shadow-lg ring-1 ring-[#5ca88d] bg-white">
                 <div className="overflow-x-auto">
                   <table className="min-w-full text-left text-sm">
-                    <thead className="bg-gradient-to-r from-[#a3c9b9] to-[#7fae9e] text-white">
+                    <thead className="bg-gradient-to-r from-[#d9f4cd] to-[#5ca88d] text-white">
                       <tr>
                         {copy.columns.map((column) => (
                           <th key={column} className="px-4 py-3 font-semibold">{column}</th>
                         ))}
                       </tr>
                     </thead>
-                    <tbody className="divide-y divide-[#cde4dc]">
+                    <tbody className="divide-y divide-[#d9f4cd]">
                       {loadingSubscribers ? (
                         <tr>
                           <td colSpan="8" className="px-4 py-6 text-center text-gray-700">{copy.loading}</td>
@@ -1728,7 +2299,7 @@ function AdminSubscribersPage() {
                               <button
                                 type="button"
                                 onClick={() => toggleUnsubscribed(subscriber)}
-                                className="rounded-full bg-white px-4 py-2 text-xs font-semibold text-[#3b5f58] shadow ring-1 ring-[#7fae9e] transition hover:bg-gray-100"
+                                className="rounded-full bg-white px-4 py-2 text-xs font-semibold text-[#5ca88d] shadow ring-1 ring-[#5ca88d] transition hover:bg-gray-100"
                               >
                                 {subscriber.unsubscribed ? copy.markSubscribed : copy.markUnsubscribed}
                               </button>
@@ -1752,37 +2323,27 @@ export default function NutritionByIballa() {
   const [state, handleSubmit] = useForm("xzzvqdlq");
   const [messageValue, setMessageValue] = useState("");
   const messageRef = useRef(null);
-  const bookingSectionRef = useRef(null);
-  const bookingViewedRef = useRef(false);
   const [navOpen, setNavOpen] = useState(false);
   const { t, i18n } = useTranslation();
   const lang = i18n.language.startsWith("es") ? "es" : "en";
   const uiCopy = getUiContent(lang);
   const localizedBlogPosts = localizeBlogPosts(blogPosts, lang);
-  const [expanded, setExpanded] = useState(false);
   const [expandedServiceKey, setExpandedServiceKey] = useState(null);
-  const [bookingPolicyOpen, setBookingPolicyOpen] = useState(false);
-  const [isMobile, setIsMobile] = useState(false);
   const [path, setPath] = useState(window.location.pathname);
 
   const slug = path.startsWith("/blog/") ? path.replace("/blog/", "") : "";
   const activePost = slug ? localizedBlogPosts.find((post) => post.slug === slug) || getBlogPost(slug) : null;
+  const isAboutRoute = path === "/about";
+  const isServicesRoute = path === "/services";
   const isBlogRoute = path === "/blog";
   const isArticleRoute = path.startsWith("/blog/");
+  const isBookingRoute = path === "/booking";
   const isAssessmentRoute = path === "/nutrition-assessment";
   const isAdminSubscribersRoute = path === "/admin/subscribers";
   const isPrivacyRoute = path === "/privacy-policy";
   const isCookieRoute = path === "/cookie-policy";
+  const isBeyondInjectionRoute = path === "/beyond-the-injection";
   const serviceCopy = servicesContent[lang] || servicesContent.en;
-
-  useEffect(() => {
-    const handleResize = () => {
-      setIsMobile(window.innerWidth < 768); // Tailwind's md breakpoint
-    };
-    handleResize(); // Initial check
-    window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize);
-  }, []);
 
   useEffect(() => {
     const handlePopState = () => setPath(window.location.pathname);
@@ -1802,7 +2363,7 @@ export default function NutritionByIballa() {
         !href ||
         isModifiedClick ||
         anchor.target === "_blank" ||
-        (!href.startsWith("/blog") && !href.startsWith("/nutrition-assessment") && !href.startsWith("/privacy-policy") && !href.startsWith("/cookie-policy") && !href.startsWith("/admin/subscribers") && !href.startsWith("/#"))
+        (!href.startsWith("/about") && !href.startsWith("/services") && !href.startsWith("/booking") && !href.startsWith("/blog") && !href.startsWith("/nutrition-assessment") && !href.startsWith("/beyond-the-injection") && !href.startsWith("/privacy-policy") && !href.startsWith("/cookie-policy") && !href.startsWith("/admin/subscribers") && !href.startsWith("/#"))
       ) {
         return;
       }
@@ -1832,24 +2393,6 @@ export default function NutritionByIballa() {
   }, [messageValue]);
 
   useEffect(() => {
-    const bookingSection = bookingSectionRef.current;
-    if (!bookingSection || typeof IntersectionObserver === "undefined") return undefined;
-
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting && !bookingViewedRef.current) {
-          bookingViewedRef.current = true;
-          trackEvent("booking_section_viewed", { language: lang });
-        }
-      },
-      { threshold: 0.35 }
-    );
-
-    observer.observe(bookingSection);
-    return () => observer.disconnect();
-  }, [lang]);
-
-  useEffect(() => {
     const widgetContainer = document.getElementById("calendly-widget");
     const alreadyLoaded = widgetContainer?.querySelector("iframe");
 
@@ -1866,6 +2409,14 @@ export default function NutritionByIballa() {
   useEffect(() => {
     const title = activePost
       ? `${activePost.title} | Nutrition by Iballa`
+      : isAboutRoute
+        ? `${t("nav.about")} | Nutrition by Iballa`
+      : isServicesRoute
+        ? `${t("nav.services")} | Nutrition by Iballa`
+      : isBookingRoute
+        ? `${t("nav.bookNow")} | Nutrition by Iballa`
+      : isBeyondInjectionRoute
+        ? "Beyond the Injection | GLP-1 Nutrition Programme | Nutrition by Iballa"
       : isAssessmentRoute
         ? `${uiCopy.assessment.title} | Nutrition by Iballa`
       : isAdminSubscribersRoute
@@ -1879,6 +2430,14 @@ export default function NutritionByIballa() {
         : "Nutrition by Iballa";
     const description = activePost
       ? activePost.excerpt
+      : isAboutRoute
+        ? t("about.paragraph1").replace(/<[^>]+>/g, "")
+      : isServicesRoute
+        ? serviceCopy.intro
+      : isBookingRoute
+        ? t("appointments.mealPlanNote")
+      : isBeyondInjectionRoute
+        ? "Beyond the Injection is a 12-week GLP-1 nutrition programme from Nutrition by Iballa, providing structured nutrition education, practical guidance and personalised dietetic support."
       : isAssessmentRoute
         ? uiCopy.assessment.intro
       : isAdminSubscribersRoute
@@ -1898,7 +2457,12 @@ export default function NutritionByIballa() {
     document.title = title;
     upsertMeta("description", description);
     upsertMeta("robots", isAdminSubscribersRoute ? "noindex, nofollow" : "index, follow");
-    upsertCanonical(activePost ? `/blog/${activePost.slug}` : isAdminSubscribersRoute ? "/admin/subscribers" : isCookieRoute ? "/cookie-policy" : isPrivacyRoute ? "/privacy-policy" : isAssessmentRoute ? "/nutrition-assessment" : isBlogRoute ? "/blog" : "/");
+    upsertPropertyMeta("og:title", title);
+    upsertPropertyMeta("og:description", description);
+    upsertPropertyMeta("og:type", activePost ? "article" : "website");
+    upsertPropertyMeta("og:image", `${window.location.origin}${isBeyondInjectionRoute ? beyondInjectionImage : activePost?.image || "/logo.png"}`);
+    upsertPropertyMeta("og:url", `${window.location.origin}${activePost ? `/blog/${activePost.slug}` : isAboutRoute ? "/about" : isServicesRoute ? "/services" : isBookingRoute ? "/booking" : isBeyondInjectionRoute ? "/beyond-the-injection" : isAdminSubscribersRoute ? "/admin/subscribers" : isCookieRoute ? "/cookie-policy" : isPrivacyRoute ? "/privacy-policy" : isAssessmentRoute ? "/nutrition-assessment" : isBlogRoute ? "/blog" : "/"}`);
+    upsertCanonical(activePost ? `/blog/${activePost.slug}` : isAboutRoute ? "/about" : isServicesRoute ? "/services" : isBookingRoute ? "/booking" : isBeyondInjectionRoute ? "/beyond-the-injection" : isAdminSubscribersRoute ? "/admin/subscribers" : isCookieRoute ? "/cookie-policy" : isPrivacyRoute ? "/privacy-policy" : isAssessmentRoute ? "/nutrition-assessment" : isBlogRoute ? "/blog" : "/");
     upsertStructuredData(
       activePost
         ? {
@@ -1918,6 +2482,50 @@ export default function NutritionByIballa() {
             },
             mainEntityOfPage: `${window.location.origin}/blog/${activePost.slug}`
           }
+        : isAboutRoute
+          ? {
+              "@context": "https://schema.org",
+              "@type": "AboutPage",
+              name: `${t("nav.about")} | Nutrition by Iballa`,
+              description,
+              url: `${window.location.origin}/about`
+            }
+        : isServicesRoute
+          ? {
+              "@context": "https://schema.org",
+              "@type": "WebPage",
+              name: `${t("nav.services")} | Nutrition by Iballa`,
+              description,
+              url: `${window.location.origin}/services`
+            }
+        : isBookingRoute
+          ? {
+              "@context": "https://schema.org",
+              "@type": "WebPage",
+              name: `${t("nav.bookNow")} | Nutrition by Iballa`,
+              description,
+              url: `${window.location.origin}/booking`
+            }
+        : isBeyondInjectionRoute
+          ? {
+              "@context": "https://schema.org",
+              "@type": "Course",
+              name: "Beyond the Injection",
+              description,
+              image: `${window.location.origin}${beyondInjectionImage}`,
+              provider: {
+                "@type": "Organization",
+                name: "Nutrition by Iballa",
+                url: window.location.origin
+              },
+              offers: {
+                "@type": "Offer",
+                price: "399",
+                priceCurrency: "EUR",
+                url: beyondInjectionUrl,
+                availability: "https://schema.org/InStock"
+              }
+            }
         : isAssessmentRoute
           ? {
             "@context": "https://schema.org",
@@ -1966,62 +2574,31 @@ export default function NutritionByIballa() {
               url: window.location.origin
             }
     );
-  }, [activePost, i18n.language, isAdminSubscribersRoute, isAssessmentRoute, isBlogRoute, isCookieRoute, isPrivacyRoute, t, uiCopy]);
-
- const appointmentTypes = {
-  en: [
-    {
-      key: "freeCall",
-      icon: Clock,
-      primary: true,
-      calendlyUrl: calendlyUrls.enFreeCall
-    },
-    {
-      key: "initial",
-      icon: Calendar,
-      calendlyUrl: "https://calendly.com/iballa-mtzyanes/initial-consultation"
-    },
-    {
-      key: "review",
-      icon: RotateCcw,
-      calendlyUrl: "https://calendly.com/iballa-mtzyanes/review-consultation"
-    }
-  ],
-  es: [
-    {
-      key: "freeCall",
-      icon: Clock,
-      primary: true,
-      calendlyUrl: calendlyUrls.esFreeCall
-    },
-    {
-      key: "initial",
-      icon: Calendar,
-      calendlyUrl: "https://calendly.com/iballa-mtzyanes/consulta-inicial"
-    },
-    {
-      key: "review",
-      icon: RotateCcw,
-      calendlyUrl: "https://calendly.com/iballa-mtzyanes/consulta-seguimiento"
-    }
-  ]
-};
+  }, [activePost, i18n.language, isAboutRoute, isAdminSubscribersRoute, isAssessmentRoute, isBeyondInjectionRoute, isBlogRoute, isBookingRoute, isCookieRoute, isPrivacyRoute, isServicesRoute, serviceCopy.intro, t, uiCopy]);
 
   return (
    <div className="overflow-x-hidden bg-white text-gray-900 font-sans">
     {/* Header */}
-  <header className="h-24 shadow-md bg-white relative z-[999]">
+  <header className="sticky top-0 h-24 shadow-md bg-white z-[999]">
   <div className="mx-auto flex h-full w-full max-w-screen-2xl items-center justify-between gap-3 px-3 sm:px-4 lg:px-10 relative z-[1000]">
-    <img src="/logo.png" alt={t("logoAlt")} className="h-16 w-[140px] object-contain sm:h-20 sm:w-[180px] lg:h-24 lg:w-[210px]" />
+    <a href="/" aria-label={t("nav.home")} className="inline-flex shrink-0">
+      <img src="/logo.png" alt={t("logoAlt")} className="h-16 w-[140px] object-contain sm:h-20 sm:w-[180px] lg:h-24 lg:w-[210px]" />
+    </a>
 
     <div className="flex shrink-0 items-center gap-2 sm:gap-4 md:gap-6 relative z-[1000]">
       <LanguageDropdown />
-      <nav className="hidden md:flex space-x-6 lg:text-base xl:text-lg">
-        <a href="/">{t("nav.home")}</a>
-        <a href="/#appointments">{t("nav.appointments")}</a>
-        <a href="/nutrition-assessment">{uiCopy.nav.assessment}</a>
-        <a href="/blog">{uiCopy.nav.blog}</a>
+      <nav className="hidden md:flex items-center space-x-6 lg:text-base xl:text-lg">
+        <a href="/about">{t("nav.about")}</a>
+        <a href="/services">{t("nav.services")}</a>
+        <a href="/beyond-the-injection">{t("nav.glp1")}</a>
+        <a href="/blog">{t("nav.blog")}</a>
         <a href="/#contact">{t("nav.contact")}</a>
+        <a
+          href="/booking"
+          className="inline-flex min-h-11 items-center justify-center rounded-full bg-[#5ca88d] px-6 py-2 text-sm font-semibold text-white shadow transition hover:opacity-90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#5ca88d] focus-visible:ring-offset-2 xl:text-base"
+        >
+          {t("nav.bookNow")}
+        </a>
       </nav>
 
       {/* Mobile Toggle */}
@@ -2037,20 +2614,27 @@ export default function NutritionByIballa() {
   {/* Mobile Navigation */}
   {navOpen && (
     <nav className="absolute top-24 left-0 w-full bg-white shadow-md flex flex-col items-center space-y-4 p-6 z-60 md:hidden">
-      <a href="/" onClick={() => setNavOpen(false)}>
-        {t("nav.home")}
+      <a href="/about" onClick={() => setNavOpen(false)}>
+        {t("nav.about")}
       </a>
-      <a href="/#appointments" onClick={() => setNavOpen(false)}>
-        {t("nav.appointments")}
+      <a href="/services" onClick={() => setNavOpen(false)}>
+        {t("nav.services")}
       </a>
-      <a href="/nutrition-assessment" onClick={() => setNavOpen(false)}>
-        {uiCopy.nav.assessment}
+      <a href="/beyond-the-injection" onClick={() => setNavOpen(false)}>
+        {t("nav.glp1")}
       </a>
       <a href="/blog" onClick={() => setNavOpen(false)}>
-        {uiCopy.nav.blog}
+        {t("nav.blog")}
       </a>
       <a href="/#contact" onClick={() => setNavOpen(false)}>
         {t("nav.contact")}
+      </a>
+      <a
+        href="/booking"
+        onClick={() => setNavOpen(false)}
+        className="inline-flex min-h-11 items-center justify-center rounded-full bg-[#5ca88d] px-6 py-2 text-sm font-semibold text-white shadow transition hover:opacity-90"
+      >
+        {t("nav.bookNow")}
       </a>
     </nav>
   )}
@@ -2059,6 +2643,18 @@ export default function NutritionByIballa() {
 
 {isBlogRoute ? (
   <BlogOverview />
+) : isAboutRoute ? (
+  <AboutPage />
+) : isServicesRoute ? (
+  <ServicesPage
+    title={t("nav.services")}
+    serviceCopy={serviceCopy}
+    expandedServiceKey={expandedServiceKey}
+    setExpandedServiceKey={setExpandedServiceKey}
+    lang={lang}
+  />
+) : isBookingRoute ? (
+  <BookingPage />
 ) : isAssessmentRoute ? (
   <NutritionAssessmentPage />
 ) : isAdminSubscribersRoute ? (
@@ -2067,6 +2663,8 @@ export default function NutritionByIballa() {
   <PrivacyPolicyPage />
 ) : isCookieRoute ? (
   <CookiePolicyPage />
+) : isBeyondInjectionRoute ? (
+  <BeyondTheInjectionPage />
 ) : isArticleRoute && activePost ? (
   <BlogArticle post={activePost} />
 ) : isArticleRoute ? (
@@ -2075,7 +2673,7 @@ export default function NutritionByIballa() {
     <p className="text-gray-700 mb-6">{uiCopy.blog.notFoundText}</p>
     <a
       href="/blog"
-      className="inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-[#a3c9b9] to-[#7fae9e] px-6 py-2 text-sm font-semibold text-white shadow hover:brightness-105 transition"
+      className="inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-[#d9f4cd] to-[#5ca88d] px-6 py-2 text-sm font-semibold text-white shadow hover:brightness-105 transition"
     >
       <ArrowLeft size={18} />
       {uiCopy.blog.back}
@@ -2084,30 +2682,68 @@ export default function NutritionByIballa() {
 ) : (
 <>
 {/* Hero Section */}
-<section className="pt-10 pb-10 text-center bg-gradient-to-r from-[#a3c9b9] to-[#7fae9e] text-white lg:py-16 xl:py-20">
-  <div className="mx-auto w-full max-w-screen-2xl px-4 sm:px-6 lg:px-12 xl:px-20">
-
-    {/* Title */}
-    <div className="mx-auto w-full max-w-4xl">
-      <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold mb-6 leading-tight">
-        {t("hero.title") || "Nutrición by Iballa"}
-      </h1>
-    </div>
-
-    {/* Paragraph */}
-    <div className="mx-auto w-full max-w-5xl lg:max-w-6xl xl:max-w-7xl">
-      <p className="mb-6 break-words text-justify text-base leading-relaxed sm:text-lg lg:text-xl xl:text-2xl">
+<section className="bg-white text-[#294b43]">
+  <div className="mx-auto grid min-h-[calc(100vh-6rem)] w-full max-w-screen-2xl items-center gap-8 px-5 pb-0 pt-8 sm:px-8 md:grid-cols-[minmax(0,0.95fr)_minmax(18rem,1.05fr)] md:px-12 lg:min-h-[42rem] lg:px-16 xl:px-20">
+    <div className="z-10 max-w-3xl text-left md:justify-self-center">
+      <h1 className="max-w-5xl text-4xl font-semibold leading-[1.05] text-[#294b43] sm:text-5xl lg:text-6xl xl:text-[4rem]">
         {t("hero.subtitle")}
+      </h1>
+      <p className="mt-6 max-w-4xl text-base leading-relaxed text-[#0f2f2b] sm:text-lg lg:text-xl xl:whitespace-nowrap">
+        {t("hero.supporting")}
       </p>
+      <a
+        href="/nutrition-assessment"
+        onClick={() => trackEvent("nutrition_assessment_clicked", { language: lang, location: "hero_assessment" })}
+        className="mt-8 inline-flex min-h-12 items-center justify-center gap-2 rounded-full bg-[#5ca88d] px-7 py-3 text-sm font-semibold text-white shadow-lg shadow-[#294b43]/15 transition hover:opacity-90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#5ca88d] focus-visible:ring-offset-2 sm:text-base"
+      >
+        <ClipboardList size={18} aria-hidden="true" />
+        {t("hero.assessmentCta")}
+      </a>
     </div>
 
-    {/* Button */}
-    <div className="mx-auto w-full max-w-xl">
+    <div className="flex min-h-[26rem] items-end justify-center self-end overflow-hidden md:min-h-[34rem] lg:min-h-[39rem] xl:min-h-[43rem]">
+      <img
+        src="/hero-iballa-cutout-transparent.png"
+        alt="Iballa Martinez, registered dietitian"
+        className="max-h-[34rem] w-auto max-w-[115%] object-contain object-bottom drop-shadow-[0_24px_34px_rgba(41,75,67,0.16)] md:max-h-[40rem] lg:max-h-[46rem] xl:max-h-[50rem]"
+      />
+    </div>
+  </div>
+</section>
+
+<section className="bg-[#d9f4cd] px-5 py-10 text-[#294b43] sm:px-8 sm:py-12 lg:px-16 lg:py-14 xl:px-20">
+  <div className="mx-auto grid max-w-screen-2xl items-center gap-8 md:grid-cols-[minmax(0,0.95fr)_minmax(18rem,1.05fr)]">
+    <div>
+      <p className="mb-4 text-sm font-semibold uppercase tracking-[0.18em] text-[#5ca88d]">
+        {t("hero.discoveryEyebrow")}
+      </p>
+      <h2 className="max-w-4xl text-3xl font-semibold leading-[1.08] text-[#294b43] sm:text-4xl lg:text-5xl xl:text-6xl">
+        {t("hero.discoveryTitle")}
+      </h2>
+      <p className="mt-6 max-w-2xl text-base leading-relaxed text-[#0f2f2b] sm:text-lg lg:text-xl">
+        {t("hero.discoveryText")}
+      </p>
+      {t("hero.discoverySupporting") && (
+        <p className="mt-3 max-w-2xl text-sm leading-relaxed text-[#0f2f2b] sm:text-base">
+          {t("hero.discoverySupporting")}
+        </p>
+      )}
+    </div>
+    <div className="rounded-xl bg-white p-6 shadow-lg ring-1 ring-[#5ca88d]/30 sm:p-8">
+      <p className="text-sm font-semibold uppercase tracking-[0.16em] text-[#5ca88d]">{lang === "es" ? "15 minutos" : "15 minutes"}</p>
+      <h3 className="mt-3 text-3xl font-semibold text-[#294b43] sm:text-4xl">{t("appointments.types.freeCall.title")}</h3>
+      <p className="mt-4 text-base leading-relaxed text-gray-700">
+        {Array.isArray(t("appointments.types.freeCall.description", { returnObjects: true }))
+          ? t("appointments.types.freeCall.description", { returnObjects: true })[0]
+          : t("appointments.types.freeCall.description")}
+      </p>
+      <div className="mt-6 h-2 rounded-full bg-[#ffb3b3]" aria-hidden="true"></div>
       <a
-        href="#appointments"
-        onClick={() => trackEvent("booking_cta_clicked", { language: lang, location: "hero" })}
-        className="inline-block rounded-full bg-white px-6 py-2 font-semibold text-[#3b5f58] shadow transition hover:bg-gray-100 lg:px-8 lg:py-3 lg:text-lg"
+        href="/booking"
+        onClick={() => trackEvent("booking_cta_clicked", { language: lang, location: "hero_discovery_card" })}
+        className="mt-6 inline-flex min-h-12 items-center justify-center gap-2 rounded-full bg-[#5ca88d] px-6 py-3 text-sm font-semibold text-white shadow transition hover:opacity-90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#5ca88d] focus-visible:ring-offset-2"
       >
+        <Calendar size={18} aria-hidden="true" />
         {t("hero.cta")}
       </a>
     </div>
@@ -2115,338 +2751,39 @@ export default function NutritionByIballa() {
 </section>
 
 
- <section id="services" className="relative overflow-hidden bg-[#f7faf8]">
-  {/* Background Image Layer */}
-  <img
-    src="/banner2.png"
-    alt=""
-    className="absolute inset-0 w-full h-full object-cover object-top sm:object-center z-0"
-  />
+<BeyondInjectionPromo />
 
-  {/* Optional overlay for readability */}
-  <div className="absolute inset-0 bg-white/90 z-10"></div>
-
-  {/* Content Layer */}
-  <div className="relative z-20 px-4 py-12 sm:px-8 sm:py-16 md:px-12 lg:px-16 xl:px-20 xl:py-20">
-    <div className="mx-auto mb-9 max-w-5xl text-center lg:mb-12">
-    <h2 className="mb-3 text-3xl font-semibold text-[#294b43] sm:text-4xl lg:text-5xl">
-      {t("services.heading")}
-    </h2>
-      <p className="text-base leading-relaxed text-gray-700 sm:text-lg lg:text-xl">{serviceCopy.intro}</p>
+<section className="bg-white px-5 py-12 sm:px-8 sm:py-16 lg:px-16 lg:py-20 xl:px-20" aria-labelledby="testimonials-heading">
+  <div className="mx-auto max-w-screen-2xl">
+    <div className="mx-auto mb-9 max-w-4xl text-center lg:mb-12">
+      <p className="mb-3 text-sm font-semibold uppercase tracking-[0.18em] text-[#5ca88d]">
+        Nutrition by Iballa
+      </p>
+      <h2 id="testimonials-heading" className="text-3xl font-semibold text-[#294b43] sm:text-4xl lg:text-5xl">
+        {t("testimonials.heading")}
+      </h2>
     </div>
-    <div className="mx-auto grid max-w-screen-2xl grid-cols-1 gap-3 min-[430px]:grid-cols-2 md:gap-5 xl:gap-8">
-      {serviceCopy.services.map((service) => {
-        const Icon = serviceIcons[service.icon];
-        const isExpanded = expandedServiceKey === service.key;
-        const panelId = `service-panel-${service.key}`;
-        return (
-          <motion.article
-            key={service.key}
-            layout
-            transition={{ layout: { duration: 0.25, ease: "easeOut" } }}
-            className={`min-h-0 overflow-hidden rounded-2xl border bg-white transition-[box-shadow,border-color] duration-300 ${
-              isExpanded
-                ? "min-[430px]:col-span-2 border-[#7fae9e] shadow-[0_12px_36px_rgba(59,95,88,0.14)]"
-                : "border-[#cde4dc] shadow-[0_8px_30px_rgba(59,95,88,0.09)] hover:shadow-[0_12px_36px_rgba(59,95,88,0.14)]"
-            }`}
-          >
-            <div>
-              <button
-                type="button"
-                aria-expanded={isExpanded}
-                aria-controls={panelId}
-                aria-label={`${isExpanded ? serviceCopy.readLess : serviceCopy.readMore}: ${service.title}`}
-                onClick={() => setExpandedServiceKey(isExpanded ? null : service.key)}
-                className="group relative block w-full p-3 pr-11 text-left transition-colors hover:bg-[#f7fbf9] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-[#477b6c] sm:p-5 sm:pr-14 md:p-6 md:pr-16 xl:p-8 xl:pr-20"
-              >
-                <span className="absolute right-3 top-3 flex h-8 w-8 items-center justify-center rounded-full bg-[#edf6f2] text-[#315f55] transition group-hover:bg-[#dceee7] sm:right-5 sm:top-5 xl:right-8 xl:top-8 xl:h-10 xl:w-10">
-                  {isExpanded ? <ChevronUp size={18} aria-hidden="true" /> : <ChevronDown size={18} aria-hidden="true" />}
-                </span>
-                <span className="flex flex-col items-start gap-3 sm:flex-row sm:gap-4 xl:gap-6">
-                  <span className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-xl sm:h-12 sm:w-12 xl:h-16 xl:w-16 ${service.iconBackground}`}>
-                    <Icon size={23} className={`${service.iconColor} sm:h-[27px] sm:w-[27px] xl:h-9 xl:w-9`} aria-hidden="true" />
-                  </span>
-                  <span>
-                    <span role="heading" aria-level="3" className="block text-[15px] font-semibold leading-snug text-[#294b43] sm:text-lg md:text-xl xl:text-2xl">{service.title}</span>
-                    <span className="mt-2 block text-xs leading-relaxed text-gray-700 sm:text-sm md:text-[15px] xl:text-lg">{service.summary}</span>
-                  </span>
-                </span>
-              </button>
-
-              <AnimatePresence initial={false}>
-                {isExpanded && (
-                  <motion.div
-                    id={panelId}
-                    role="region"
-                    aria-label={service.title}
-                    initial={{ height: 0, opacity: 0 }}
-                    animate={{ height: "auto", opacity: 1 }}
-                    exit={{ height: 0, opacity: 0 }}
-                    transition={{ height: { duration: 0.25, ease: "easeOut" }, opacity: { duration: 0.18 } }}
-                    className="overflow-hidden px-3 pb-3 sm:px-5 sm:pb-5 md:px-6 md:pb-6 xl:px-8 xl:pb-8"
-                  >
-                    <div className="border-t border-[#dbeae4] pt-4 sm:pt-5">
-                      <div className="grid gap-4 md:grid-cols-3 md:gap-5 xl:gap-8">
-                        <div>
-                          <h4 className="font-semibold text-[#315f55] xl:text-lg">{serviceCopy.headings.what}</h4>
-                          <p className="mt-2 text-sm leading-relaxed text-gray-700 xl:text-base">{service.what}</p>
-                        </div>
-                        <div>
-                          <h4 className="font-semibold text-[#315f55] xl:text-lg">{serviceCopy.headings.who}</h4>
-                          <p className="mt-2 text-sm leading-relaxed text-gray-700 xl:text-base">{service.who}</p>
-                        </div>
-                        <div>
-                          <h4 className="font-semibold text-[#315f55] xl:text-lg">{serviceCopy.headings.expect}</h4>
-                          <p className="mt-2 text-sm leading-relaxed text-gray-700 xl:text-base">{service.expect}</p>
-                        </div>
-                      </div>
-                      <div className="mt-5 rounded-xl bg-[#edf6f2] p-4 sm:p-5 xl:p-6">
-                        <h4 className="font-semibold text-[#294b43] xl:text-lg">{serviceCopy.headings.book}</h4>
-                        <p className="mt-1 text-sm leading-relaxed text-gray-700 xl:text-base">{serviceCopy.bookingText}</p>
-                        <div className="mt-4 flex flex-wrap gap-3">
-                          <a
-                            href="#appointments"
-                            onClick={() => trackEvent("booking_cta_clicked", { language: lang, location: "service_card", service: service.key })}
-                            className="inline-flex min-h-11 items-center justify-center rounded-full bg-[#477b6c] px-5 py-2 text-sm font-semibold text-white transition hover:bg-[#365f54] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#315f55] focus-visible:ring-offset-2"
-                          >
-                            {serviceCopy.bookConsultation}
-                          </a>
-                          <a
-                            href="#contact"
-                            className="inline-flex min-h-11 items-center justify-center rounded-full border-2 border-[#7fae9e] bg-white px-5 py-2 text-sm font-semibold text-[#315f55] transition hover:bg-gray-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#315f55] focus-visible:ring-offset-2"
-                          >
-                            {serviceCopy.contactMe}
-                          </a>
-                        </div>
-                      </div>
-                    </div>
-                  </motion.div>
-                )}
-              </AnimatePresence>
-            </div>
-          </motion.article>
-        );
-      })}
-    </div>
-
-  </div>
-</section>
-
-
-      {/* About */}
- <section id="about" className="px-5 py-10 sm:p-12 lg:px-16 lg:py-20 xl:px-20 bg-gradient-to-r from-[#a3c9b9] to-[#7fae9e] text-white">
-      <div className="mx-auto flex max-w-screen-xl flex-col items-center gap-8 md:flex-row lg:gap-14 xl:max-w-screen-2xl xl:gap-20">
-        <img
-          src="/profile1.png"
-          alt="Iballa Martinez"
-          className="rounded-full h-48 md:h-80 lg:h-[28rem] xl:h-[32rem] shadow-lg border-4 border-white"
-        />
-        <div className="text-left">
-          <h2 className="text-3xl font-semibold mb-4 lg:text-5xl">{t("about.heading")}</h2>
-
-          <p
-            className="text-justify text-[15px] md:text-lg lg:text-xl leading-relaxed max-w-md md:max-w-3xl xl:max-w-4xl mb-4"
-            dangerouslySetInnerHTML={{ __html: t("about.paragraph1") }}
-          />
-          <p
-            className="text-justify text-[15px] md:text-lg lg:text-xl leading-relaxed max-w-md md:max-w-3xl xl:max-w-4xl mb-4"
-            dangerouslySetInnerHTML={{ __html: t("about.paragraph2") }}
-          />
-
-          {/* Mobile-only toggle */}
-          {isMobile ? (
-            <>
-              {expanded && (
-                <>
-                  <p
-                    className="text-justify text-[15px] md:text-lg lg:text-xl leading-relaxed max-w-md md:max-w-3xl xl:max-w-4xl mb-4"
-                    dangerouslySetInnerHTML={{ __html: t("about.paragraph3") }}
-                  />
-                  <p
-                    className="text-justify text-[15px] md:text-lg lg:text-xl leading-relaxed max-w-md md:max-w-3xl xl:max-w-4xl mb-4"
-                    dangerouslySetInnerHTML={{ __html: t("about.paragraph4") }}
-                  />
-                </>
-              )}
-              <button
-                onClick={() => setExpanded(!expanded)}
-                className="mt-2 text-sm underline text-white hover:text-gray-200 transition"
-              >
-                {expanded ? uiCopy.common.readLess : uiCopy.common.readMore}
-              </button>
-            </>
-          ) : (
-            <>
-              {/* Always show on desktop */}
-              <p
-                className="text-justify text-[15px] md:text-lg lg:text-xl leading-relaxed max-w-md md:max-w-3xl xl:max-w-4xl mb-4"
-                dangerouslySetInnerHTML={{ __html: t("about.paragraph3") }}
-              />
-              <p
-                className="text-justify text-[15px] md:text-lg lg:text-xl leading-relaxed max-w-md md:max-w-3xl xl:max-w-4xl mb-4"
-                dangerouslySetInnerHTML={{ __html: t("about.paragraph4") }}
-              />
-            </>
-          )}
-        </div>
-      </div>
-    </section>
-	
-{/* Appointments */}
-<section
-  id="appointments"
-  ref={bookingSectionRef}
-  className="relative bg-gray-50 pt-8 pb-12 sm:pt-12 sm:pb-20 lg:py-20"
->
-  {/* Overlay for readability */}
-  <div className="absolute inset-0 bg-white/70 z-0"></div>
-
-  {/* Centered Title */}
-  <div className="relative z-10 text-center mb-8 sm:mb-12">
-    <h2 className="text-3xl font-semibold lg:text-5xl">
-      {t("appointments.heading")}
-    </h2>
-  </div>
-
-  {/* Responsive Layout: Cards first on mobile, image second */}
-  <div className="relative z-10 mx-auto grid w-full max-w-screen-xl items-start gap-8 px-4 sm:px-6 md:px-10 lg:grid-cols-[minmax(0,1.05fr)_minmax(0,1fr)] lg:gap-12 xl:max-w-screen-2xl xl:px-20">
-    
-    {/* Appointment Cards */}
-    <div className="order-1 flex w-full flex-col items-center justify-center">
-      <div className="flex w-full flex-col items-center gap-4 sm:gap-6">
-        {appointmentTypes[lang].map((service) => {
-          const Icon = service.icon;
-          const bookingUrlMissing = service.calendlyUrl === "#";
-          return (
-            <div
-              key={service.key}
-              className={`rounded-xl shadow-lg transition-all duration-200 overflow-hidden flex flex-col w-full ${
-                service.primary
-                  ? "ring-2 ring-[#315f55] bg-white"
-                  : "ring-1 ring-[#7fae9e] hover:ring-2"
-              }`}
-            >
-              {/* Card Header */}
-              <div className={`flex flex-col items-center justify-center gap-2 text-white p-4 lg:p-5 ${
-                service.primary ? "bg-[#315f55]" : "bg-gradient-to-r from-[#a3c9b9] to-[#7fae9e]"
-              }`}>
-                {service.primary && (
-                  <span className="rounded-full bg-white/95 px-3 py-1 text-xs font-semibold uppercase tracking-wide text-[#315f55]">
-                    {t("appointments.recommended")}
-                  </span>
-                )}
-                <div className="flex items-center justify-center">
-                  <Icon size={32} className="mr-2 lg:h-10 lg:w-10" />
-                  <h3 className="text-lg font-bold lg:text-2xl">
-                    {t(`appointments.types.${service.key}.title`)}
-                  </h3>
-                </div>
-              </div>
-
-              {/* Card Body */}
-              <div className="flex-grow flex flex-col items-center justify-center bg-white text-gray-800 px-4 py-3 sm:px-6 sm:py-4 lg:px-8 lg:py-6 text-xs sm:text-sm md:text-base lg:text-lg text-justify">
-                {service.primary && (
-                  <p className="mb-3 rounded-full bg-[#edf6f2] px-4 py-2 text-center text-sm font-semibold text-[#315f55] lg:text-base">
-                    {t("appointments.startHere")}
-                  </p>
-                )}
-                {(() => {
-  const desc = t(`appointments.types.${service.key}.description`, { returnObjects: true });
-
-  return Array.isArray(desc) ? (
-    <div className="space-y-3 text-center text-xs leading-relaxed sm:text-sm md:text-base lg:text-lg">
-      {desc.map((item, idx) => (
-        <p key={idx}>{item}</p>
+    <div className="grid gap-5 lg:grid-cols-3 xl:gap-8">
+      {t("testimonials.items", { returnObjects: true }).map((item) => (
+        <article key={item.title} className="flex h-full flex-col rounded-xl bg-white p-5 shadow-lg ring-1 ring-[#d9f4cd] sm:p-6">
+          <h3 className="text-xl font-semibold leading-snug text-[#294b43] sm:text-2xl">
+            {item.title}
+          </h3>
+          <blockquote className="mt-5 border-l-4 border-[#ffb3b3] pl-4 text-sm leading-relaxed text-gray-700 sm:text-base">
+            {item.review.split("\n\n").map((paragraph) => (
+              <p key={paragraph} className="mb-4 last:mb-0">
+                {paragraph}
+              </p>
+            ))}
+          </blockquote>
+        </article>
       ))}
-    </div>
-  ) : (
-    <p className="text-xs sm:text-sm md:text-base lg:text-lg text-center leading-relaxed">
-      {desc}
-    </p>
-  );
-})()}
-
-                <a
-                  href={service.calendlyUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  aria-disabled={bookingUrlMissing}
-                  onClick={(event) => {
-                    trackEvent("appointment_type_selected", { language: lang, appointmentType: service.key });
-                    if (bookingUrlMissing) {
-                      event.preventDefault();
-                    }
-                  }}
-                  className={`mt-4 rounded-full px-6 py-2 text-xs font-semibold transition lg:px-8 lg:py-3 lg:text-base ${
-                    bookingUrlMissing
-                      ? "cursor-not-allowed bg-gray-300 text-gray-600"
-                      : service.primary
-                        ? "bg-[#315f55] text-white hover:bg-[#25463f]"
-                        : "bg-gradient-to-r from-[#a3c9b9] to-[#7fae9e] text-white hover:brightness-105"
-                  }`}
-                >
-                  {t(`appointments.types.${service.key}.cta`, { defaultValue: t("appointments.cta") })}
-                </a>
-                {bookingUrlMissing && (
-                  <p className="mt-2 text-center text-xs leading-relaxed text-gray-600">
-                    {t("appointments.missingFreeCallUrl")}
-                  </p>
-                )}
-              </div>
-            </div>
-          );
-        })}
-        <div className="w-full rounded-xl bg-white p-4 text-left shadow-lg ring-1 ring-[#7fae9e] sm:p-5 lg:p-6">
-          <p className="text-sm leading-relaxed text-gray-700 lg:text-base">
-            {t("appointments.mealPlanNote")}
-          </p>
-          <button
-            type="button"
-            aria-expanded={bookingPolicyOpen}
-            aria-controls="booking-policy-details"
-            onClick={() => setBookingPolicyOpen((open) => !open)}
-            className="mt-4 inline-flex w-full items-center justify-between gap-3 rounded-full border border-[#b7d5c9] px-4 py-2 text-left text-sm font-semibold text-[#294b43] transition hover:bg-[#f7fbf9] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#315f55]"
-          >
-            <span>{t("appointments.policyHeading")}</span>
-            {bookingPolicyOpen ? <ChevronUp size={18} aria-hidden="true" /> : <ChevronDown size={18} aria-hidden="true" />}
-          </button>
-          <AnimatePresence initial={false}>
-            {bookingPolicyOpen && (
-              <motion.div
-                id="booking-policy-details"
-                initial={{ height: 0, opacity: 0 }}
-                animate={{ height: "auto", opacity: 1 }}
-                exit={{ height: 0, opacity: 0 }}
-                transition={{ height: { duration: 0.22, ease: "easeOut" }, opacity: { duration: 0.16 } }}
-                className="overflow-hidden"
-              >
-                <ul className="mt-3 list-disc space-y-2 pl-5 text-sm leading-relaxed text-gray-700">
-                  {t("appointments.policy", { returnObjects: true }).map((item) => (
-                    <li key={item}>{item}</li>
-                  ))}
-                </ul>
-              </motion.div>
-            )}
-          </AnimatePresence>
-        </div>
-      </div>
-    </div>
-
-    <div className="order-2 w-full">
-      <div className="min-h-52 w-full rounded-xl bg-no-repeat bg-cover bg-center shadow-lg sm:min-h-72 lg:min-h-[32rem] xl:min-h-[38rem]" style={{ backgroundImage: "url('/banner1.png')" }}></div>
-      <div className="mt-20 hidden justify-center lg:flex xl:mt-24">
-        <img
-          src="/logo.png"
-          alt={t("logoAlt")}
-          className="h-48 w-auto object-contain xl:h-60"
-        />
-      </div>
     </div>
   </div>
 </section>
 
      {/* Contact */}
-<section id="contact" className="p-8 sm:p-12 lg:px-16 lg:py-20 xl:px-20 bg-gradient-to-r from-[#a3c9b9] to-[#7fae9e] text-white text-center">
+<section id="contact" className="bg-[#ffb3b3] p-8 text-center text-[#294b43] sm:p-12 lg:px-16 lg:py-20 xl:px-20">
   <h2 className="text-3xl font-semibold mb-4 lg:text-5xl">{t("contact.heading")}</h2>
 
   <p
@@ -2455,7 +2792,7 @@ export default function NutritionByIballa() {
   />
 
   {state.succeeded ? (
-    <p className="text-white text-lg">{t("contact.success")}</p>
+    <p className="text-lg text-[#294b43]">{t("contact.success")}</p>
   ) : (
     <form className="max-w-xl lg:max-w-3xl mx-auto w-full space-y-4 lg:space-y-5" onSubmit={handleSubmit}>
       {/* Name */}
@@ -2500,7 +2837,7 @@ export default function NutritionByIballa() {
         className="w-full resize-y rounded-md border border-gray-300 bg-white px-3 py-2 lg:px-5 lg:py-4 lg:text-lg text-gray-900 placeholder:text-gray-500 focus:outline-none focus:ring-2 focus:ring-white"
       />
 
-      <p className="text-sm lg:text-base text-white/80">{t("contact.fields.note")}</p>
+      <p className="text-sm text-[#294b43]/75 lg:text-base">{t("contact.fields.note")}</p>
 
       {/* Submit */}
       <div className="text-center pt-2">
@@ -2578,16 +2915,16 @@ export default function NutritionByIballa() {
           </div>
 
           {/* Policies */}
-          <div className="flex w-full flex-wrap items-center justify-center gap-x-4 gap-y-2 border-t border-[#e2eee9] pt-3 text-[11px] font-semibold lg:text-xs">
+          <div className="flex w-full flex-wrap items-center justify-center gap-x-4 gap-y-2 border-t border-[#d9f4cd] pt-3 text-[11px] font-semibold lg:text-xs">
             <a
               href="/privacy-policy"
-              className="text-[#3b5f58] underline underline-offset-2 hover:text-[#7fae9e]"
+              className="text-[#5ca88d] underline underline-offset-2 hover:text-[#5ca88d]"
             >
               {t("footer.privacyPolicy")}
             </a>
             <a
               href="/cookie-policy"
-              className="text-[#3b5f58] underline underline-offset-2 hover:text-[#7fae9e]"
+              className="text-[#5ca88d] underline underline-offset-2 hover:text-[#5ca88d]"
             >
               {t("footer.cookiePolicy")}
             </a>
@@ -2598,4 +2935,7 @@ export default function NutritionByIballa() {
     </div>
   );
 }
+
+
+
 

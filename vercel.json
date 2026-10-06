@@ -9,7 +9,23 @@
       "destination": "/"
     },
     {
+      "source": "/about",
+      "destination": "/"
+    },
+    {
+      "source": "/services",
+      "destination": "/"
+    },
+    {
+      "source": "/booking",
+      "destination": "/"
+    },
+    {
       "source": "/nutrition-assessment",
+      "destination": "/"
+    },
+    {
+      "source": "/beyond-the-injection",
       "destination": "/"
     },
     {

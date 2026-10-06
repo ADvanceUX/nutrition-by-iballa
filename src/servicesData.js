@@ -1,9 +1,9 @@
 export const servicesContent = {
   en: {
-    intro: "Personalised nutrition support for the health concerns and everyday challenges that matter most to you.",
+    intro: "",
     readMore: "Read More",
     readLess: "Read Less",
-    bookConsultation: "Find the Right Service",
+    bookConsultation: "Book Now",
     contactMe: "Contact Me",
     headings: {
       what: "What is this service?",
@@ -11,14 +11,14 @@ export const servicesContent = {
       expect: "What can you expect?",
       book: "Book a consultation"
     },
-    bookingText: "Ready to talk through your goals? Start with a free introductory call, book a consultation, or get in touch with a question.",
+    bookingText: "",
     services: [
       {
         key: "weight-management",
         icon: "scale",
         iconColor: "text-emerald-600",
         iconBackground: "bg-emerald-100",
-        title: "Weight Loss & Weight Management",
+        title: "Weight Management",
         summary: "Personalised nutrition support to help you lose weight, build healthier habits, and maintain your progress long term without restrictive dieting.",
         what: "A supportive, realistic approach to sustainable fat loss and weight management. We focus on balanced nutrition and habits you can maintain, rather than fad diets or quick fixes.",
         who: "For anyone who wants to manage their weight, improve eating habits, feel more in control around food, or move away from repeated cycles of restrictive dieting.",
@@ -82,10 +82,10 @@ export const servicesContent = {
     ]
   },
   es: {
-    intro: "Apoyo nutricional personalizado para los problemas de salud y los retos cotidianos que más te importan.",
+    intro: "",
     readMore: "Leer más",
     readLess: "Leer menos",
-    bookConsultation: "Encontrar el servicio adecuado",
+    bookConsultation: "Reservar",
     contactMe: "Contactar",
     headings: {
       what: "¿En qué consiste este servicio?",
@@ -93,7 +93,7 @@ export const servicesContent = {
       expect: "¿Qué puedes esperar?",
       book: "Reserva una consulta"
     },
-    bookingText: "¿Quieres hablar sobre tus objetivos? Empieza con una llamada introductoria gratuita, reserva una consulta o ponte en contacto si tienes alguna pregunta.",
+    bookingText: "",
     services: [
       {
         key: "weight-management",

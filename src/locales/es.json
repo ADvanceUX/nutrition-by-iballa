@@ -1,14 +1,24 @@
 {
   "nav": {
     "home": "Inicio",
-    "appointments": "Reservas",
+    "about": "Sobre mí",
+    "services": "Servicios",
+    "glp1": "Programa GLP-1",
+    "bookNow": "Reservar",
+    "blog": "Blogs",
     "contact": "Contacto"
   },
   "logoAlt": "Logotipo de Nutrición por Iballa",
   "hero": {
     "title": "Nutrition by Iballa",
-    "subtitle": "Brindo asesoría nutricional personalizada y basada en la evidencia, disponible en español e inglés. Como dietista-nutricionista colegiada en CORU, mi misión es acompañarte en el cuidado de tu salud y bienestar con una atención profesional, cercana y comprensible. Te ayudo a gestionar condiciones médicas, a crear hábitos sostenibles y a sentirte mejor en tu día a día, siempre con un enfoque adaptado a tu estilo de vida y orientado a generar cambios positivos y duraderos en tu salud.",
-    "cta": "Llamada gratuita de descubrimiento de 15 minutos"
+    "subtitle": "Asesoramiento nutricional práctico y basado en la evidencia para control de peso, salud de la mujer y salud intestinal en español e inglés.",
+    "supporting": "Descubre qué áreas de tu alimentación necesitan mejorar haciendo el test de abajo.",
+    "assessmentCta": "Hacer evaluación nutricional",
+    "discoveryEyebrow": "Llamada gratuita",
+    "discoveryTitle": "¿Quieres saber si encajamos bien?",
+    "discoveryText": "Reserva una llamada gratuita, sin presión, para hablar sobre tus objetivos de salud, tus retos actuales y cómo podría ser trabajar juntas.",
+    "cta": "Reservar llamada gratuita",
+    "discoverySupporting": ""
   },
   "services": {
     "heading": "Servicios Especializados",
@@ -58,10 +68,13 @@
   },
   "about": {
     "heading": "Sobre mí",
-    "paragraph1": "Hola, soy Iballa, Dietista-Nutricionista colegiada y miembro del Instituto Irlandés de Nutrición y Dietética y CORU.",
-    "paragraph2": "Soy graduada en Ciencias Biomédicas por la Universidad Tecnológica de Dublín y Máster en Nutrición Humana y Dietética por la Universidad de Limerick. A lo largo de los últimos años he trabajado en distintos entornos clínicos tanto en Irlanda como en Australia, atendiendo a pacientes hospitalizados y ambulatorios en diversas áreas de la nutrición. Esta experiencia me ha permitido consolidar mis competencias y ampliar mi trayectoria profesional.",
-    "paragraph3": "Me apasiona el impacto que la alimentación tiene en la salud y el bienestar. Mi enfoque se centra en acompañar y educar a las personas para que puedan tomar decisiones informadas y sostenibles que favorezcan su calidad de vida.",
-    "paragraph4": "No creo en dietas estrictas ni en soluciones rápidas. Mi propósito es brindar a cada persona las herramientas y la confianza necesarias para que se conviertan en protagonistas de su propia salud y puedan vivir con más energía y bienestar."
+    "paragraph1": "Iballa | Dietista registrada, BSc (Hons) Biomedical Science, MSc Human Nutrition and Dietetics",
+    "paragraph2": "Soy dietista registrada en CORU con amplia experiencia en control de peso, salud de la mujer y salud intestinal. Tengo un BSc en Biomedical Science, con especialización en Bioquímica Clínica y Microbiología Médica, y un MSc en Human Nutrition and Dietetics, además de formación especializada en manejo del SII y salud de la mujer.",
+    "paragraph3": "Soy miembro orgullosa del Irish Nutrition and Dietetic Institute (INDI), donde formo parte del grupo de interés en salud de la mujer. Trabajé como dietista clínica en los servicios de salud de Irlanda y Australia antes de fundar Nutrition By Iballa a principios de 2026.",
+    "paragraph4": "Mi propia experiencia con PMOS, salud intestinal y control de peso me ha dado una comprensión personal de lo frustrantes y abrumadores que pueden sentirse estos problemas. Esto da forma a la empatía y la visión práctica que aporto a mi trabajo.",
+    "paragraph5": "Mi objetivo es darte las herramientas y la orientación que necesitas al comenzar tu camino de salud, siempre basando mis recomendaciones en la evidencia científica y en soluciones que funcionen a largo plazo. No creo en soluciones rápidas. Quiero ayudarte a crear hábitos para toda la vida que encajen con tu estilo de vida. Cada consulta es un espacio seguro, sin juicios, donde podemos trabajar juntas a tu ritmo.",
+    "paragraph6": "Si quieres hablarlo con más calma, reserva tu llamada de descubrimiento abajo.",
+    "discoveryCta": "Reservar llamada de descubrimiento"
   },
   "appointments": {
     "heading": "Reservas",
@@ -71,10 +84,10 @@
     "missingFreeCallUrl": "Este enlace para reservar la llamada gratuita estará disponible cuando se añada la URL de Calendly.",
     "policyHeading": "Política de cancelación y retrasos",
     "policy": [
-      "Las citas pueden cancelarse o reprogramarse sin coste con al menos 24 horas de antelación.",
-      "Las cancelaciones con menos de 24 horas de aviso, o las citas a las que no se acuda, se cobrarán en su totalidad.",
-      "Si llegas con más de 10 minutos de retraso, es posible que tengamos que considerar la cita como no asistencia. Esto es simplemente para asegurarnos de tener el tiempo necesario para darte la atención y el apoyo que te mereces, y así poder ofrecerte el mejor servicio posible.",
-      "Te agradecemos mucho tu comprensión, ya que nos ayuda a mantener disponibilidad para otros pacientes."
+      "Cancelaciones y cambios de cita: Las citas pueden cancelarse o reprogramarse sin coste con al menos 24 horas de antelación. Las cancelaciones realizadas dentro de las 24 horas previas, y las citas no atendidas, pueden cobrarse en su totalidad o contarse como una cita utilizada. Esto nos ayuda a mantener disponibilidad para otros clientes.",
+      "Retrasos: Si llegas con más de 10 minutos de retraso, es posible que tengamos que marcar la cita como no asistida y reprogramarla. Esto garantiza que tengamos tiempo suficiente juntas para darte la atención y el apoyo que mereces.",
+      "Bonos: Las consultas compradas como bono deben utilizarse en los siguientes plazos: bono de 4 consultas dentro de los 6 meses desde la fecha de la consulta inicial; bono de 6 consultas dentro de los 12 meses desde la fecha de la consulta inicial.",
+      "Los importes no son reembolsables una vez realizada la primera consulta. Después de asistir a la primera sesión, no se realizará ningún reembolso por consultas no utilizadas restantes en el bono."
     ],
     "types": {
       "freeCall": {
@@ -87,14 +100,65 @@
       },
       "initial": {
         "title": "Consulta Inicial",
-        "description": "55 minutos — En tu primera cita, revisaremos tu historial de salud, los medicamentos que tomas, resultados de análisis previos y tus hábitos alimenticios. Esto me ayudará a conocer tu situación de manera integral y a crear un plan de nutrición hecho a medida para tus necesidades y objetivos."
+        "description": "En tu primera cita, revisaremos tu historial de salud, los medicamentos que tomas, resultados de análisis previos y tus hábitos alimenticios. Esto me ayudará a conocer tu situación de manera integral y a crear un plan de nutrición hecho a medida para tus necesidades y objetivos."
       },
       "review": {
         "title": "Cita de Revisión",
-        "description": "30 minutos — En las citas de seguimiento, evaluaremos tu progreso y buscaremos soluciones a cualquier dificultad que surja en el camino."
+        "description": "En las citas de seguimiento, evaluaremos tu progreso y buscaremos soluciones a cualquier dificultad que surja en el camino."
       }
     },
+    "packages": {
+      "eyebrow": "Opciones secundarias de reserva",
+      "heading": "Bonos de consultas",
+      "cta": "Reservar",
+      "individualCost": "Coste individual",
+      "save": "Ahorra",
+      "items": {
+        "bundle4": {
+          "title": "Bono de 4 consultas",
+          "description": "Una forma con descuento de reservar varias consultas y mantener apoyo constante.",
+          "price": "€280",
+          "individualCost": "€330",
+          "saving": "€50",
+          "includes": [
+            "1 consulta inicial",
+            "3 citas de revisión"
+          ]
+        },
+        "bundle6": {
+          "title": "Bono de 6 consultas",
+          "description": "Una opción con descuento para recibir apoyo nutricional continuado en varias citas.",
+          "price": "€400",
+          "individualCost": "€470",
+          "saving": "€70",
+          "includes": [
+            "1 consulta inicial",
+            "5 citas de revisión"
+          ]
+        }
+      }
+    },
+    "individualHeading": "Consultas individuales",
+    "existingClients": "Para clientes existentes",
     "cta": "Reservar"
+  },
+  "testimonials": {
+    "heading": "Lo que dicen mis clientes",
+    "aboutHeading": "Lo que mis clientes dicen de mí",
+    "items": [
+      {
+        "title": "Me hizo sentir escuchada, comprendida y acompañada",
+        "review": "Sinceramente, no podría estar más contenta con mi experiencia. Desde el primer día, me hizo sentir escuchada, comprendida y acompañada. Lo que más valoro es cómo se toma el tiempo para adaptar todo a mis necesidades individuales en lugar de utilizar un enfoque único para todo el mundo.\n\nSu trabajo va mucho más allá de la nutrición. Tiene un enfoque verdaderamente integral del bienestar, teniendo en cuenta no solo la alimentación, sino también el estilo de vida, los hábitos, el equilibrio y la salud en general. Eso ha marcado una gran diferencia para mí. Gracias, Iballa"
+      },
+      {
+        "title": "¡Estoy encantada!",
+        "review": "Una auténtica profesional, me enseñó cómo mantener una alimentación equilibrada en el tiempo. Después de mi diagnóstico digestivo, me está ayudando a establecer pautas para mejorar sin restricciones drásticas, combinándolas con consejos nutricionales básicos. ¡Estoy encantada!"
+      },
+      {
+        "title": "Nutricionista profesional con amplia experiencia",
+        "review": "Me mostró los beneficios de cada alimento y cómo incorporarlos en cada comida para llevar una alimentación saludable.\n\nSin duda, una nutricionista profesional con amplia experiencia."
+      }
+    ]
   },
   "contact": {
     "heading": "Contacto",
