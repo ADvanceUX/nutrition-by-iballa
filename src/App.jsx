@@ -2684,8 +2684,8 @@ export default function NutritionByIballa() {
 {/* Hero Section */}
 <section className="bg-white text-[#294b43]">
   <div className="mx-auto grid min-h-[calc(100vh-6rem)] w-full max-w-screen-2xl items-center gap-8 px-5 pb-0 pt-8 sm:px-8 md:grid-cols-[minmax(0,0.95fr)_minmax(18rem,1.05fr)] md:px-12 lg:min-h-[42rem] lg:px-16 xl:px-20">
-    <div className="z-10 max-w-3xl text-left md:justify-self-center">
-      <h1 className="max-w-5xl text-4xl font-semibold leading-[1.05] text-[#294b43] sm:text-5xl lg:text-6xl xl:text-[4rem]">
+    <div className="z-10 w-full max-w-3xl text-left md:justify-self-start">
+      <h1 className="max-w-full text-4xl font-semibold leading-[1.05] text-[#294b43] sm:text-5xl lg:text-6xl xl:text-[4rem]">
         {t("hero.subtitle")}
       </h1>
       <p className="mt-6 max-w-4xl text-base leading-relaxed text-[#0f2f2b] sm:text-lg lg:text-xl xl:whitespace-nowrap">
