@@ -768,7 +768,7 @@ function BeyondInjectionPromo({ embedded = false }) {
   const programmeLabel = isSpanish ? "Descubre el programa" : "Discover the Programme";
 
   return (
-    <section className={embedded ? "mb-10" : "bg-[#d9f4cd] px-4 py-12 sm:px-8 sm:py-16 lg:px-16 lg:py-20 xl:px-20"} aria-labelledby={headingId}>
+    <section className={embedded ? "mb-10" : "bg-[#ffb3b3] px-4 py-12 sm:px-8 sm:py-16 lg:px-16 lg:py-20 xl:px-20"} aria-labelledby={headingId}>
       <div className="mx-auto grid max-w-screen-xl items-center gap-8 overflow-hidden rounded-2xl bg-white p-5 shadow-lg ring-1 ring-[#5ca88d] md:grid-cols-[minmax(0,1fr)_minmax(18rem,0.85fr)] sm:p-8 lg:gap-12 lg:p-10 xl:max-w-screen-2xl">
         <div>
           <h2 id={headingId} className="text-3xl font-semibold leading-tight text-[#294b43] sm:text-4xl lg:text-5xl">
@@ -2588,10 +2588,10 @@ export default function NutritionByIballa() {
   return (
    <div className="overflow-x-hidden bg-white text-gray-900 font-sans">
     {/* Header */}
-  <header className="sticky top-0 h-24 shadow-md bg-white z-[999]">
-  <div className="mx-auto flex h-full w-full max-w-screen-2xl items-center justify-between gap-3 px-3 sm:px-4 lg:px-10 relative z-[1000]">
+  <header className="sticky top-0 h-24 shadow-md bg-[#ffb3b3] z-[999]">
+  <div className="mx-auto flex h-full w-full max-w-screen-2xl items-center justify-between gap-3 bg-[#ffb3b3] px-3 sm:px-4 lg:px-10 relative z-[1000]">
     <a href="/" aria-label={t("nav.home")} className="inline-flex shrink-0">
-      <img src="/logo.png" alt={t("logoAlt")} className="h-16 w-[140px] object-contain sm:h-20 sm:w-[180px] lg:h-24 lg:w-[210px]" />
+      <img src="/logo.png" alt={t("logoAlt")} className="h-16 w-[140px] object-contain mix-blend-multiply sm:h-20 sm:w-[180px] lg:h-24 lg:w-[210px]" />
     </a>
 
     <div className="flex shrink-0 items-center gap-2 sm:gap-4 md:gap-6 relative z-[1000]">
@@ -2622,7 +2622,7 @@ export default function NutritionByIballa() {
 
   {/* Mobile Navigation */}
   {navOpen && (
-    <nav className="absolute top-24 left-0 w-full bg-white shadow-md flex flex-col items-center space-y-4 p-6 z-60 md:hidden">
+    <nav className="absolute top-24 left-0 w-full bg-[#ffb3b3] shadow-md flex flex-col items-center space-y-4 p-6 z-60 md:hidden">
       <a href="/about" onClick={() => setNavOpen(false)}>
         {t("nav.about")}
       </a>
@@ -2692,63 +2692,50 @@ export default function NutritionByIballa() {
 <>
 {/* Hero Section */}
 <section className="bg-white text-[#294b43]">
-  <div className="mx-auto grid min-h-[calc(100vh-6rem)] w-full max-w-screen-2xl items-center gap-8 px-5 pb-0 pt-8 sm:px-8 md:grid-cols-[minmax(0,0.95fr)_minmax(18rem,1.05fr)] md:px-12 lg:min-h-[42rem] lg:px-16 xl:px-20">
+  <div className="mx-auto grid w-full max-w-screen-2xl items-center gap-8 px-5 pb-0 pt-8 sm:px-8 md:px-12 lg:min-h-[38rem] lg:grid-cols-[minmax(0,1.8fr)_minmax(0,1fr)] lg:px-16 xl:px-20">
     <div className="z-10 w-full max-w-3xl text-left md:justify-self-start">
-      <h1 className="max-w-full text-4xl font-semibold leading-[1.05] text-[#294b43] sm:text-5xl lg:text-6xl xl:text-[4rem]">
-        {t("hero.subtitle")}
+      <h1 className="max-w-full text-4xl font-semibold leading-[1.15] text-[#294b43] sm:text-5xl lg:text-[clamp(1.75rem,3vw,3rem)]">
+        {lang === "en" ? t("hero.subtitleLines", { returnObjects: true }).map((line) => (
+          <span key={line} className="lg:block lg:whitespace-nowrap">{line}{" "}</span>
+        )) : t("hero.subtitle")}
       </h1>
-      <p className="mt-6 max-w-4xl text-base leading-relaxed text-[#0f2f2b] sm:text-lg lg:text-xl xl:whitespace-nowrap">
+      <p className="mt-6 max-w-[38rem] text-base leading-relaxed text-[#0f2f2b] sm:text-lg lg:text-xl">
         {t("hero.supporting")}
       </p>
       <a
         href="/nutrition-assessment"
         onClick={() => trackEvent("nutrition_assessment_clicked", { language: lang, location: "hero_assessment" })}
-        className="mt-8 inline-flex min-h-12 items-center justify-center gap-2 rounded-full bg-[#5ca88d] px-7 py-3 text-sm font-semibold text-white shadow-lg shadow-[#294b43]/15 transition hover:opacity-90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#5ca88d] focus-visible:ring-offset-2 sm:text-base"
+        className="mt-8 inline-flex min-h-14 items-center justify-center gap-3 rounded-full bg-[#5ca88d] px-8 py-4 text-base font-semibold text-white shadow-lg shadow-[#294b43]/15 transition hover:opacity-90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#5ca88d] focus-visible:ring-offset-2 sm:px-10 sm:text-lg"
       >
-        <ClipboardList size={18} aria-hidden="true" />
+        <ClipboardList size={22} aria-hidden="true" />
         {t("hero.assessmentCta")}
       </a>
     </div>
 
-    <div className="flex min-h-[26rem] items-end justify-center self-end overflow-hidden md:min-h-[34rem] lg:min-h-[39rem] xl:min-h-[43rem]">
+    <div className="flex items-end justify-center self-end overflow-hidden">
       <img
         src="/hero-iballa-cutout-transparent.png"
         alt="Iballa Martinez, registered dietitian"
-        className="max-h-[34rem] w-auto max-w-[115%] object-contain object-bottom drop-shadow-[0_24px_34px_rgba(41,75,67,0.16)] md:max-h-[40rem] lg:max-h-[46rem] xl:max-h-[50rem]"
+        className="max-h-[28rem] w-auto max-w-full object-contain object-bottom drop-shadow-[0_24px_34px_rgba(41,75,67,0.16)] lg:max-h-[38rem]"
       />
     </div>
   </div>
 </section>
 
 <section className="bg-[#d9f4cd] px-5 py-10 text-[#294b43] sm:px-8 sm:py-12 lg:px-16 lg:py-14 xl:px-20">
-  <div className="mx-auto grid max-w-screen-2xl items-center gap-8 md:grid-cols-[minmax(0,0.95fr)_minmax(18rem,1.05fr)]">
+  <div className="mx-auto max-w-4xl text-center">
     <div>
       <p className="mb-4 text-sm font-semibold uppercase tracking-[0.18em] text-[#5ca88d]">
         {t("hero.discoveryEyebrow")}
       </p>
-      <h2 className="max-w-4xl text-3xl font-semibold leading-[1.08] text-[#294b43] sm:text-4xl lg:text-5xl xl:text-6xl">
+      <h2 className="text-3xl font-semibold leading-[1.15] text-[#294b43] sm:text-4xl lg:text-5xl">
         {t("hero.discoveryTitle")}
       </h2>
-      <p className="mt-6 max-w-2xl text-base leading-relaxed text-[#0f2f2b] sm:text-lg lg:text-xl">
+      <p className="mx-auto mt-5 max-w-3xl text-base leading-relaxed text-[#0f2f2b] sm:text-lg lg:text-xl">
         {t("hero.discoveryText")}
       </p>
-      {t("hero.discoverySupporting") && (
-        <p className="mt-3 max-w-2xl text-sm leading-relaxed text-[#0f2f2b] sm:text-base">
-          {t("hero.discoverySupporting")}
-        </p>
-      )}
-    </div>
-    <div className="rounded-xl bg-white p-6 shadow-lg ring-1 ring-[#5ca88d]/30 sm:p-8">
-      <p className="text-sm font-semibold uppercase tracking-[0.16em] text-[#5ca88d]">{lang === "es" ? "15 minutos" : "15 minutes"}</p>
-      <h3 className="mt-3 text-3xl font-semibold text-[#294b43] sm:text-4xl">{t("appointments.types.freeCall.title")}</h3>
-      <p className="mt-4 text-base leading-relaxed text-gray-700">
-        {Array.isArray(t("appointments.types.freeCall.description", { returnObjects: true }))
-          ? t("appointments.types.freeCall.description", { returnObjects: true })[0]
-          : t("appointments.types.freeCall.description")}
-      </p>
-      <div className="mt-6 h-2 rounded-full bg-[#ffb3b3]" aria-hidden="true"></div>
       <a
-        href="/booking"
+        href={lang === "es" ? calendlyUrls.esFreeCall : calendlyUrls.enFreeCall}
         onClick={() => trackEvent("booking_cta_clicked", { language: lang, location: "hero_discovery_card" })}
         className="mt-6 inline-flex min-h-12 items-center justify-center gap-2 rounded-full bg-[#5ca88d] px-6 py-3 text-sm font-semibold text-white shadow transition hover:opacity-90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#5ca88d] focus-visible:ring-offset-2"
       >
@@ -2773,10 +2760,12 @@ export default function NutritionByIballa() {
       </h2>
     </div>
     <div className="grid gap-5 lg:grid-cols-3 xl:gap-8">
-      {t("testimonials.items", { returnObjects: true }).map((item) => (
+      {t("testimonials.items", { returnObjects: true }).map((item, index) => (
         <article key={item.title} className="flex h-full flex-col rounded-xl bg-white p-5 shadow-lg ring-1 ring-[#d9f4cd] sm:p-6">
-          <h3 className="text-xl font-semibold leading-snug text-[#294b43] sm:text-2xl">
-            {item.title}
+          <h3 className={`text-xl font-semibold leading-snug text-[#294b43] ${index === 0 && lang === "en" ? "lg:text-[clamp(1rem,1.35vw,1.25rem)]" : "sm:text-2xl"}`}>
+            {index === 0 && lang === "en" ? (
+              <><span className="lg:block lg:whitespace-nowrap">She made me feel heard,</span>{" "}<span className="lg:block lg:whitespace-nowrap">understood, and supported</span></>
+            ) : item.title}
           </h3>
           <blockquote className="mt-5 border-l-4 border-[#ffb3b3] pl-4 text-sm leading-relaxed text-gray-700 sm:text-base">
             {item.review.split("\n\n").map((paragraph) => (

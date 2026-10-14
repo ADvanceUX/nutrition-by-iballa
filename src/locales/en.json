@@ -12,6 +12,7 @@
   "hero": {
     "title": "Nutrition by Iballa",
     "subtitle": "Practical evidence-based nutrition advice for weight management, women’s health and gut health in Spanish and English.",
+    "subtitleLines": ["Practical evidence-based nutrition", "advice for weight management,", "women’s health and gut health", "in Spanish and English"],
     "supporting": "Find out what areas of your diet need improvement by taking the test below.",
     "assessmentCta": "Take Nutrition Assessment",
     "discoveryEyebrow": "Free discovery call",
