@@ -761,20 +761,25 @@ function BeyondInjectionCta({ location, children, variant = "primary", className
   );
 }
 
-function BeyondInjectionPromo() {
+function BeyondInjectionPromo({ embedded = false }) {
+  const { i18n } = useTranslation();
+  const isSpanish = i18n.language?.startsWith("es");
+  const headingId = embedded ? "beyond-blog-heading" : "beyond-home-heading";
+  const programmeLabel = isSpanish ? "Descubre el programa" : "Discover the Programme";
+
   return (
-    <section className="bg-[#d9f4cd] px-4 py-12 sm:px-8 sm:py-16 lg:px-16 lg:py-20 xl:px-20" aria-labelledby="beyond-home-heading">
+    <section className={embedded ? "mb-10" : "bg-[#d9f4cd] px-4 py-12 sm:px-8 sm:py-16 lg:px-16 lg:py-20 xl:px-20"} aria-labelledby={headingId}>
       <div className="mx-auto grid max-w-screen-xl items-center gap-8 overflow-hidden rounded-2xl bg-white p-5 shadow-lg ring-1 ring-[#5ca88d] md:grid-cols-[minmax(0,1fr)_minmax(18rem,0.85fr)] sm:p-8 lg:gap-12 lg:p-10 xl:max-w-screen-2xl">
         <div>
-          <h2 id="beyond-home-heading" className="text-3xl font-semibold leading-tight text-[#294b43] sm:text-4xl lg:text-5xl">
+          <h2 id={headingId} className="text-3xl font-semibold leading-tight text-[#294b43] sm:text-4xl lg:text-5xl">
             Beyond the Injection
           </h2>
-          <p className="mt-3 text-lg font-semibold text-[#5ca88d]">12-week GLP-1 nutrition programme</p>
+          <p className="mt-3 text-lg font-semibold text-[#5ca88d]">{isSpanish ? "Programa de nutrición GLP-1 de 12 semanas" : "12-week GLP-1 nutrition programme"}</p>
           <p className="mt-4 max-w-3xl text-base leading-relaxed text-gray-700 lg:text-lg">
-            A structured programme with nutrition education, personalised dietetic support and practical guidance for people using GLP-1 medication.
+            {isSpanish ? "Un programa estructurado con educación nutricional, apoyo dietético personalizado y orientación práctica para personas que utilizan medicamentos GLP-1." : "A structured programme with nutrition education, personalised dietetic support and practical guidance for people using GLP-1 medication."}
           </p>
           <div className="mt-5 flex flex-wrap gap-2">
-            {["12 webinars", "4 consultations", "3 live Q&As", "Community access"].map((item) => (
+            {(isSpanish ? ["12 seminarios online", "4 consultas", "3 sesiones de preguntas en directo", "Acceso a la comunidad"] : ["12 webinars", "4 consultations", "3 live Q&As", "Community access"]).map((item) => (
               <span key={item} className="rounded-full bg-white px-4 py-2 text-sm font-semibold text-[#5ca88d] ring-1 ring-[#d9f4cd]">
                 {item}
               </span>
@@ -786,18 +791,18 @@ function BeyondInjectionPromo() {
               href="/beyond-the-injection"
               className="inline-flex min-h-11 items-center justify-center gap-2 rounded-full bg-[#5ca88d] px-6 py-2 text-sm font-semibold text-white shadow transition hover:opacity-90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#5ca88d] focus-visible:ring-offset-2 lg:px-8 lg:py-3 lg:text-base"
             >
-              Discover the Programme
+              {programmeLabel}
               <ArrowRight size={18} className="text-[#ffb3b3]" aria-hidden="true" />
             </a>
           </div>
         </div>
-        <div className="flex min-h-64 items-center justify-center rounded-xl bg-[#d9f4cd] p-3 shadow-md">
+        <a href="/beyond-the-injection" aria-label={programmeLabel} className="flex min-h-64 items-center justify-center rounded-xl bg-[#d9f4cd] p-3 shadow-md transition hover:opacity-90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#5ca88d] focus-visible:ring-offset-2">
           <img
             src={beyondInjectionImage}
-            alt="Beyond the Injection 12-week programme by Iballa, registered dietitian"
+            alt={isSpanish ? "Beyond the Injection, programa de 12 semanas de Iballa, dietista-nutricionista" : "Beyond the Injection 12-week programme by Iballa, registered dietitian"}
             className="max-h-[28rem] w-full rounded-lg object-contain"
           />
-        </div>
+        </a>
       </div>
     </section>
   );
@@ -1114,7 +1119,7 @@ function BlogSection({ section }) {
           {renderText(paragraph)}
         </p>
       ))}
-      {section.list && (
+      {section.list?.length > 0 && (
         <ul className="list-disc pl-6 space-y-2 text-base sm:text-lg leading-relaxed text-gray-700 mb-4">
           {section.list.map((item) => (
             <li key={item}>{item}</li>
@@ -1184,10 +1189,10 @@ function BlogArticle({ post }) {
   return (
     <main className="bg-white text-gray-900">
       <article>
-        <div className="relative h-72 sm:h-96 overflow-hidden">
+        <div className="relative min-h-[18rem] sm:min-h-[24rem] overflow-hidden">
           <img src={post.image} alt="" className="absolute inset-0 h-full w-full object-cover" />
           <div className="absolute inset-0 bg-[#5ca88d]/50"></div>
-          <div className="relative z-10 h-full max-w-5xl mx-auto px-6 flex flex-col justify-center text-white">
+          <div className="relative z-10 min-h-[18rem] sm:min-h-[24rem] max-w-5xl mx-auto px-6 py-8 flex flex-col justify-center text-white">
             <a
               href="/blog"
               className="inline-flex items-center gap-2 mb-5 text-sm font-semibold hover:text-gray-100 transition"
@@ -1217,13 +1222,17 @@ function BlogArticle({ post }) {
         </div>
 
         <div className="max-w-4xl mx-auto px-4 sm:px-6 py-10 sm:py-14">
-          <div className="rounded-xl shadow-lg ring-1 ring-[#5ca88d] bg-[#d9f4cd] text-[#5ca88d] p-5 sm:p-6 mb-10">
-            <p className="text-base sm:text-lg font-semibold leading-relaxed">{post.callout}</p>
-          </div>
+          {post.callout && (
+            <div className="rounded-xl shadow-lg ring-1 ring-[#5ca88d] bg-[#d9f4cd] text-[#5ca88d] p-5 sm:p-6 mb-10">
+              <p className="text-base sm:text-lg font-semibold leading-relaxed">{post.callout}</p>
+            </div>
+          )}
 
           {post.sections.map((section) => (
             <BlogSection key={section.heading} section={section} />
           ))}
+
+          {post.programmeBanner && <BeyondInjectionPromo embedded />}
 
           <section className="border-t border-[#d9f4cd] pt-8">
             <h2 className="text-2xl sm:text-3xl font-semibold mb-4">{copy.references}</h2>

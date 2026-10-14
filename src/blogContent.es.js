@@ -1,4 +1,7 @@
+import { glp1BlogPost, spanishGlp1BlogPost } from "./glp1BlogPost";
+
 export const spanishBlogContent = {
+  [glp1BlogPost.slug]: spanishGlp1BlogPost,
   "gut-microbiome-why-your-gut-health-matters": {
     title: "El microbioma intestinal: por qué tu salud digestiva importa más de lo que crees",
     excerpt: "El microbioma intestinal influye en la inmunidad, el metabolismo, la digestión e incluso el estado de ánimo. Descubre por qué la diversidad es importante y qué hábitos sencillos favorecen la salud intestinal.",
@@ -427,7 +430,7 @@ export const spanishBlogContent = {
 function mergeLocalizedValue(base, localized) {
   if (localized === undefined) return base;
   if (Array.isArray(base) && Array.isArray(localized)) {
-    return base.map((item, index) => mergeLocalizedValue(item, localized[index]));
+    return localized.map((item, index) => mergeLocalizedValue(base[index], item));
   }
   if (base && localized && typeof base === "object" && typeof localized === "object") {
     return Object.fromEntries(
