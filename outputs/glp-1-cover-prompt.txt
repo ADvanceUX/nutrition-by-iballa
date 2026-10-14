@@ -1,0 +1,5 @@
+Tool: built-in image_gen
+Asset: public/glp-1-nutrition-cover.png
+
+Final prompt:
+Use case: photorealistic-natural. Create a polished editorial photograph for a registered dietitian's blog card about nutrition support during GLP-1 medication and weight management. A natural light oak kitchen table with a balanced colourful meal in a ceramic bowl (salmon, lentils, leafy vegetables), a clear glass of water, and a single discreet closed unbranded medication injection pen resting beside a small plain notebook. No exposed needles, no labels, no lettering, no logos, no packaging, no weight scales or measuring tape. Realistic everyday food portions, warm soft daylight, muted sage green and cream surroundings matching a calm nutrition website. Landscape 3:2 composition, key objects clustered centrally so the photograph also crops attractively to a portrait blog thumbnail; modest depth of field, natural material texture, no people. Deliver one finished photograph only.

@@ -4,6 +4,7 @@ export const glp1BlogPost = {
   "title": "GLP-1s: what everyone should know before starting their medicated weight loss journey?",
   "excerpt": "Ultimately, these medications can make it easier for someone to eat less without experiencing the same level of hunger and food preoccupation that can make weight loss difficult. This is one reason they represent a significant change in the treatment of obesity: rather than relying on willpower alone to reduce food intake, they can help target some of the biological mechanisms that regulate appetite and make obesity management challenging.",
   "image": "/blog-background.svg",
+  "cardImage": "/glp-1-nutrition-cover.png",
   "category": "GLP-1 Nutrition",
   "date": "2026-10-14",
   "readingTime": "10 min read",

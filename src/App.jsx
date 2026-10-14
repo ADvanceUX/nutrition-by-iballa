@@ -1018,7 +1018,7 @@ function BlogOverview() {
                   className="grid h-full min-h-[26rem] group md:grid-cols-[minmax(18rem,0.95fr)_minmax(0,1.05fr)]"
                 >
                   <img
-                    src={latestPost.image}
+                    src={latestPost.cardImage || latestPost.image}
                     alt=""
                     className="h-64 min-h-full w-full object-cover object-center md:h-full"
                   />
@@ -1062,7 +1062,7 @@ function BlogOverview() {
             {postsNewestFirst.map((post) => (
               <article key={post.slug} className="rounded-xl shadow-lg ring-1 ring-[#5ca88d] overflow-hidden bg-white transition-all duration-200 hover:ring-2">
                 <a href={`/blog/${post.slug}`} className="grid sm:grid-cols-[12rem_1fr] group">
-                  <img src={post.image} alt="" className="h-48 sm:h-full w-full object-cover object-center" />
+                  <img src={post.cardImage || post.image} alt="" className="h-48 sm:h-full w-full object-cover object-center" />
                   <div className="p-5 sm:p-6">
                     <div className="flex flex-wrap items-center gap-3 text-sm text-gray-600 mb-4">
                       <span className="inline-flex items-center rounded-full bg-[#d9f4cd] px-3 py-1 font-semibold text-[#5ca88d]">
