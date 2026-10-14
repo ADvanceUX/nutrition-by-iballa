@@ -2591,7 +2591,7 @@ export default function NutritionByIballa() {
   <header className="sticky top-0 h-24 border-b-2 border-[#ffb3b3] bg-white z-[999]">
   <div className="mx-auto flex h-full w-full max-w-screen-2xl items-center justify-between gap-3 bg-white px-3 sm:px-4 lg:px-10 relative z-[1000]">
     <a href="/" aria-label={t("nav.home")} className="inline-flex shrink-0">
-      <img src="/logo.png" alt={t("logoAlt")} className="h-16 w-[140px] object-contain sm:h-20 sm:w-[180px] lg:h-24 lg:w-[210px]" />
+      <img src="/logo.png" alt={t("logoAlt")} className="h-16 w-[140px] -translate-y-1 object-contain sm:h-20 sm:w-[180px] lg:h-24 lg:w-[210px]" />
     </a>
 
     <div className="flex shrink-0 items-center gap-2 sm:gap-4 md:gap-6 relative z-[1000]">
