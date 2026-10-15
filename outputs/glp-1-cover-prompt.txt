@@ -1,0 +1,6 @@
+Tool: built-in image_gen (edit)
+Asset: public/glp-1-nutrition-cover.png
+Selected variant: Website pink
+
+Final prompt:
+Edit the supplied photograph ONLY to vary the colours of the objects. Preserve the exact composition, camera, lighting, background, depth of field, tabletop, realistic photographic quality, and every object position. Keep the closed white GLP-1 injection pen in sharp focus in the foreground and its shape and dose window unchanged; keep the dumbbells, bottle, shoes and towel behind. No added lettering, logos or objects. Replace the overly coordinated sage green styling with a tasteful varied palette; the image should feel colourful yet professional, without a global colour filter. Recolour the pen cap and dose dial to the website's soft coral pink #ffb3b3, dumbbells to a slightly deeper muted dusty rose, bottle to warm cream, towel to light powder blue, and the shoe accents to soft pink. Keep only the naturally green background foliage. Pink is the leading accent, with complementary blue and neutral balance.

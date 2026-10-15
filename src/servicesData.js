@@ -52,9 +52,9 @@ export const servicesContent = {
         iconColor: "text-purple-600",
         iconBackground: "bg-purple-100",
         title: "Women's Health",
-        summary: "Nutrition support and guidance for PCOS, endometriosis, fertility, pregnancy, gestational diabetes, perimenopause and menopause.",
+        summary: "Nutrition support and guidance for PMOS, endometriosis, fertility, pregnancy, gestational diabetes, perimenopause and menopause.",
         what: "Personalised nutrition guidance for women at any life stage with a practical focus on food, habits and wellbeing.",
-        who: "For people looking for support with PCOS, endometriosis, fertility, pregnancy, perimenopause or menopause.",
+        who: "For people looking for support with PMOS, endometriosis, fertility, pregnancy, perimenopause or menopause.",
         expect: "An individual plan built around your symptoms, health priorities and lifestyle, with balanced meals and sustainable routines rather than restrictive rules."
       },
       {
@@ -134,9 +134,9 @@ export const servicesContent = {
         iconColor: "text-purple-600",
         iconBackground: "bg-purple-100",
         title: "Salud de la mujer",
-        summary: "Apoyo nutricional para el SOP, endometriosis, planificación del embarazo, embarazo, diabetes gestacional, perimenopausia y menopausia.",
+        summary: "Apoyo nutricional para el SOMP, endometriosis, planificación del embarazo, embarazo, diabetes gestacional, perimenopausia y menopausia.",
         what: "Orientación nutricional personalizada para la salud de la mujer, con un enfoque práctico en la alimentación, los hábitos y el bienestar en cada etapa.",
-        who: "Para personas que buscan apoyo con SOP, endometriosis, planificación del embarazo, embarazo, diabetes gestacional, perimenopausia y menopausia.",
+        who: "Para personas que buscan apoyo con SOMP, endometriosis, planificación del embarazo, embarazo, diabetes gestacional, perimenopausia y menopausia.",
         expect: "Un plan individual basado en tus síntomas, prioridades y estilo de vida, con comidas equilibradas y rutinas sostenibles, sin reglas restrictivas."
       },
       {

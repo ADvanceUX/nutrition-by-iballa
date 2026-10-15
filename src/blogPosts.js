@@ -1,3 +1,5 @@
+import { glp1BlogPost } from "./glp1BlogPost";
+
 export const blogPosts = [
   {
     slug: "gut-microbiome-why-your-gut-health-matters",
@@ -466,7 +468,8 @@ export const blogPosts = [
         url: "https://doi.org/10.3389/fendo.2026.1741509"
       }
     ]
-  }
+  },
+  glp1BlogPost
 ];
 
 export function getBlogPost(slug) {
