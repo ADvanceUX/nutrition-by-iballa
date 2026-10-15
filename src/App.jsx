@@ -992,12 +992,12 @@ function BlogOverview() {
   return (
     <main className="bg-white text-gray-900">
       <section className="bg-[#5ca88d] pt-10 pb-10 text-center text-white">
-        <div className="max-w-5xl mx-auto px-6">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6">
           <p className="text-sm font-semibold uppercase tracking-wide mb-3">{copy.eyebrow}</p>
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-5 leading-tight">
             {copy.heading}
           </h1>
-          <p className="text-base sm:text-lg leading-relaxed max-w-3xl mx-auto">
+          <p className="mx-auto text-sm leading-relaxed sm:text-base md:whitespace-nowrap md:text-[clamp(0.875rem,1.6vw,1.125rem)]">
             {copy.intro}
           </p>
           <div className="mx-auto mt-6 h-2 w-28 rounded-full bg-[#ffb3b3]" aria-hidden="true"></div>
